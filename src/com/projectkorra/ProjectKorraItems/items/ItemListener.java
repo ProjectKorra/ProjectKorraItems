@@ -1,0 +1,269 @@
+package com.projectkorra.ProjectKorraItems.items;
+
+import java.util.ArrayList;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.InventoryType.SlotType;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import com.projectkorra.ProjectKorraItems.Messages;
+import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
+
+public class ItemListener implements Listener {
+	/*
+	 * When a player places an item into a crafting bench
+	 */
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onCraftingPlace(InventoryClickEvent event) {
+		if(event.isCancelled() || event.getInventory().getType() != InventoryType.WORKBENCH) 
+			return;
+		HumanEntity humEnt = event.getWhoClicked();
+		if(!(humEnt instanceof Player))
+			return;
+		
+		new BukkitRunnable() {
+			@SuppressWarnings("unchecked")
+			public void run() {
+				Player player = (Player) humEnt;
+				ItemStack[] tempInvItems = event.getInventory().getContents();
+				ArrayList<ItemStack> originalInvItems = new ArrayList<ItemStack>();
+				for(ItemStack istack : tempInvItems)
+					originalInvItems.add(istack);
+				
+				//Remove the result item slot
+				originalInvItems.remove(0);
+				ArrayList<ItemStack> invItemsClone = (ArrayList<ItemStack>) originalInvItems.clone();
+				
+				for(CustomItem citem : CustomItem.items.values()) {
+					if(citem.getRecipe().size() == 0)
+						continue;
+					ArrayList<RecipeIngredient> recipeClone = (ArrayList<RecipeIngredient>) citem.getRecipe().clone();
+					boolean validShape = true, validRecipe = false;
+					int maxQuantity = Integer.MAX_VALUE;
+					invItemsClone = (ArrayList<ItemStack>) originalInvItems.clone();
+					
+					for(int i = 0; i < recipeClone.size(); i++) {
+						RecipeIngredient ing = recipeClone.get(i);
+						for(int j = 0; j < invItemsClone.size(); j++) {
+							//Bukkit.broadcastMessage("Sizes: " + recipeClone.size() + " " + invItemsClone.size());
+							// The index of a perfectly shaped recipe will always stay at 0 because the ingredients are being removed
+							if(i > 0 || j > 0)
+								validShape = false;
+							ItemStack item = invItemsClone.get(j);
+							if(ing.getMaterial() == Material.AIR && item.getType() == Material.AIR) {
+								recipeClone.remove(i);
+								invItemsClone.remove(j);
+								i--;
+								j--;
+								break;
+							}
+							else if(ing.getMaterial() == item.getType() && item.getAmount() >= ing.getQuantity() && item.getDurability() == ing.getDamage()) {
+								if(item.getAmount() / ing.getQuantity() < maxQuantity)
+									maxQuantity = item.getAmount() / ing.getQuantity();
+								recipeClone.remove(i);
+								invItemsClone.remove(j);
+								i--;
+								j--;
+								break;
+							}
+						}
+
+					}
+					if(recipeClone.size() == 0 && invItemsClone.size() == 0) {
+						validRecipe = true;
+						//Bukkit.broadcastMessage("ValidRecipe!" + " ValidShape=" + validShape + " maxQuantity=" + maxQuantity);
+						if(citem.isUnshapedRecipe() || validShape) {
+							ItemStack newItem = citem.generateItem();
+							newItem.setAmount(maxQuantity * newItem.getAmount());
+							event.getInventory().setItem(0, newItem);
+							player.updateInventory();
+							return;
+						}
+					}
+					else {
+						//Bukkit.broadcastMessage("Remaining: " + recipeClone);
+						//Bukkit.broadcastMessage("Remaining: " + invItemsClone);
+					}
+				}
+			}
+		}.runTaskLater(ProjectKorraItems.plugin, 1);
+	}
+
+	/*
+	 * When a player attempts to grab a crafted custom item.
+	 */
+	@SuppressWarnings("unchecked")
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onGrabResultItem(InventoryClickEvent event) {
+		if(event.isCancelled() || event.getSlotType() != SlotType.RESULT 
+				|| event.getSlot() != 0 || event.getInventory().getType() != InventoryType.WORKBENCH) 
+			return;
+		HumanEntity humEnt = event.getWhoClicked();
+		if(!(humEnt instanceof Player))
+			return;
+		Player player = (Player) humEnt;
+		ItemStack curItem = event.getCurrentItem();
+		if(curItem == null)
+			return;
+		CustomItem citem = CustomItem.getCustomItem(curItem);
+		if(citem == null)
+			return;
+		int amountCreated = curItem.getAmount() / citem.getQuantity();
+		
+		/*
+		 * Once a player clicks the resultant item we need to calculate the amount of items
+		 * that will remain in the crafting bench.
+		 */
+		ItemStack[] tempInvItems = event.getInventory().getContents();
+		ArrayList<RecipeIngredient> recipeClone = (ArrayList<RecipeIngredient>) citem.getRecipe().clone();
+		ArrayList<ItemStack> invItems = new ArrayList<ItemStack>();
+		for(ItemStack istack : tempInvItems)
+			invItems.add(istack);
+		invItems.set(0, new ItemStack(Material.AIR));
+		
+		while(recipeClone.size() > 0) {
+			RecipeIngredient ing = recipeClone.get(0);
+			int ingQuantity = ing.getQuantity() * amountCreated;
+			
+			if(ing.getMaterial() != Material.AIR)
+				for(int i = 0; i < invItems.size(); i++) {
+					ItemStack istack = invItems.get(i);
+					
+					if(istack.getType() == ing.getMaterial() && istack.getDurability() == ing.getDamage()) {
+						int itemQuantity = istack.getAmount();
+						if(ingQuantity > itemQuantity) {
+							invItems.set(i, new ItemStack(Material.AIR));
+							ingQuantity -= itemQuantity;
+						}
+						else if(ingQuantity == itemQuantity) {
+							invItems.set(i, new ItemStack(Material.AIR));
+							break;
+						}
+						else if(ingQuantity < itemQuantity) {
+							istack.setAmount(itemQuantity - ingQuantity);
+							break;
+						}
+					}
+				}
+			recipeClone.remove(0);
+		}
+		event.getInventory().clear();
+		player.setItemOnCursor(curItem);
+		final ItemStack[] finalItems = invItems.toArray(new ItemStack[invItems.size()]);
+		new BukkitRunnable() {
+			public void run() {
+				event.getInventory().setContents(finalItems);
+				player.updateInventory();
+			}
+		}.runTaskLater(ProjectKorraItems.plugin, 1);
+		//Bukkit.broadcastMessage("Final Items: " + invItems);
+	}
+	
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onClickInDisplayInv(InventoryClickEvent event) {
+		if(event.isCancelled()) 
+			return;
+		HumanEntity humEnt = event.getWhoClicked();
+		if(!(humEnt instanceof Player))
+			return;
+
+		Inventory inv = event.getInventory();
+		Player player = (Player) humEnt;
+		for(ItemDisplay disp : ItemDisplay.displays.values())
+			if(disp.getInventory().equals(inv))
+				event.setCancelled(true);
+		if(!ItemDisplay.displays.containsKey(player))
+			return;
+		
+		ItemDisplay disp = ItemDisplay.displays.get(player);
+		ItemStack curItem = event.getCurrentItem();
+		if(curItem == null)
+			return;
+		if(curItem.equals(ItemDisplay.NEXT_BUTTON)) {
+			player.closeInventory();
+			disp.setPage(disp.getPage() + 1);
+			disp.createInventory();
+			return;
+		}
+		else if(curItem.equals(ItemDisplay.PREV_BUTTON)) {
+			player.closeInventory();
+			if(!disp.isShowingRecipeInv()) {
+				disp.setPage(disp.getPage() - 1);
+				disp.createInventory();
+			}
+			else {
+				// Just recreate the old inventory page
+				disp.createInventory();
+			}
+			return;
+		}
+
+		CustomItem citem = CustomItem.getCustomItem(curItem);
+		if(citem == null)
+			return;
+		// Create the new Recipe inventory
+		Inventory recInv = Bukkit.createInventory(null, 27, citem.getDisplayName());
+		for(int i = 0; i < citem.getRecipe().size(); i++) {
+			RecipeIngredient ing = citem.getRecipe().get(i);
+			int pos = ((i % 3) + 3) + ((i / 3) * 9);
+			recInv.setItem(pos, ing.getItemStack());
+		}
+		recInv.setItem(18, ItemDisplay.PREV_BUTTON);
+		/*
+		 * By closing the inventory onCloseDisplayInv is going to
+		 * remove this ItemDisplay from the map. Since we are going to reuse
+		 * this ItemDisplay, we need to add it back;
+		 */
+		ItemDisplay.displays.put(player, disp);
+		disp.setInventory(recInv);
+		disp.setShowingRecipeInv(true);
+		player.openInventory(recInv);
+	}
+	
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onCloseDisplayInv(InventoryCloseEvent event) {
+		HumanEntity humEnt = event.getPlayer();
+		if(!(humEnt instanceof Player))
+			return;
+		
+		Inventory inv = event.getInventory();
+		Player player = (Player) humEnt;
+		for(ItemDisplay disp : ItemDisplay.displays.values())
+			if(disp.getInventory().equals(inv)) {
+				ItemDisplay.displays.remove(player);
+				return;
+			}
+	}
+	
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onAnvilItemPlace(InventoryClickEvent event) {
+		if(event.isCancelled() || event.getInventory().getType() != InventoryType.ANVIL) 
+			return;
+		HumanEntity humEnt = event.getWhoClicked();
+		if(!(humEnt instanceof Player))
+			return;
+		Player player = (Player) humEnt;
+		ItemStack cursorItem = event.getCurrentItem();
+		if(cursorItem == null)
+			return;
+		
+		CustomItem citem = CustomItem.getCustomItem(cursorItem);
+		if(citem == null)
+			return;
+		else {
+			event.setCancelled(true);
+			player.sendMessage(Messages.NO_ANVIL);
+		}
+	}
+}
