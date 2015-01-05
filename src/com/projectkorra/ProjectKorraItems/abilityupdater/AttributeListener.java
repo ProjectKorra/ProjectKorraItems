@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -12,12 +11,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerAnimationEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import com.projectkorra.ProjectKorra.BendingPlayer;
 import com.projectkorra.ProjectKorra.Element;
 import com.projectkorra.ProjectKorra.Methods;
 import com.projectkorra.ProjectKorraItems.Messages;
@@ -37,21 +38,47 @@ public class AttributeListener implements Listener {
 	public void onPlayerSneak(PlayerToggleSneakEvent event) {
 		if(event.isCancelled())
 			return;
-		final Player player = event.getPlayer();
+		
+		Player player = event.getPlayer();
+		startGliding(player);
+		
+		// Handles the Charges, and ShiftCharges attribute
+		if(!player.isSneaking()) {
+			tryToConfirmClick(player, waitingToConfirmShift);
+		}
+	}
+	
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onChangeItem(PlayerItemHeldEvent event) {
+		if(event.isCancelled())
+			return;
+		Player player = event.getPlayer();
+		startGliding(player);
+	}
+	
+	public void startGliding(Player p) {
+		final Player player = p;
+		BendingPlayer bplayer = Methods.getBendingPlayer(player.getName());
+		if(player == null || bplayer == null)
+			return;
 		
 		if(!player.isSneaking() && player.getLocation().getBlock().getType() == Material.AIR
-				&& Methods.getBendingPlayer(player.getName()).hasElement(Element.Air)) {
-			//TODO add fall speed adjustments
+				&& bplayer.hasElement(Element.Air)) {
 			new BukkitRunnable() {
 				int counter = 0;
 				public void run() {
 					Block block = player.getLocation().add(0, -0.5, 0).getBlock();
-					if(block.getType() != Material.AIR || !player.isSneaking()) {
+					if(block.getType() != Material.AIR) {
+						this.cancel();
+						return;
+					}
+					ConcurrentHashMap<String, Double> attribs = CustomItem.getSimplePlayerAttributeMap(player);
+					boolean auto = Attribute.getBooleanValue("AirGlideAutomatic", attribs);					
+					if(!player.isSneaking() && !auto) {
 						this.cancel();
 						return;
 					}
 					
-					ConcurrentHashMap<String, Double> attribs = CustomItem.getSimplePlayerAttributeMap(player);
 					if(attribs.containsKey("AirGlide")) {
 						double speed = AttributeList.AIR_GLIDE_SPEED;
 						double fallSpeed = AttributeList.AIR_GLIDE_FALL;
@@ -61,7 +88,6 @@ public class AttributeListener implements Listener {
 							fallSpeed = fallSpeed + fallSpeed * attribs.get("AirGlideFallSpeed") / 100.0;
 						
 						Vector vel = player.getEyeLocation().getDirection();
-						vel.setY(0);
 						vel.normalize();
 						vel.multiply(speed);
 						vel.setY(fallSpeed);
@@ -73,11 +99,6 @@ public class AttributeListener implements Listener {
 					}
 				}
 			}.runTaskTimer(ProjectKorraItems.plugin, 1, 1);
-		}
-		
-		// Handles the Charges, and ShiftCharges attribute
-		if(!player.isSneaking()) {
-			tryToConfirmClick(player, waitingToConfirmShift);
 		}
 	}
 	
@@ -102,9 +123,11 @@ public class AttributeListener implements Listener {
 			waitingToConfirmClick.remove(player);
 		}
 		
+		final Player fplayer = player;
+		final ConcurrentHashMap<Player, BukkitRunnable> fmap = map;
 		BukkitRunnable br = new BukkitRunnable() {
 			public void run() {
-				map.remove(player);
+				fmap.remove(fplayer);
 			}
 		};
 		br.runTaskLater(ProjectKorraItems.plugin, 3);
@@ -141,12 +164,12 @@ public class AttributeListener implements Listener {
 					if(line.startsWith(AttributeList.CHARGES_STR) 
 							|| (line.startsWith(AttributeList.CLICK_CHARGES_STR) && type == ClickType.CLICK)
 							|| (line.startsWith(AttributeList.SNEAK_CHARGES_STR) && type == ClickType.SHIFT)) {
-						String start = line.substring(0, line.indexOf(":"));
-						String end = line.substring(line.indexOf(":") + 1, line.length());
+						String start = line.substring(0, line.indexOf(": "));
+						String end = line.substring(line.indexOf(": ") + 1, line.length());
 						end = end.trim();
 						int val = Integer.parseInt(end) - 1;
 						if(val >= 0)
-							newLine = start + ":" + val;
+							newLine = start + ": " + val;
 					}
 				}
 				catch (Exception e) {}
@@ -157,11 +180,14 @@ public class AttributeListener implements Listener {
 			
 			//Check if we need to destroy the item
 			boolean hasDestroyAttr = false;
-			for(Attribute attr : citem.getAttributes())
-				if(attr.getName().equalsIgnoreCase("DestroyAfterCharges")) {
+			boolean hasIgnoreDestroyMsg = false;
+			for(Attribute attr : citem.getAttributes()) {
+				if(attr.getBooleanValue("DestroyAfterCharges") == true)
 					hasDestroyAttr = true;
-					break;
-				}
+				else if(attr.getBooleanValue("IgnoreDestroyMessage") == true)
+					hasIgnoreDestroyMsg = true;
+			}
+				
 			
 			boolean hasChargesLeft = true;
 			if(hasDestroyAttr) {
@@ -169,7 +195,7 @@ public class AttributeListener implements Listener {
 					try {
 						if(line.startsWith(AttributeList.CHARGES_STR) || line.startsWith(AttributeList.CLICK_CHARGES_STR)
 								|| line.startsWith(AttributeList.SNEAK_CHARGES_STR)) {
-							String tmpStr = line.substring(line.indexOf(":") + 1, line.length()).trim();
+							String tmpStr = line.substring(line.indexOf(": ") + 1, line.length()).trim();
 							int value = Integer.parseInt(tmpStr);
 							if(value <= 0)
 								hasChargesLeft = false;
@@ -183,15 +209,35 @@ public class AttributeListener implements Listener {
 				}	
 			}
 			
+			/*
+			 * When we go to destroy an item we need to check that there
+			 * were not multiple items in that stack. If there were
+			 * multiple items then we need to just remove 1 and change the lore
+			 * back to the start.
+			 */
 			if(hasDestroyAttr && !hasChargesLeft) {
-				player.sendMessage(citem.getDisplayName() + Messages.ITEM_DESTROYED);
-				if(player.getInventory().contains(istack))
-					player.getInventory().remove(istack);
+				if(!hasIgnoreDestroyMsg)
+					player.sendMessage(citem.getDisplayName() + Messages.ITEM_DESTROYED);
+				if(player.getInventory().contains(istack)) {
+					if(istack.getAmount() > 1) {
+						istack.setAmount(istack.getAmount() - 1);
+						ItemStack newStack = citem.generateItem();
+						setLore(istack, newStack.getItemMeta().getLore());
+					}
+					else
+						player.getInventory().remove(istack);
+				}
 				else {
 					ItemStack[] armor = player.getInventory().getArmorContents();
 					for(int i = 0; i < armor.length; i++) {
 						if(armor[i].equals(istack)) {
-							armor[i] = new ItemStack(Material.AIR);
+							if(istack.getAmount() > 1) {
+								armor[i].setAmount(armor[i].getAmount() - 1);
+								ItemStack newStack = citem.generateItem();
+								setLore(armor[i], newStack.getItemMeta().getLore());
+							}
+							else
+								armor[i] = new ItemStack(Material.AIR);
 							break;
 						}
 					}
@@ -200,5 +246,16 @@ public class AttributeListener implements Listener {
 			}
 			
 		}
+	}
+	
+	public static boolean setLore(ItemStack istack, List<String> lore) {
+		if(istack == null || lore == null)
+			return false;
+		ItemMeta meta = istack.getItemMeta();
+		if(meta == null)
+			return false;
+		meta.setLore(lore);
+		istack.setItemMeta(meta);
+		return true;
 	}
 }
