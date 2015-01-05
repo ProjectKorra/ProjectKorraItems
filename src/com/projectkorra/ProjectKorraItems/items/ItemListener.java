@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -19,7 +20,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.projectkorra.ProjectKorraItems.Messages;
 import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
-
+//TODO add a space between charges
 public class ItemListener implements Listener {
 	/*
 	 * When a player places an item into a crafting bench
@@ -28,7 +29,8 @@ public class ItemListener implements Listener {
 	public void onCraftingPlace(InventoryClickEvent event) {
 		if(event.isCancelled() || event.getInventory().getType() != InventoryType.WORKBENCH) 
 			return;
-		HumanEntity humEnt = event.getWhoClicked();
+		final HumanEntity humEnt = event.getWhoClicked();
+		final InventoryClickEvent fevent = event;
 		if(!(humEnt instanceof Player))
 			return;
 		
@@ -36,7 +38,7 @@ public class ItemListener implements Listener {
 			@SuppressWarnings("unchecked")
 			public void run() {
 				Player player = (Player) humEnt;
-				ItemStack[] tempInvItems = event.getInventory().getContents();
+				ItemStack[] tempInvItems = fevent.getInventory().getContents();
 				ArrayList<ItemStack> originalInvItems = new ArrayList<ItemStack>();
 				for(ItemStack istack : tempInvItems)
 					originalInvItems.add(istack);
@@ -86,7 +88,7 @@ public class ItemListener implements Listener {
 						if(citem.isUnshapedRecipe() || validShape) {
 							ItemStack newItem = citem.generateItem();
 							newItem.setAmount(maxQuantity * newItem.getAmount());
-							event.getInventory().setItem(0, newItem);
+							fevent.getInventory().setItem(0, newItem);
 							player.updateInventory();
 							return;
 						}
@@ -161,10 +163,12 @@ public class ItemListener implements Listener {
 		event.getInventory().clear();
 		player.setItemOnCursor(curItem);
 		final ItemStack[] finalItems = invItems.toArray(new ItemStack[invItems.size()]);
+		final InventoryClickEvent fevent = event;
+		final Player fplayer = player;
 		new BukkitRunnable() {
 			public void run() {
-				event.getInventory().setContents(finalItems);
-				player.updateInventory();
+				fevent.getInventory().setContents(finalItems);
+				fplayer.updateInventory();
 			}
 		}.runTaskLater(ProjectKorraItems.plugin, 1);
 		//Bukkit.broadcastMessage("Final Items: " + invItems);
@@ -185,8 +189,16 @@ public class ItemListener implements Listener {
 				event.setCancelled(true);
 		if(!ItemDisplay.displays.containsKey(player))
 			return;
-		
 		ItemDisplay disp = ItemDisplay.displays.get(player);
+		
+		boolean hasPerm = player.hasPermission("bendingitems.command.give");
+		// If they have permissions and right click, they are probably holding an item
+		if(hasPerm && event.getClick() == ClickType.RIGHT 
+				&& player.getItemOnCursor().getType() != Material.AIR && !disp.isShowStats()) {
+			event.setCancelled(false);
+			return;
+		}
+		
 		ItemStack curItem = event.getCurrentItem();
 		if(curItem == null)
 			return;
@@ -212,6 +224,13 @@ public class ItemListener implements Listener {
 		CustomItem citem = CustomItem.getCustomItem(curItem);
 		if(citem == null)
 			return;
+		
+		// If they right clicked then they might be able to grab the item or place one down
+		if(hasPerm && event.getClick() == ClickType.RIGHT && !disp.isShowStats()) {
+			player.setItemOnCursor(citem.generateItem());
+			return;
+		}
+		
 		// Create the new Recipe inventory
 		Inventory recInv = Bukkit.createInventory(null, 27, citem.getDisplayName());
 		for(int i = 0; i < citem.getRecipe().size(); i++) {
