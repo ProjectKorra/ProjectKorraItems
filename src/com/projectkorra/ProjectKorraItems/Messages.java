@@ -19,8 +19,8 @@ public class Messages {
 	public static final String DUPLICATE_ITEM = "an item with this name already exists";
 	public static final String BAD_RECIPE_MAT = "invalid recipe material";
 	public static final String BAD_RECIPE = "an error occured while parsing the recipe";
-	public static final String BAD_DAMAGE = "invalid data value";
-	public static final String BAD_QUANTITY = "invalid quantity value";
+	public static final String BAD_DAMAGE = "invalid durability value";
+	public static final String BAD_QUANTITY = "invalid amount value";
 	public static final String BAD_LORE = "invalid lore";
 	public static final String BAD_GLOW = "invalid glow value";
 	public static final String BAD_DNAME = "invalid display name";
