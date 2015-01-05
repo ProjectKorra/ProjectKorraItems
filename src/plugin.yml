@@ -1,0 +1,23 @@
+name: ProjectKorraItems
+author: ProjectKorraItems
+version: 1.0.0
+main: com.projectkorra.ProjectKorraItems.ProjectKorraItems
+depend: [ProjectKorra]
+commands:
+  projectkorraitems:
+    aliases: [bi,bendingi,bendingitems,korraitems,pki,korrai]
+    usage: /<command>
+permissions:
+  bendingitems.admin:
+    default: op
+    description: Grants access to all commands.
+    children:
+      bendingitems.player: true
+      bendingitems.command.reload: true
+      bendingitems.command.give: true      
+  bendingitems.player:
+    default: true
+    description: Grants access to most commands.
+    children:
+      bendingitems.command.stats: true
+      bendingitems.command.items: true
