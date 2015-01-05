@@ -20,12 +20,12 @@ public class ConfigManager {
 	public static final String SHAPED_RECIPE_PREF = "ShapedRecipe:";
 	public static final String UNSHAPED_RECIPE_PREF = "UnshapedRecipe:";
 	public static final String MATERIAL_PREF = "Material:";
-	public static final String DAMAGE_PREF = "Data:";
-	public static final String QUANTITY_PREF = "Quantity:";
+	public static final String DURA_PREF = "Durability:";
+	public static final String AMT_PREF = "Amount:";
 	public static final String ATTR_PREF = "Stats:";
 	public static final String GLOW_PREF = "Glow:";
 	public static final String[] PREFIXES = {ITEM_PREF, DNAME_PREF, NAME_PREF, LORE_PREF, 
-		SHAPED_RECIPE_PREF, UNSHAPED_RECIPE_PREF, MATERIAL_PREF, DAMAGE_PREF, QUANTITY_PREF, ATTR_PREF,
+		SHAPED_RECIPE_PREF, UNSHAPED_RECIPE_PREF, MATERIAL_PREF, DURA_PREF, AMT_PREF, ATTR_PREF,
 		GLOW_PREF};
 	
 	public ProjectKorraItems plugin;
@@ -112,9 +112,9 @@ public class ConfigManager {
 							}
 							else if(prefix.equalsIgnoreCase(MATERIAL_PREF))
 								newItem.updateMaterial(tmp);
-							else if(prefix.equalsIgnoreCase(DAMAGE_PREF))
+							else if(prefix.equalsIgnoreCase(DURA_PREF))
 								newItem.updateDamage(tmp);
-							else if(prefix.equalsIgnoreCase(QUANTITY_PREF))
+							else if(prefix.equalsIgnoreCase(AMT_PREF))
 								newItem.updateQuantity(tmp);
 							else if(prefix.equalsIgnoreCase(GLOW_PREF))
 								newItem.updateGlow(tmp);
