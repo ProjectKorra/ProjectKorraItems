@@ -365,7 +365,7 @@ public class CustomItem {
 				for(String line : istack.getItemMeta().getLore()) {
 					if(line.startsWith(AttributeList.CHARGES_STR) || line.startsWith(AttributeList.CLICK_CHARGES_STR)
 							|| line.startsWith(AttributeList.SNEAK_CHARGES_STR)) {
-						String tmpStr = line.substring(line.indexOf(":") + 1, line.length()).trim();
+						String tmpStr = line.substring(line.indexOf(": ") + 1, line.length()).trim();
 						int value = Integer.parseInt(tmpStr);
 						if(value <= 0)
 							validCharges = false;
@@ -383,11 +383,12 @@ public class CustomItem {
 			
 			boolean wearHoldValid = true;
 			for(Attribute attr : citem.getAttributes()) {
-				if(attr.getName().equalsIgnoreCase("HoldOnly") && !istack.equals(player.getItemInHand())) {
+				
+				if(attr.getBooleanValue("HoldOnly") && !istack.equals(player.getItemInHand())) {
 					wearHoldValid = false;
 					break;
 				}
-				else if(attr.getName().equalsIgnoreCase("WearOnly") && istack.equals(player.getItemInHand())) {
+				else if(attr.getBooleanValue("WearOnly") && istack.equals(player.getItemInHand())) {
 					wearHoldValid = false;
 					break;
 				}
