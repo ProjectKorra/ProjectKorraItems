@@ -72,6 +72,9 @@ public class ItemDisplay {
 			}
 			else {
 				List<String> lore = meta.getLore();
+				if(lore == null)
+					lore = new ArrayList<String>();
+				
 				String s = "";
 				if(citem.getRecipe().size() == 0)
 					s = ChatColor.RED + "Uncraftable";
