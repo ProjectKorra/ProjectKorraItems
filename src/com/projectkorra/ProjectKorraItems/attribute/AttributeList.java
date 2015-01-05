@@ -7,29 +7,32 @@ import org.bukkit.ChatColor;
 public class AttributeList {
 	public static double AIR_GLIDE_SPEED = 0.6;
 	public static double AIR_GLIDE_FALL = -0.12;
-	public static String CHARGES_STR = ChatColor.GOLD + "Charges:";
-	public static String SNEAK_CHARGES_STR = ChatColor.GOLD + "SneakCharges:";
-	public static String CLICK_CHARGES_STR = ChatColor.GOLD + "ClickCharges:";
+	public static String CHARGES_STR = ChatColor.GOLD + "Charges: ";
+	public static String SNEAK_CHARGES_STR = ChatColor.GOLD + "SneakCharges: ";
+	public static String CLICK_CHARGES_STR = ChatColor.GOLD + "ClickCharges: ";
 	
 	public static ArrayList<Attribute> attributes = new ArrayList<Attribute>(){
 		private static final long serialVersionUID = 1L;
 	{
 		
 		// MISC
-		add(new Attribute("Charges", "charges are decreased by both clicking and sneaking, an item stops working if it runs out of charges"));
-		add(new Attribute("ClickCharges", "charges are decreased by clicking"));
-		add(new Attribute("SneakCharges", "charges are decreased by sneaking"));
+		add(new Attribute("Charges", "the number of charges remaining, charges are decreased by both clicking and sneaking, and an item stops working if it runs out of charges"));
+		add(new Attribute("ClickCharges", "charges are only decreased by clicking"));
+		add(new Attribute("SneakCharges", "charges are only decreased by sneaking"));
 		add(new Attribute("DestroyAfterCharges", "the item will be destroyed when the charges run out"));
+		add(new Attribute("IgnoreDestroyMessage", "the player will not receive a message that the item was destroyed when the charges run out"));
 		add(new Attribute("WearOnly", "the item will only work if it is being worn as armor"));
 		add(new Attribute("HoldOnly", "the item will only work being held"));
 		add(new Attribute("LeatherColor", "gives leather armor a specific color, specified as R,G,B. For example, LeatherColor:255,0,0 would be red armor"));
-		add(new Attribute("AirGlide", "allows an Airbender to glide through the air by sneaking"));
-		add(new Attribute("AirGlideSpeed", "modifies the air gliding speed"));
-		add(new Attribute("AirGlideFallSpeed", "modifies the air gliding fall speed"));
 		
 		// AIR
+		add(new Attribute("AirGlide", "(true/false) allows an Airbender to glide through the air by sneaking"));
+		add(new Attribute("AirGlideSpeed", "modifies the air gliding speed"));
+		add(new Attribute("AirGlideFallSpeed", "modifies the air gliding fall speed"));
+		add(new Attribute("AirGlideAutomatic", "(true/false) gliding will start the moment that the user switches to the slot, they don't have to sneak"));
+
 		add(new Attribute("AirBlastRange", "range"));
-		add(new Attribute("AirBlastForce", "knockback force"));
+		add(new Attribute("AirBlastForce", "force"));
 		
 		add(new Attribute("AirSwipeDamage", "damage"));
 		add(new Attribute("AirSwipeForce", "knockback force"));
@@ -118,7 +121,7 @@ public class AttributeList {
 		//add(new Attribute("CatapultLength", "length of the catapult earth pillar"));
 		//add(new Attribute("CatapultPush", "initial push distance"));
 		
-		add(new Attribute("EarthArmorStrength", "resistance potion potenc"));
+		add(new Attribute("EarthArmorStrength", "resistance potion potency"));
 		
 		add(new Attribute("EarthBlastRange", "range"));
 		add(new Attribute("EarthBlastDamage", "damage"));
