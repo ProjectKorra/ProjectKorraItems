@@ -1,6 +1,9 @@
 package com.projectkorra.ProjectKorraItems.attribute;
 
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
+
+import com.projectkorra.ProjectKorraItems.items.CustomItem;
 
 public class Attribute 
 {	
@@ -54,10 +57,32 @@ public class Attribute
 				return att;
 		return null;
 	}
+	
+	public static boolean getBooleanValue(String name, ConcurrentHashMap<String, Double> map) {
+		boolean val = map.containsKey(map);
+		if(val) {
+			try {
+				val = map.get(name).intValue() != 0; 
+			}
+			catch(Exception e) {}
+		}
+		return val;
+	}
 
 	@Override
 	public String toString() {
 		return "Attribute [name=" + name + ", desc=" + desc + ", values="
 				+ values + "]";
+	}
+
+	public boolean getBooleanValue(String name) {
+		if(!this.name.equalsIgnoreCase(name))
+			return false;
+		try {
+			boolean val = Integer.parseInt(this.values.get(0)) != 0;
+			return val;
+		}
+		catch (Exception e) {}
+		return false;
 	}
 }
