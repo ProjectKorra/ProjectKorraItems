@@ -22,7 +22,7 @@ public class AttributeList {
 		add(new Attribute("DestroyAfterCharges", "the item will be destroyed when the charges run out"));
 		add(new Attribute("IgnoreDestroyMessage", "the player will not receive a message that the item was destroyed when the charges run out"));
 		add(new Attribute("WearOnly", "the item will only work if it is being worn as armor"));
-		add(new Attribute("HoldOnly", "the item will only work being held"));
+		add(new Attribute("HoldOnly", "the item will only work if it is being held"));
 		add(new Attribute("LeatherColor", "gives leather armor a specific color, specified as R,G,B. For example, LeatherColor:255,0,0 would be red armor"));
 		
 		// AIR
