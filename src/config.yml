@@ -37,7 +37,7 @@ Item:
 Item:
     Name: example5
     DisplayName: <&9>Azula Stone
-    Material: REDSTONE_DUST
+    Material: REDSTONE
     Lore: <&c>Instantly charges Lightning
     Stats:
         SneakCharges: 1
@@ -48,11 +48,11 @@ Item:
     Name: glider
     DisplayName: <&f>Airbender Staff
     Lore: <&8>A versatile wooden staff used by <&f><&l>Air Nomads<n><&7>Press sneak while falling to glide<n><&7>Improves the knockback of<n><&f>  AirBlast<n><&f>  AirSwipe<n><&f>  AirSuction
-    Material: IRON_HELMET
+    Material: STICK
     ShapedRecipe: WOOL:8, WOOL:8, WOOL:8, AIR, STICK:8, WOOL:8, FEATHER:8, AIR, WOOL:8
     Glow: true
     Stats:
-        Charges: 5
+        Charges: 50
         DestroyAfterCharges: true
         IgnoreDestroyMessage: false
         AirGlide: true
