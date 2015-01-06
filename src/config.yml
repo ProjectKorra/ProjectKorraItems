@@ -34,6 +34,16 @@ Item:
         Charges: 20
         BlazeRange: 30
         DestroyAfterCharges: true
+Item:
+    Name: example5
+    DisplayName: <&9>Azula Stone
+    Material: REDSTONE_DUST
+    Lore: <&c>Instantly charges Lightning
+    Stats:
+        SneakCharges: 1
+        DestroyAfterCharges: true
+        IgnoreDestroyMessage: true
+        LightningChargeTime: -300
 Item: 
     Name: glider
     DisplayName: <&f>Airbender Staff

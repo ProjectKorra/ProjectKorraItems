@@ -14,10 +14,15 @@ permissions:
     children:
       bendingitems.player: true
       bendingitems.command.reload: true
-      bendingitems.command.give: true      
+      bendingitems.command.give: true
   bendingitems.player:
     default: true
     description: Grants access to most commands.
     children:
       bendingitems.command.stats: true
       bendingitems.command.items: true
+  bendingitems.command.items:
+    default: true
+    description: Grants access to /bi items.
+    children:
+      bendingitems.command.items.stats: true
