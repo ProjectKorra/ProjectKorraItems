@@ -157,6 +157,9 @@ public class AttributeListener implements Listener {
 				continue;
 			ItemMeta meta = istack.getItemMeta();
 			List<String> lore = meta.getLore();
+			if(lore == null)
+				continue;
+			
 			List<String> newLore = new ArrayList<String>();
 			for(String line : lore) {
 				String newLine = line;
