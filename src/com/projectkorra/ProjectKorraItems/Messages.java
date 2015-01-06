@@ -29,17 +29,18 @@ public class Messages {
 	public static final String BAD_CHARGES = "invalid charges value";
 	public static final String MISSING_VALUES = "an attribute is missing it's values";
 	
-	public static final String NO_PERM = ChatColor.RED + "you don't have permission to use this command";
-	public static final String CONFIG_RELOADED = ChatColor.AQUA + "Bending items config reloaded";
-	public static final String PLAYER_ONLY = ChatColor.RED + "you must be a player to use this command";
-	public static final String INVALID_PLAYER = ChatColor.RED + "player not found";
-	public static final String ITEM_NOT_FOUND = ChatColor.RED + "item not found";
-	public static final String NO_ANVIL = ChatColor.RED + "you can't place this item in an anvil";
+	public static final String NO_PERM = ChatColor.RED + "You don't have permission to do that.";
+	public static final String CONFIG_RELOADED = ChatColor.AQUA + "Bending items config reloaded.";
+	public static final String PLAYER_ONLY = ChatColor.RED + "You must be a player to use this command.";
+	public static final String INVALID_PLAYER = ChatColor.RED + "Player not found.";
+	public static final String ITEM_NOT_FOUND = ChatColor.RED + "Item not found.";
+	public static final String NO_ANVIL = ChatColor.RED + "You can't place this item in an anvil.";
 	
 	public static final String USAGE = 	ChatColor.RED + "/bi items " + ChatColor.YELLOW + "Display all items, click to see their recipes.\n" + 
 									   	ChatColor.RED + "/bi items stats " + ChatColor.YELLOW + "Display all items and their stats.\n" +
 									   	ChatColor.RED + "/bi stats <page> " + ChatColor.YELLOW + "Displays each stat and it's description.\n" +
-									   	ChatColor.RED + "/bi stats [phrase] <page> " + ChatColor.YELLOW + "Displays only the stats that contain the phrase.";
+									   	ChatColor.RED + "/bi stats [phrase] <page> " + ChatColor.YELLOW + "Displays only the stats that contain the phrase." + 
+									   	ChatColor.RED + "/bi give " + ChatColor.YELLOW + "(OP) send players custom items.";
 	
 	public static final String GIVE_USAGE = ChatColor.RED + "/bi give [item] <qty> " + ChatColor.YELLOW + "Gives yourself a bending item.\n" +
 											ChatColor.RED + "/bi give [item] [player] <qty> " + ChatColor.YELLOW + "Gives the player a bending item.\n" +
