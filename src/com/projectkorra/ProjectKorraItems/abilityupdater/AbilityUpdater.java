@@ -343,20 +343,17 @@ public class AbilityUpdater {
 	public static void updateAbility(Player player, Object ability) {
 		if(player == null)
 			return;
-		AttributeListener.confirmClick(player, AttributeListener.waitingToConfirmClick, AttributeListener.ClickType.CLICK);
-		AttributeListener.confirmClick(player, AttributeListener.waitingToConfirmShift, AttributeListener.ClickType.SHIFT);
 		
 		ConcurrentHashMap<String, Double> attribs = CustomItem.getSimplePlayerAttributeMap(player);
-		if(FireUpdater.updateAbility(player, ability, attribs))
-			return;
-		else if(WaterUpdater.updateAbility(player, ability, attribs))
-			return;
-		else if(AirUpdater.updateAbility(player, ability, attribs))
-			return;
-		else if(EarthUpdater.updateAbility(player, ability, attribs))
-			return;
-		else if(ChiUpdater.updateAbility(player, ability, attribs))
-			return;
+		if(FireUpdater.updateAbility(player, ability, attribs)) {}
+		else if(WaterUpdater.updateAbility(player, ability, attribs)){}
+		else if(AirUpdater.updateAbility(player, ability, attribs)){}
+		else if(EarthUpdater.updateAbility(player, ability, attribs)) {}
+		else if(ChiUpdater.updateAbility(player, ability, attribs)){}
+		
+		AttributeListener.confirmClick(player, AttributeListener.waitingToConfirmClick, AttributeListener.ClickType.CLICK);
+		AttributeListener.confirmClick(player, AttributeListener.waitingToConfirmShift, AttributeListener.ClickType.SHIFT);
+
 
 	}
 }
