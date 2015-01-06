@@ -138,7 +138,6 @@ public class CommandManager {
 							for(int i = 0; i < attribs.size(); i++) {
 								Attribute att = attribs.get(i);
 								if(!att.getName().toLowerCase().contains(phrase.toLowerCase())) {
-									ProjectKorraItems.log.info("Removing: " + att.getName());
 									attribs.remove(i);
 									i--;
 								}	
