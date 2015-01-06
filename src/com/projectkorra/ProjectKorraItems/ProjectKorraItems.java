@@ -4,7 +4,6 @@ import java.util.logging.Logger;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.projectkorra.ProjectKorra.ProjectKorra;
 import com.projectkorra.ProjectKorraItems.abilityupdater.AbilityUpdater;
 import com.projectkorra.ProjectKorraItems.abilityupdater.AttributeListener;
 import com.projectkorra.ProjectKorraItems.items.ItemDisplay;
