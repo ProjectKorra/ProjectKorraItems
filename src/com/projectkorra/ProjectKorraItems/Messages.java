@@ -1,9 +1,13 @@
 package com.projectkorra.ProjectKorraItems;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.bukkit.ChatColor;
 
 public class Messages {
+	public static ConcurrentHashMap<String, Long> logDelay = new ConcurrentHashMap<String, Long>();
 	public static final int LINES_PER_PAGE = 10;
+	public static final long LOG_DELAY = 30000;
 	
 	public static final String[] RELOAD_ALIAS = {"reload", "r", "reloadconfig", "restart"};
 	public static final String[] ITEMS_ALIAS = {"items", "i", "item"};
@@ -27,7 +31,9 @@ public class Messages {
 	public static final String BAD_MATERIAL = "invalid material";
 	public static final String BAD_NAME = "invalid name";
 	public static final String BAD_CHARGES = "invalid charges value";
+	public static final String BAD_VALUE = "an issue occured with this value";
 	public static final String MISSING_VALUES = "an attribute is missing it's values";
+	public static final String MISSING_EFFECT_VALUES = "an effect is missing values (Effect:Power:Duration)";
 	
 	public static final String NO_PERM = ChatColor.RED + "You don't have permission to do that.";
 	public static final String CONFIG_RELOADED = ChatColor.AQUA + "Bending items config reloaded.";
@@ -39,7 +45,7 @@ public class Messages {
 	public static final String USAGE = 	ChatColor.RED + "/bi items " + ChatColor.YELLOW + "Display all items, click to see their recipes.\n" + 
 									   	ChatColor.RED + "/bi items stats " + ChatColor.YELLOW + "Display all items and their stats.\n" +
 									   	ChatColor.RED + "/bi stats <page> " + ChatColor.YELLOW + "Displays each stat and it's description.\n" +
-									   	ChatColor.RED + "/bi stats [phrase] <page> " + ChatColor.YELLOW + "Displays only the stats that contain the phrase." + 
+									   	ChatColor.RED + "/bi stats [phrase] <page> " + ChatColor.YELLOW + "Displays only the stats that contain the phrase.\n" + 
 									   	ChatColor.RED + "/bi give " + ChatColor.YELLOW + "(OP) send players custom items.";
 	
 	public static final String GIVE_USAGE = ChatColor.RED + "/bi give [item] <qty> " + ChatColor.YELLOW + "Gives yourself a bending item.\n" +
@@ -50,8 +56,13 @@ public class Messages {
 		   										ChatColor.RED + "/bi stats [phrase] <page> " + ChatColor.YELLOW + "Displays only the stats that contain the phrase.\n" +
 		   										ChatColor.RED + "ex:\n/bi stats Air\n/bi stats Tornado\n/bi stats blast 2";
 
-	public static final String ITEM_DESTROYED = ChatColor.RED + " has ran out of charges and has been destroyed";
+	public static final String ITEM_DESTROYED = ChatColor.RED + "has ran out";
 
 
-	
+	public static void logTimedMessage(String msg, long delay) {
+		if(logDelay.containsKey(msg) && System.currentTimeMillis() - logDelay.get(msg) < LOG_DELAY)
+			return;
+		logDelay.put(msg, System.currentTimeMillis() + delay);
+		ProjectKorraItems.log.info(msg);
+	}
 }
