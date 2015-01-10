@@ -5,7 +5,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.projectkorra.ProjectKorraItems.abilityupdater.AbilityUpdater;
-import com.projectkorra.ProjectKorraItems.abilityupdater.AttributeListener;
+import com.projectkorra.ProjectKorraItems.attribute.AttributeListener;
 import com.projectkorra.ProjectKorraItems.items.ItemDisplay;
 import com.projectkorra.ProjectKorraItems.items.ItemListener;
 

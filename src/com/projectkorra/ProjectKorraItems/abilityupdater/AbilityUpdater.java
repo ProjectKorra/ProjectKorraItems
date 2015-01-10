@@ -3,7 +3,6 @@ package com.projectkorra.ProjectKorraItems.abilityupdater;
 import java.util.HashSet;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -23,6 +22,7 @@ import com.projectkorra.ProjectKorra.earthbending.EarthArmor;
 import com.projectkorra.ProjectKorra.earthbending.EarthBlast;
 import com.projectkorra.ProjectKorra.earthbending.EarthSmash;
 import com.projectkorra.ProjectKorra.earthbending.EarthTunnel;
+import com.projectkorra.ProjectKorra.earthbending.MetalClips;
 import com.projectkorra.ProjectKorra.earthbending.Ripple;
 import com.projectkorra.ProjectKorra.earthbending.Shockwave;
 import com.projectkorra.ProjectKorra.firebending.Cook;
@@ -46,7 +46,8 @@ import com.projectkorra.ProjectKorra.waterbending.WaterWall;
 import com.projectkorra.ProjectKorra.waterbending.WaterWave;
 import com.projectkorra.ProjectKorra.waterbending.Wave;
 import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
-import com.projectkorra.ProjectKorraItems.items.CustomItem;
+import com.projectkorra.ProjectKorraItems.attribute.Attribute;
+import com.projectkorra.ProjectKorraItems.attribute.AttributeListener;
 
 public class AbilityUpdater {
 	public static ConcurrentHashMap<Object, Long> updatedAbilities = new ConcurrentHashMap<Object, Long>();
@@ -184,6 +185,14 @@ public class AbilityUpdater {
 						updatedAbilities.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
+				/*for(Player ID : MetalClips.instances.keySet()) {
+					MetalClips abil = MetalClips.instances.get(ID);
+					if(!updatedAbilities.containsKey(abil)) {
+						updatedAbilities.put(abil, System.currentTimeMillis());
+						updateAbility(abil.getPlayer(), abil);
+					}
+				}*/
+				
 				
 				for(Player ID : Cook.instances.keySet()) {
 					Cook abil = Cook.instances.get(ID);
@@ -344,14 +353,14 @@ public class AbilityUpdater {
 		if(player == null)
 			return;
 		
-		ConcurrentHashMap<String, Double> attribs = CustomItem.getSimplePlayerAttributeMap(player);
+		ConcurrentHashMap<String, Double> attribs = Attribute.getSimplePlayerAttributeMap(player);
 		if(FireUpdater.updateAbility(player, ability, attribs)) {}
 		else if(WaterUpdater.updateAbility(player, ability, attribs)){}
 		else if(AirUpdater.updateAbility(player, ability, attribs)){}
 		else if(EarthUpdater.updateAbility(player, ability, attribs)) {}
 		else if(ChiUpdater.updateAbility(player, ability, attribs)){}
 		
-		AttributeListener.confirmClick(player, AttributeListener.waitingToConfirmClick, AttributeListener.ClickType.CLICK);
+		AttributeListener.confirmClick(player, AttributeListener.waitingToConfirmClick, AttributeListener.ClickType.LEFTCLICK);
 		AttributeListener.confirmClick(player, AttributeListener.waitingToConfirmShift, AttributeListener.ClickType.SHIFT);
 
 
