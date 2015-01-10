@@ -16,6 +16,12 @@ public class AttributeList {
 	{
 		
 		// MISC
+		add(new Attribute("WaterSource", "acts as a temporary water source for water abilities"));
+		//add(new Attribute("MetalSource", "acts as a temporary metal source for metal clips"));
+		add(new Attribute("Effects", "adds potion and bending effects whenever the player clicks, sneaks, or consumes the item. For example: Effects: JUMP:1:30, BlazeRange:25:30 would add Jump 1 and increase Blaze range by 25% for 30 seconds."));
+		add(new Attribute("ClickEffects", "adds potion and bending effects when the player clicks"));
+		add(new Attribute("SneakEffects", "adds potion and bending effects when the player sneaks"));
+		add(new Attribute("ConsumeEffects", "adds potion and bending effects when this item is consumed"));		
 		add(new Attribute("Charges", "the number of charges remaining, charges are decreased by both clicking and sneaking, and an item stops working if it runs out of charges"));
 		add(new Attribute("ClickCharges", "charges are only decreased by clicking"));
 		add(new Attribute("SneakCharges", "charges are only decreased by sneaking"));
