@@ -44,6 +44,27 @@ Item:
         DestroyAfterCharges: true
         IgnoreDestroyMessage: true
         LightningChargeTime: -300
+Item:
+    Name: example6
+    DisplayName: <&2>Cactus Juice
+    Material: POTION
+    Lore: <&8>Makes you dizzy but increases <n><&8>your resistance to damage.<n><&8>Octopusform charges faster<n><&8>Airbenders can glide without a glider
+    Stats:
+        Charges: 1
+        DestroyAfterCharges: true
+        IgnoreDestroyMessage: true
+        Effects: CONFUSION:3:15, DAMAGE_RESISTANCE:2:5, AirGlide:true:15, AirGlideSpeed:50:15, OctopusFormInterval:-100:15
+Item:
+    Name: example7
+    DisplayName: <&b>Water Leggings with Water Pouch
+    Material: LEATHER_LEGGINGS
+    Lore: <&8>Basic Leggings that come equipped with a Water Pouch.<n><&7>You must double tap your abilities to execute them.
+    ShapedRecipe: LEATHER, LEATHER, LEATHER, LEATHER, POTION, LEATHER, LEATHER, POTION, LEATHER
+    Glow: true
+    Stats:
+        Charges: 50
+        DestroyAfterCharges: false
+        WaterSource: true
 Item: 
     Name: glider
     DisplayName: <&f>Airbender Staff
