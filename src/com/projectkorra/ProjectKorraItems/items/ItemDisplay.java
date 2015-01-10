@@ -66,8 +66,12 @@ public class ItemDisplay {
 			ItemMeta meta = istack.getItemMeta();
 			if(showStats) {
 				ArrayList<String> lore = new ArrayList<String>();
-				for(Attribute att : citem.getAttributes())
-					lore.add(new String(att.getName() + ":" + att.getValues()));
+				for(Attribute att : citem.getAttributes()) {
+					if(att.getValues().toString().length() < 40)
+						lore.add(new String(att.getName() + ":" + att.getValues()));
+					else
+						lore.add(new String(att.getName()));
+				}
 				meta.setLore(lore);
 			}
 			else {

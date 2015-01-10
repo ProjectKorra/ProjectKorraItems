@@ -232,7 +232,10 @@ public class ItemListener implements Listener {
 		}
 		
 		// Create the new Recipe inventory
-		Inventory recInv = Bukkit.createInventory(null, 27, citem.getDisplayName());
+		String displayName = citem.getDisplayName();
+		if(displayName.length() > 32)
+			displayName = displayName.substring(0, 32);
+		Inventory recInv = Bukkit.createInventory(null, 27, displayName);
 		for(int i = 0; i < citem.getRecipe().size(); i++) {
 			RecipeIngredient ing = citem.getRecipe().get(i);
 			int pos = ((i % 3) + 3) + ((i / 3) * 9);
