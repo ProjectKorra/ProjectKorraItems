@@ -67,7 +67,8 @@ public class CustomItem {
 			ProjectKorraItems.log.info(Messages.BAD_DNAME + ": " + toString());
 		}
 		else {
-			s = "<&f>" + s;
+			if(!s.contains("<&"))
+				s = "<&f>" + s;
 			displayName = colorizeString(s);
 		}
 	}
