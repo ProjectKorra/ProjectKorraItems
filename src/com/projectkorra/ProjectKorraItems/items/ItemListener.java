@@ -20,48 +20,66 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.projectkorra.ProjectKorraItems.Messages;
 import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
-//TODO add a space between charges
+
 public class ItemListener implements Listener {
-	/*
-	 * When a player places an item into a crafting bench
+	
+	/**
+	 * When the player places an item into a crafting table
+	 * we need to check if the current crafting table contains
+	 * the correct ingredients for a custom item. If they have placed
+	 * the items correctly then we will place a custom item into the
+	 * resulting inventory slot.
+	 * @param event the click event
 	 */
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onCraftingPlace(InventoryClickEvent event) {
 		if(event.isCancelled() || event.getInventory().getType() != InventoryType.WORKBENCH) 
 			return;
+		
 		final HumanEntity humEnt = event.getWhoClicked();
 		final InventoryClickEvent fevent = event;
 		if(!(humEnt instanceof Player))
 			return;
 		
 		new BukkitRunnable() {
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "deprecation" })
 			public void run() {
 				Player player = (Player) humEnt;
 				ItemStack[] tempInvItems = fevent.getInventory().getContents();
 				ArrayList<ItemStack> originalInvItems = new ArrayList<ItemStack>();
+				
 				for(ItemStack istack : tempInvItems)
 					originalInvItems.add(istack);
 				
-				//Remove the result item slot
+				/*
+				 * Remove the resultant slot because we don't
+				 * wish to consider it for the purpose of calculating
+				 * the recipe.
+				 */
 				originalInvItems.remove(0);
 				ArrayList<ItemStack> invItemsClone = (ArrayList<ItemStack>) originalInvItems.clone();
 				
 				for(CustomItem citem : CustomItem.items.values()) {
 					if(citem.getRecipe().size() == 0)
 						continue;
+					
 					ArrayList<RecipeIngredient> recipeClone = (ArrayList<RecipeIngredient>) citem.getRecipe().clone();
-					boolean validShape = true, validRecipe = false;
+					boolean validShape = true;
 					int maxQuantity = Integer.MAX_VALUE;
 					invItemsClone = (ArrayList<ItemStack>) originalInvItems.clone();
 					
 					for(int i = 0; i < recipeClone.size(); i++) {
 						RecipeIngredient ing = recipeClone.get(i);
 						for(int j = 0; j < invItemsClone.size(); j++) {
-							//Bukkit.broadcastMessage("Sizes: " + recipeClone.size() + " " + invItemsClone.size());
-							// The index of a perfectly shaped recipe will always stay at 0 because the ingredients are being removed
+
+							/*
+							 *  The index of a perfectly shaped recipe will 
+							 *  always stay at 0 because the ingredients are being
+							 *  removed as we attempt to cycle through the list.
+							 */
 							if(i > 0 || j > 0)
 								validShape = false;
+							
 							ItemStack item = invItemsClone.get(j);
 							if(ing.getMaterial() == Material.AIR && item.getType() == Material.AIR) {
 								recipeClone.remove(i);
@@ -80,11 +98,14 @@ public class ItemListener implements Listener {
 								break;
 							}
 						}
-
 					}
+					
+					/*
+					 * Once there are no more recipes left in this cloned list
+					 * then we know that the recipe was correct, we can now
+					 * determine whether or not we let the user receive the item.
+					 */
 					if(recipeClone.size() == 0 && invItemsClone.size() == 0) {
-						validRecipe = true;
-						//Bukkit.broadcastMessage("ValidRecipe!" + " ValidShape=" + validShape + " maxQuantity=" + maxQuantity);
 						if(citem.isUnshapedRecipe() || validShape) {
 							ItemStack newItem = citem.generateItem();
 							newItem.setAmount(maxQuantity * newItem.getAmount());
@@ -93,17 +114,18 @@ public class ItemListener implements Listener {
 							return;
 						}
 					}
-					else {
-						//Bukkit.broadcastMessage("Remaining: " + recipeClone);
-						//Bukkit.broadcastMessage("Remaining: " + invItemsClone);
-					}
+					
 				}
 			}
 		}.runTaskLater(ProjectKorraItems.plugin, 1);
 	}
 
-	/*
-	 * When a player attempts to grab a crafted custom item.
+	/**
+	 * Once the player attempts to grab a newly formed
+	 * custom item, we need to place the item in their hand
+	 * and then calculate the remaining amount of items that will
+	 * stay inside of the crafting table.
+	 * @param event the click event
 	 */
 	@SuppressWarnings("unchecked")
 	@EventHandler(priority = EventPriority.NORMAL)
@@ -111,16 +133,20 @@ public class ItemListener implements Listener {
 		if(event.isCancelled() || event.getSlotType() != SlotType.RESULT 
 				|| event.getSlot() != 0 || event.getInventory().getType() != InventoryType.WORKBENCH) 
 			return;
+		
 		HumanEntity humEnt = event.getWhoClicked();
 		if(!(humEnt instanceof Player))
 			return;
+		
 		Player player = (Player) humEnt;
 		ItemStack curItem = event.getCurrentItem();
 		if(curItem == null)
 			return;
+		
 		CustomItem citem = CustomItem.getCustomItem(curItem);
 		if(citem == null)
 			return;
+		
 		int amountCreated = curItem.getAmount() / citem.getQuantity();
 		
 		/*
@@ -130,8 +156,10 @@ public class ItemListener implements Listener {
 		ItemStack[] tempInvItems = event.getInventory().getContents();
 		ArrayList<RecipeIngredient> recipeClone = (ArrayList<RecipeIngredient>) citem.getRecipe().clone();
 		ArrayList<ItemStack> invItems = new ArrayList<ItemStack>();
+		
 		for(ItemStack istack : tempInvItems)
 			invItems.add(istack);
+		
 		invItems.set(0, new ItemStack(Material.AIR));
 		
 		while(recipeClone.size() > 0) {
@@ -144,6 +172,7 @@ public class ItemListener implements Listener {
 					
 					if(istack.getType() == ing.getMaterial() && istack.getDurability() == ing.getDamage()) {
 						int itemQuantity = istack.getAmount();
+						
 						if(ingQuantity > itemQuantity) {
 							invItems.set(i, new ItemStack(Material.AIR));
 							ingQuantity -= itemQuantity;
@@ -160,49 +189,75 @@ public class ItemListener implements Listener {
 				}
 			recipeClone.remove(0);
 		}
+		
 		event.getInventory().clear();
 		player.setItemOnCursor(curItem);
 		final ItemStack[] finalItems = invItems.toArray(new ItemStack[invItems.size()]);
 		final InventoryClickEvent fevent = event;
 		final Player fplayer = player;
+		
+		/*
+		 * Update the players inventory on a short delay so that
+		 * they see the newly calculated changes to each
+		 * ItemStack in the inventory.
+		 */
 		new BukkitRunnable() {
+			@SuppressWarnings("deprecation")
 			public void run() {
 				fevent.getInventory().setContents(finalItems);
 				fplayer.updateInventory();
 			}
 		}.runTaskLater(ProjectKorraItems.plugin, 1);
-		//Bukkit.broadcastMessage("Final Items: " + invItems);
 	}
 	
+	/**
+	 * When the player clicks in an inventory it is
+	 * possible that they are viewing an inventory used to
+	 * display the custom items with /bi items. If they click
+	 * in one of these inventorys then we need to handle stuff differently.
+	 * @param event the click event
+	 */
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onClickInDisplayInv(InventoryClickEvent event) {
 		if(event.isCancelled()) 
 			return;
+		
 		HumanEntity humEnt = event.getWhoClicked();
 		if(!(humEnt instanceof Player))
 			return;
 
 		Inventory inv = event.getInventory();
 		Player player = (Player) humEnt;
+		
 		for(ItemDisplay disp : ItemDisplay.displays.values())
 			if(disp.getInventory().equals(inv))
 				event.setCancelled(true);
+		
 		if(!ItemDisplay.displays.containsKey(player))
 			return;
-		ItemDisplay disp = ItemDisplay.displays.get(player);
 		
+		ItemDisplay disp = ItemDisplay.displays.get(player);
 		boolean hasPerm = player.hasPermission("bendingitems.command.give");
-		// If they have permissions and right click, they are probably holding an item
+		
+		/*
+		 *  If they have permissions and right click, 
+		 *  they are probably holding an item
+		 */
 		if(hasPerm && event.getClick() == ClickType.RIGHT 
 				&& player.getItemOnCursor().getType() != Material.AIR && !disp.isShowStats()) {
 			event.setCancelled(false);
 			return;
 		}
 		
+		/*
+		 * If the player clicks a prev or next button
+		 * then we need to regenerate the inventory using items from
+		 * the next or previous page.
+		 */
 		ItemStack curItem = event.getCurrentItem();
 		if(curItem == null)
 			return;
-		if(curItem.equals(ItemDisplay.NEXT_BUTTON)) {
+		else if(curItem.equals(ItemDisplay.NEXT_BUTTON)) {
 			player.closeInventory();
 			disp.setPage(disp.getPage() + 1);
 			disp.createInventory();
@@ -225,13 +280,17 @@ public class ItemListener implements Listener {
 		if(citem == null)
 			return;
 		
-		// If they right clicked then they might be able to grab the item or place one down
+		/*
+		 *  If they right clicked then they might be able to grab the item or place one down
+		 */
 		if(hasPerm && event.getClick() == ClickType.RIGHT && !disp.isShowStats()) {
 			player.setItemOnCursor(citem.generateItem());
 			return;
 		}
 		
-		// Create the new Recipe inventory
+		/*
+		 *  Create the new Recipe inventory
+		 */
 		String displayName = citem.getDisplayName();
 		if(displayName.length() > 32)
 			displayName = displayName.substring(0, 32);
@@ -242,6 +301,7 @@ public class ItemListener implements Listener {
 			recInv.setItem(pos, ing.getItemStack());
 		}
 		recInv.setItem(18, ItemDisplay.PREV_BUTTON);
+		
 		/*
 		 * By closing the inventory onCloseDisplayInv is going to
 		 * remove this ItemDisplay from the map. Since we are going to reuse
@@ -253,6 +313,11 @@ public class ItemListener implements Listener {
 		player.openInventory(recInv);
 	}
 	
+	/**
+	 * When the inventory closes we need to remove
+	 * this instance from the ItemDisplay.displays map.
+	 * @param event the close event
+	 */
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onCloseDisplayInv(InventoryCloseEvent event) {
 		HumanEntity humEnt = event.getPlayer();
@@ -268,6 +333,11 @@ public class ItemListener implements Listener {
 			}
 	}
 	
+	/**
+	 * We can't allow users to place custom items into
+	 * an anvil, if they rename the item it may cause it to break.
+	 * @param event the click event
+	 */
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onAnvilItemPlace(InventoryClickEvent event) {
 		if(event.isCancelled() || event.getInventory().getType() != InventoryType.ANVIL) 

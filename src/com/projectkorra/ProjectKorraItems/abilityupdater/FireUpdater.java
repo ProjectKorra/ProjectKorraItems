@@ -123,7 +123,6 @@ public class FireUpdater {
 				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("WallOfFireCooldown") / 100.0));
 			return true;
 		}
-		
 		return false;
 	}
 

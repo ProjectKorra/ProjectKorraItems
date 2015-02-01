@@ -151,7 +151,6 @@ public class WaterUpdater {
 				abil.setMaxfreezeradius(abil.getMaxfreezeradius() + abil.getMaxfreezeradius() * attribs.get("SurgeWaveFreezeSize") / 100.0);			
 			return true;
 		}
-		
 		return false;
 	}
 }

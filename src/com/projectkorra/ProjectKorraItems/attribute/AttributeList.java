@@ -7,13 +7,13 @@ import org.bukkit.ChatColor;
 import com.projectkorra.ProjectKorra.Element;
 
 public class AttributeList {
-	public static double AIR_GLIDE_SPEED = 0.6;
-	public static double AIR_GLIDE_FALL = -0.12;
-	public static String CHARGES_STR = ChatColor.GOLD + "Charges: ";
-	public static String SNEAK_CHARGES_STR = ChatColor.GOLD + "SneakCharges: ";
-	public static String CLICK_CHARGES_STR = ChatColor.GOLD + "ClickCharges: ";
+	public static final double AIR_GLIDE_SPEED = 0.6;
+	public static final double AIR_GLIDE_FALL = -0.12;
+	public static final String CHARGES_STR = ChatColor.GOLD + "Charges: ";
+	public static final String SNEAK_CHARGES_STR = ChatColor.GOLD + "SneakCharges: ";
+	public static final String CLICK_CHARGES_STR = ChatColor.GOLD + "ClickCharges: ";
 	
-	public static ArrayList<Attribute> attributes = new ArrayList<Attribute>(){
+	public static final ArrayList<Attribute> ATTRIBUTES = new ArrayList<Attribute>(){
 		private static final long serialVersionUID = 1L;
 	{
 		

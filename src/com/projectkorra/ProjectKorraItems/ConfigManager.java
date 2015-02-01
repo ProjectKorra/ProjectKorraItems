@@ -27,26 +27,25 @@ public class ConfigManager {
 		SHAPED_RECIPE_PREF, UNSHAPED_RECIPE_PREF, MATERIAL_PREF, DURA_PREF, AMT_PREF, ATTR_PREF,
 		GLOW_PREF};
 	
-	private ProjectKorraItems plugin;
-	private String configStr;
-	
-	public ConfigManager(ProjectKorraItems plugin) {
-		this.plugin = plugin;
-		configStr = "";
+	public ConfigManager() {
 		CustomItem.items.clear();
 		CustomItem.itemList.clear();
-		plugin.saveDefaultConfig();
-		readConfig();
-		analyzeConfig();
+		ProjectKorraItems.plugin.saveDefaultConfig();
+		String str = readConfig();
+		analyzeConfig(str);
 	}
 	
-	private void readConfig() {
+	/**
+	 * Returns the entire config file as a String.
+	 */
+	public String readConfig() {
+		String configStr = "";
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader(PATH));
 		} catch (FileNotFoundException e) {
 			ProjectKorraItems.log.info(Messages.NO_CONFIG);
-			return;
+			return configStr;
 		}
 	    try {
 	        StringBuilder sb = new StringBuilder();
@@ -61,19 +60,26 @@ public class ConfigManager {
 	    }
 	    catch (IOException e) {
 	    	ProjectKorraItems.log.info(Messages.BAD_FILE);
-			return;
+			return configStr;
 	    }
 	    finally {
 	        try {
 				br.close();
 			} catch (IOException e) {
 				ProjectKorraItems.log.info(Messages.BAD_FILE);
-				return;
+				return configStr;
 			}
 	    }
+	    return configStr;
 	}
 	
-	private void analyzeConfig() {
+	/**
+	 * Uses a string that represents the configuration file to
+	 * parse through all of the items and create instances of CustomItems.
+	 * 
+	 * @param configStr a string version of the config.yml
+	 */
+	public void analyzeConfig(String configStr) {
 		String[] items = configStr.split("\n");
 		CustomItem newItem = null;
 		boolean invalid = false;
@@ -120,7 +126,7 @@ public class ConfigManager {
 							else if(prefix.equalsIgnoreCase(GLOW_PREF))
 								newItem.updateGlow(tmp);
 						} catch(Exception e) {
-							plugin.log.info(Messages.BAD_PREFIX + ": " + prefix);
+							ProjectKorraItems.log.info(Messages.BAD_PREFIX + ": " + prefix);
 							invalid = false;
 						}
 					}
@@ -135,7 +141,7 @@ public class ConfigManager {
 						valueStr = valueStr.replaceAll("(?i)false", "0");
 						String[] commaSplit = valueStr.split(",");
 						if(commaSplit.length == 0) {
-							plugin.log.info(Messages.MISSING_VALUES + ": " + s);
+							ProjectKorraItems.log.info(Messages.MISSING_VALUES + ": " + s);
 							invalid = false;
 						}
 						Attribute att = Attribute.getAttribute(prefix);
@@ -143,7 +149,7 @@ public class ConfigManager {
 						newAtt.getValues().addAll(Arrays.asList(commaSplit));
 						newItem.getAttributes().add(newAtt);
 					} catch(Exception e) {
-						plugin.log.info(Messages.BAD_PREFIX + ": " + s);
+						ProjectKorraItems.log.info(Messages.BAD_PREFIX + ": " + s);
 						invalid = false;
 					}
 				}

@@ -1,7 +1,6 @@
 package com.projectkorra.ProjectKorraItems;
 import java.util.ArrayList;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,15 +14,20 @@ import com.projectkorra.ProjectKorraItems.items.CustomItem;
 import com.projectkorra.ProjectKorraItems.items.ItemDisplay;
 
 public class CommandManager {
-	ProjectKorraItems plugin;
 
-	public CommandManager(ProjectKorraItems plugin) {
-		this.plugin = plugin;
+	public CommandManager() {
 		init();
 	}
 
+	/**
+	 * Any command that relates to "/bending items"
+	 * will be ran through this new CommandExecutor. It displays
+	 * any help information related to a specific command, opens up
+	 * display inventories, and gives items to specific players.
+	 */
 	public void init() {
 		CommandExecutor exe = new CommandExecutor() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public boolean onCommand(CommandSender s, Command c, String label, String[] args) {
 				if(args.length >= 1 && aliasChecker(args[0], Messages.RELOAD_ALIAS)) {
@@ -32,7 +36,7 @@ public class CommandManager {
 						return true;
 					}
 					
-					new ConfigManager(ProjectKorraItems.plugin);
+					new ConfigManager();
 					s.sendMessage(Messages.CONFIG_RELOADED);
 					return true;
 				}
@@ -131,7 +135,7 @@ public class CommandManager {
 							catch(Exception e) {}
 						}
 						
-						ArrayList<Attribute> attribs = new ArrayList<Attribute>(AttributeList.attributes);
+						ArrayList<Attribute> attribs = new ArrayList<Attribute>(AttributeList.ATTRIBUTES);
 						if(phrase != null) {
 							for(int i = 0; i < attribs.size(); i++) {
 								Attribute att = attribs.get(i);
@@ -191,9 +195,15 @@ public class CommandManager {
 				return true;
 			}
 		};
-		plugin.getCommand("projectkorraitems").setExecutor(exe);
+		ProjectKorraItems.plugin.getCommand("projectkorraitems").setExecutor(exe);
 	}
 	
+	/**
+	 * Determines if a String is contained within the array.
+	 * @param s the string to check
+	 * @param alias an array of alias
+	 * @return true if s was in alias
+	 */
 	public boolean aliasChecker(String s, String[] alias) {
 		for(String ali : alias)
 			if(s.equalsIgnoreCase(ali))

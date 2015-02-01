@@ -3,18 +3,10 @@ package com.projectkorra.ProjectKorraItems.attribute;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-
 import com.projectkorra.ProjectKorra.Element;
-import com.projectkorra.ProjectKorraItems.Messages;
-import com.projectkorra.ProjectKorraItems.items.CustomItem;
 
-public class Attribute 
-{	
+
+public class Attribute {	
 	private String name;
 	private String desc;
 	private ArrayList<String> values;
@@ -27,7 +19,21 @@ public class Attribute
 		this.desc = desc;
 		this.element = element;
 		this.benefit = benefit;
+		this.duration = 0;
+		this.time = 0;
 		values = new ArrayList<String>();
+	}
+	
+	public Attribute(Attribute other) {
+		this.name = other.name;
+		this.desc = other.desc;
+		this.time = other.time;
+		this.duration = other.duration;
+		this.element = other.element;
+		this.benefit = other.benefit;
+		ArrayList<String> newVals = new ArrayList<String>();
+		for(String str : this.values)
+			newVals.add(new String(str));
 	}
 	
 	public Attribute(String name, String desc, Element element) {
@@ -44,20 +50,6 @@ public class Attribute
 	
 	public Attribute() {
 		this("");
-	}
-	
-	public Attribute clone() {
-		Attribute attr = new Attribute();
-		attr.name = this.name;
-		attr.desc = this.desc;
-		attr.time = this.time;
-		attr.duration = this.duration;
-		attr.element = this.element;
-		attr.benefit = this.benefit;
-		ArrayList<String> newVals = new ArrayList<String>();
-		for(String str : this.values)
-			newVals.add(new String(str));
-		return attr;
 	}
 
 	public String getName() {
@@ -121,24 +113,19 @@ public class Attribute
 		values.add(val + "");
 	}
 	
+	/**
+	 * Gets an attribute from the list of attributes if
+	 * the name matches an existing attribute.
+	 * @param name the name of the attribute
+	 * @return an Attribute or null if none was found
+	 */
 	public static Attribute getAttribute(String name) {
 		if(name == null)
 			return null;
-		for(Attribute att : AttributeList.attributes)
+		for(Attribute att : AttributeList.ATTRIBUTES)
 			if(att.getName().equalsIgnoreCase(name))
 				return att;
 		return null;
-	}
-	
-	public static boolean getBooleanValue(String name, ConcurrentHashMap<String, Double> map) {
-		boolean val = map.containsKey(map);
-		if(val) {
-			try {
-				val = map.get(name).intValue() != 0; 
-			}
-			catch(Exception e) {}
-		}
-		return val;
 	}
 
 	@Override
@@ -147,6 +134,12 @@ public class Attribute
 				+ values + ", time=" + time + "]";
 	}
 
+	/**
+	 * Returns if this Attribute's name matches name, AND
+	 * the value of this Attribute is not 0.
+	 * @param name the name of the attribute
+	 * @return true if names are equal and it's value isn't 0
+	 */
 	public boolean getBooleanValue(String name) {
 		if(!this.name.equalsIgnoreCase(name))
 			return false;
@@ -158,175 +151,21 @@ public class Attribute
 		return false;
 	}
 	
-	public static ConcurrentHashMap<String, Double> getSimplePlayerAttributeMap(Player player) {
-		/*
-		 * Generates a map containing all of the attributes on the players
-		 * armor and item in hand.
-		 * Doesn't return values with multiple commas.
-		 * Doesn't return non numerical values.
-		 */
-		ArrayList<ItemStack> items = new ArrayList<ItemStack>();
-		ConcurrentHashMap<String, Double> map = new ConcurrentHashMap<String, Double>();
-		ArrayList<Attribute> totalAttribs = new ArrayList<Attribute>();
-		
-		// Handle any potion style bending effects that the player might have
-		if(AttributeListener.currentBendingEffects.containsKey(player.getName())) {
-			ConcurrentHashMap<String, Attribute> effects = AttributeListener.currentBendingEffects.get(player.getName());
-			for(Attribute effect : effects.values()) {
-				if(System.currentTimeMillis() - effect.time < effect.duration) {
-					totalAttribs.add(effect);
-				}
-			}
-		}
-		
-		// Handle any armor bending effects
-		for(ItemStack istack : player.getInventory().getArmorContents())
-			items.add(istack);
-		items.add(player.getItemInHand());
-		
-		for(ItemStack istack : items) {
-			CustomItem citem = CustomItem.getCustomItem(istack);
-			if(citem == null)
-				continue;
-			
-			// Check to make sure it has valid charges
-			boolean validCharges = true;
-			try {
-				for(String line : istack.getItemMeta().getLore()) {
-					if(line.startsWith(AttributeList.CHARGES_STR) || line.startsWith(AttributeList.CLICK_CHARGES_STR)
-							|| line.startsWith(AttributeList.SNEAK_CHARGES_STR)) {
-						String tmpStr = line.substring(line.indexOf(": ") + 1, line.length()).trim();
-						int value = Integer.parseInt(tmpStr);
-						if(value <= 0)
-							validCharges = false;
-						else {
-							validCharges = true;
-							break;
-						}
-					}
-				}
-			}
-			catch (Exception e) {}
-			if(!validCharges)
-				continue;
-			
-			// Handle the holdOnly/wearOnly stats
-			boolean wearHoldValid = true;
-			for(Attribute attr : citem.getAttributes()) {
-				if(attr.getBooleanValue("HoldOnly") && !istack.equals(player.getItemInHand())) {
-					wearHoldValid = false;
-					break;
-				}
-				else if(attr.getBooleanValue("WearOnly") && istack.equals(player.getItemInHand())) {
-					wearHoldValid = false;
-					break;
-				}
-			}
-			if(!wearHoldValid)
-				continue;
-			for(Attribute attr : citem.getAttributes())
-				totalAttribs.add(attr);
-		}
-		
-		// Handle the full element powerup stats 
-		for(int i = 0; i < totalAttribs.size(); i++) {
-			Attribute attr = totalAttribs.get(i);
-			String name = attr.getName();
-			if(name.equalsIgnoreCase("Air") || name.equalsIgnoreCase("Water") 
-					|| name.equalsIgnoreCase("Earth") || name.equalsIgnoreCase("Fire") 
-					|| name.equalsIgnoreCase("Chi")) {
-				Element elem = Element.getType(name);
-				if(elem != null) {
-					double val = 1;
-					try {
-						val = Double.parseDouble(attr.getValues().get(0));
-					}
-					catch (NumberFormatException e) {
-						continue;
-					}
-					for(Attribute listAttr : AttributeList.attributes) {
-						if(listAttr.element == elem) {
-							Attribute newAttr = listAttr.clone();
-							newAttr.setValues(val * newAttr.getBenefit());
-							totalAttribs.add(newAttr);
-						}
-					}
-				}
-			}
-		}
-			
-		for(Attribute attr : totalAttribs) {
-			if(attr.getValues().size() != 1)
-				continue;
-			
-			double val = 0;
-			if(map.containsKey(attr.getName())) 
-				val = map.get(attr.getName());
-			try {
-				val += Double.parseDouble(attr.getValues().get(0));
-				map.put(attr.getName(), val);
-			} catch (NumberFormatException e) {
-				continue;
-			}
-		}
-		return map;
-	}
-
-	public static ArrayList<PotionEffect> parsePotionEffects(Attribute attr) {
-		ArrayList<PotionEffect> effects = new ArrayList<PotionEffect>();
-		if(attr.getValues() == null)
-			return effects;
-
-		for(String val : attr.getValues()) {
-			String[] colSplit = val.split(":");
-			try {
-				PotionEffectType type = PotionEffectType.getByName(colSplit[0].trim());
-				int strength = Integer.parseInt(colSplit[1].trim());
-				double duration = Double.parseDouble(colSplit[2].trim());
-				PotionEffect pot = new PotionEffect(type, (int)(duration * 20), strength - 1);
-				effects.add(pot);
-			}
-			catch (Exception e) {}
-		}
-		return effects;
-	}
-	
-	/*
-	 * This method will handle logging the bad effects for both itself and
-	 * the parsePotionEffects. If there was a mistake in the effect it would not pass
-	 * the PotionEffectType.getByName check, and it would break on the parsing.
+	/**
+	 * Checks if an attribute exists in a map, and if it does
+	 * makes sure that the value is not 0.
+	 * @param name name of the Attribute
+	 * @param map containing attribute names and values
+	 * @return true if name is in map and it's value isn't 0
 	 */
-	public static ArrayList<Attribute> parseBendingEffects(Attribute attr) {
-		ArrayList<Attribute> effects = new ArrayList<Attribute>();
-		if(attr.getValues() == null)
-			return effects;
-
-		for(String val : attr.getValues()) {
-			String[] colSplit = val.split(":");
-			if(colSplit.length < 3) {
-				Messages.logTimedMessage(Messages.MISSING_EFFECT_VALUES + ": " + val, Messages.LOG_DELAY);
-				continue;
-			}
+	public static boolean getBooleanValue(String name, ConcurrentHashMap<String, Double> map) {
+		boolean val = map.containsKey(map);
+		if(val) {
 			try {
-				String name = colSplit[0].trim();
-				//Make sure its not a potion
-				PotionEffectType type = PotionEffectType.getByName(name);
-				if(type != null)
-					continue;
-				
-				final String modifier = colSplit[1].trim();
-				double duration = Double.parseDouble(colSplit[2].trim());
-				Attribute newAttr = Attribute.getAttribute(name).clone();
-				ArrayList<String> vals = new ArrayList<String>();
-				vals.add(modifier);
-				newAttr.setValues(vals);
-				newAttr.setDuration(duration * 1000);
-				effects.add(newAttr);
+				val = map.get(name).intValue() != 0; 
 			}
-			catch (Exception e) {
-				Messages.logTimedMessage(Messages.BAD_VALUE + ": " + val, Messages.LOG_DELAY);
-			}
+			catch(Exception e) {}
 		}
-		return effects;
+		return val;
 	}
 }

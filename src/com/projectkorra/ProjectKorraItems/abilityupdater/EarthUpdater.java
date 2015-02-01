@@ -2,10 +2,8 @@ package com.projectkorra.ProjectKorraItems.abilityupdater;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import com.projectkorra.ProjectKorra.chiblocking.AcrobatStance;
 import com.projectkorra.ProjectKorra.earthbending.Catapult;
 import com.projectkorra.ProjectKorra.earthbending.EarthArmor;
 import com.projectkorra.ProjectKorra.earthbending.EarthBlast;
@@ -100,7 +98,6 @@ public class EarthUpdater {
 				abil.setChargetime((long) (abil.getChargetime() + abil.getChargetime() * attribs.get("ShockwaveChargeTime") / 100.0));
 			return true;
 		}
-		
 		return false;
 	}
 }

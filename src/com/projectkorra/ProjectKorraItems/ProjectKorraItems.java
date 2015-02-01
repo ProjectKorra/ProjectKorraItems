@@ -19,8 +19,8 @@ public class ProjectKorraItems extends JavaPlugin {
 		plugin = this;
 		PluginDescriptionFile pdfFile = this.getDescription();
 		log.info(pdfFile.getName() + " Version " + pdfFile.getVersion() + " Has Been Enabled!");
-		new CommandManager(this);
-		new ConfigManager(this);
+		new CommandManager();
+		new ConfigManager();
 		this.getServer().getPluginManager().registerEvents(new ItemListener(), this);
 		this.getServer().getPluginManager().registerEvents(new AttributeListener(), this);
 		AbilityUpdater.startUpdater();
