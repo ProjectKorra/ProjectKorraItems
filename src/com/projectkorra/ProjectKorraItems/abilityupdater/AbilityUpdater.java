@@ -50,12 +50,17 @@ import com.projectkorra.ProjectKorraItems.attribute.Attribute;
 import com.projectkorra.ProjectKorraItems.attribute.AttributeListener;
 
 public class AbilityUpdater {
-	public static ConcurrentHashMap<Object, Long> updatedAbilities = new ConcurrentHashMap<Object, Long>();
-	public static BukkitRunnable updater, cleaner;
 	public static final long CLEANUP_TIME = 300000;
+	private static final ConcurrentHashMap<Object, Long> updatedAbilities = new ConcurrentHashMap<Object, Long>();
+	private static BukkitRunnable updater, cleaner;
 	
 	private AbilityUpdater(){}
 	
+	/**
+	 * Hooks into the instance maps of all the ProjectKorra
+	 * abilities, searching for any new instances of abilities.
+	 * When a new ability is found it is put into updatedAbilities.
+	 */
 	public static void startUpdater() {
 		updater = new BukkitRunnable() {
 			public void run() {
@@ -336,6 +341,10 @@ public class AbilityUpdater {
 		updater.runTaskTimer(ProjectKorraItems.plugin, 0, 1);
 	}
 	
+	/**
+	 * The cleaner scans through each ability instance
+	 * inside of updatedAbilities and removes the oldest ones.
+	 */
 	public static void startCleanup() {
 		cleaner = new BukkitRunnable() {
 			public void run() {
@@ -349,6 +358,12 @@ public class AbilityUpdater {
 		cleaner.runTaskTimer(ProjectKorraItems.plugin, 0, 600);
 	}
 	
+	/**
+	 * Attempts to update an ability based on the attribute
+	 * effects of a specific player.
+	 * @param player the player that initialized the ability
+	 * @param ability the instance of a ProjectKorra ability
+	 */
 	public static void updateAbility(Player player, Object ability) {
 		if(player == null)
 			return;
@@ -362,7 +377,5 @@ public class AbilityUpdater {
 		
 		AttributeListener.confirmClick(player, AttributeListener.waitingToConfirmClick, AttributeListener.ClickType.LEFTCLICK);
 		AttributeListener.confirmClick(player, AttributeListener.waitingToConfirmShift, AttributeListener.ClickType.SHIFT);
-
-
 	}
 }

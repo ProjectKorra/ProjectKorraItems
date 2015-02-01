@@ -5,8 +5,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.ChatColor;
 
 public class Messages {
+	/** logDelay is used to store the times that a message was logged by logTimedMessage**/
 	public static ConcurrentHashMap<String, Long> logDelay = new ConcurrentHashMap<String, Long>();
+	
+	/** the amount of stats that are displayed when calling /bi stats**/
 	public static final int LINES_PER_PAGE = 10;
+	
+	/** the min amount of milliseconds before a message gets logged by logTimedMessage, prevents spam**/
 	public static final long LOG_DELAY = 30000;
 	
 	public static final String[] RELOAD_ALIAS = {"reload", "r", "reloadconfig", "restart"};
@@ -58,7 +63,12 @@ public class Messages {
 
 	public static final String ITEM_DESTROYED = ChatColor.RED + "has ran out";
 
-
+	/**
+	 * logs a message, but any consecutive calls will be ignored if the
+	 * delay has not been met.
+	 * @param msg the message to log
+	 * @param delay the delay between duplicating msg
+	 */
 	public static void logTimedMessage(String msg, long delay) {
 		if(logDelay.containsKey(msg) && System.currentTimeMillis() - logDelay.get(msg) < LOG_DELAY)
 			return;

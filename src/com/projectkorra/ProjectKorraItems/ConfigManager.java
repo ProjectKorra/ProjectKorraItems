@@ -11,8 +11,7 @@ import com.projectkorra.ProjectKorraItems.items.CustomItem;
 
 public class ConfigManager {
 	
-	public static final String path = ProjectKorraItems.plugin.getDataFolder() + "/config.yml";
-	public static String configStr = "";
+	public static final String PATH = ProjectKorraItems.plugin.getDataFolder() + "/config.yml";
 	public static final String ITEM_PREF = "Item:";
 	public static final String DNAME_PREF = "DisplayName:";
 	public static final String NAME_PREF = "Name:";
@@ -28,10 +27,12 @@ public class ConfigManager {
 		SHAPED_RECIPE_PREF, UNSHAPED_RECIPE_PREF, MATERIAL_PREF, DURA_PREF, AMT_PREF, ATTR_PREF,
 		GLOW_PREF};
 	
-	public ProjectKorraItems plugin;
+	private ProjectKorraItems plugin;
+	private String configStr;
 	
 	public ConfigManager(ProjectKorraItems plugin) {
 		this.plugin = plugin;
+		configStr = "";
 		CustomItem.items.clear();
 		CustomItem.itemList.clear();
 		plugin.saveDefaultConfig();
@@ -42,7 +43,7 @@ public class ConfigManager {
 	private void readConfig() {
 		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new FileReader(path));
+			br = new BufferedReader(new FileReader(PATH));
 		} catch (FileNotFoundException e) {
 			ProjectKorraItems.log.info(Messages.NO_CONFIG);
 			return;
@@ -124,9 +125,8 @@ public class ConfigManager {
 						}
 					}
 				}
-				/*
-				 * Check if it is an attribute
-				 */
+				
+				/* Check if it is an attribute */
 				if(!prefFound) {
 					try {
 						String prefix = s.substring(0, s.indexOf(":"));

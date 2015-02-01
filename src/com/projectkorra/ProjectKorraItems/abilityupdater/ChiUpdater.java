@@ -10,6 +10,13 @@ import com.projectkorra.ProjectKorra.chiblocking.WarriorStance;
 
 public class ChiUpdater {
 	
+	/**
+	 * updates the chi abilities based on a players bending effect attributes
+	 * @param player the player that has the effects
+	 * @param ability an instance of a chi ability
+	 * @param attribs the map of the players effects
+	 * @return if the ability was updated correctly
+	 */
 	public static boolean updateAbility(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
 		if(ability instanceof AcrobatStance) {
 			AcrobatStance abil = (AcrobatStance) ability;

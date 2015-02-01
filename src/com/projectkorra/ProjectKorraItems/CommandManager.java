@@ -36,9 +36,8 @@ public class CommandManager {
 					s.sendMessage(Messages.CONFIG_RELOADED);
 					return true;
 				}
-				/*
-				 * GIVING
-				 */
+				
+				/* GIVING */
 				else if(args.length >= 1 && aliasChecker(args[0], Messages.GIVE_ALIAS)) {
 					if(!s.hasPermission("bendingitems.command.give")) {
 						s.sendMessage(Messages.NO_PERM);
@@ -105,10 +104,9 @@ public class CommandManager {
 					istack.setAmount(qty);
 					player.getInventory().addItem(istack);
 					return true;
-				}			
-				/*
-				 * STATS
-				 */
+				}	
+				
+				/* STATS */
 				else if(args.length >= 1 && aliasChecker(args[0], Messages.STATS_ALIAS)) {
 					if(!s.hasPermission("bendingitems.command.stats")) {
 						s.sendMessage(Messages.NO_PERM);
@@ -165,9 +163,8 @@ public class CommandManager {
 						return true;
 					}
 				}
-				/*
-				 * ITEMS
-				 */
+				
+				/* ITEMS */
 				else if(args.length >= 1 && aliasChecker(args[0], Messages.ITEMS_ALIAS)) {
 					if(!s.hasPermission("bendingitems.command.items")) {
 						s.sendMessage(Messages.NO_PERM);

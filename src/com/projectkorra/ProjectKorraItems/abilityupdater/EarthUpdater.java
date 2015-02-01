@@ -16,6 +16,13 @@ import com.projectkorra.ProjectKorra.earthbending.Shockwave;
 
 public class EarthUpdater {
 	
+	/**
+	 * updates the earth abilities based on a players bending effect attributes
+	 * @param player the player that has the effects
+	 * @param ability an instance of a earth ability
+	 * @param attribs the map of the players effects
+	 * @return if the ability was updated correctly
+	 */
 	public static boolean updateAbility(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
 		if(ability instanceof EarthSmash) {
 			EarthSmash abil = (EarthSmash) ability;

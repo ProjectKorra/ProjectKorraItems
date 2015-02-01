@@ -15,6 +15,13 @@ import com.projectkorra.ProjectKorra.airbending.Tornado;
 
 public class AirUpdater {
 	
+	/**
+	 * updates the air abilities based on a players bending effect attributes
+	 * @param player the player that has the effects
+	 * @param ability an instance of a air ability
+	 * @param attribs the map of the players effects
+	 * @return if the ability was updated correctly
+	 */
 	public static boolean updateAbility(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
 		if(ability instanceof AirBlast) {
 			AirBlast abil = (AirBlast) ability;
