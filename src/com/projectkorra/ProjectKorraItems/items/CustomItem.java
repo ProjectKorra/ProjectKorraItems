@@ -219,6 +219,24 @@ public class CustomItem {
 		return istack;
 	}
 	
+	/**
+	 * Checks if a customitem has a specific attribute,
+	 * and also that the attribute has a boolean value of true.
+	 * 
+	 * If the value is false, or it was not found, then
+	 * this returns false.
+	 * @param attrib the name of the attribute
+	 * @return true if the attribute was found and true
+	 */
+	public boolean getBooleanAttributeValue(String attrib) {
+		for(Attribute attr : attributes) {
+			if(attr.getBooleanValue(attrib)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public static ConcurrentHashMap<String, CustomItem> getItems() {
 		return items;
 	}
@@ -257,6 +275,21 @@ public class CustomItem {
 
 	public ArrayList<Attribute> getAttributes() {
 		return attributes;
+	}
+	
+	/**
+	 * Given an attribute name, returns the attribute if
+	 * this item has it, else returns null.
+	 * @param attrName the name of the attribute
+	 * @return an attribute or null
+	 */
+	public Attribute getAttribute(String attrName) {
+		for(Attribute attr : attributes) {
+			if(attr.getName().equalsIgnoreCase(attrName)) {
+				return attr;
+			}
+		}
+		return null;
 	}
 
 	public void setAttributes(ArrayList<Attribute> attributes) {
