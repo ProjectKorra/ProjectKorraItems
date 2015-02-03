@@ -27,7 +27,7 @@ public class AttributeUtils {
 	 * @return a map containing attribute effects
 	 */
 	public static ConcurrentHashMap<String, Double> getSimplePlayerAttributeMap(Player player) {
-		ArrayList<ItemStack> items = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> equipment = ItemUtils.getPlayerValidEquipment(player);
 		ConcurrentHashMap<String, Double> map = new ConcurrentHashMap<String, Double>();
 		ArrayList<Attribute> totalAttribs = new ArrayList<Attribute>();
 		
@@ -41,81 +41,21 @@ public class AttributeUtils {
 			}
 		}
 		
-		/* Handle any armor bending effects */
-		for(ItemStack istack : player.getInventory().getArmorContents())
-			items.add(istack);
-		items.add(player.getItemInHand());
-		
-		for(ItemStack istack : items) {
+		/* Handle any armor bending effects */	
+		for(ItemStack istack : equipment) {
 			CustomItem citem = CustomItem.getCustomItem(istack);
 			if(citem == null)
-				continue;
-			
-			/* Check to make sure it has valid charges */
-			boolean validCharges = true;
-			try {
-				for(String line : istack.getItemMeta().getLore()) {
-					if(line.startsWith(AttributeList.CHARGES_STR) || line.startsWith(AttributeList.CLICK_CHARGES_STR)
-							|| line.startsWith(AttributeList.SNEAK_CHARGES_STR)) {
-						String tmpStr = line.substring(line.indexOf(": ") + 1, line.length()).trim();
-						int value = Integer.parseInt(tmpStr);
-						if(value <= 0)
-							validCharges = false;
-						else {
-							validCharges = true;
-							break;
-						}
-					}
-				}
-			}
-			catch (Exception e) {}
-			if(!validCharges)
-				continue;
-			
-			/* Handle the holdOnly/wearOnly stats */
-			boolean wearHoldValid = true;
-			for(Attribute attr : citem.getAttributes()) {
-				if(attr.getBooleanValue("HoldOnly") && !istack.equals(player.getItemInHand())) {
-					wearHoldValid = false;
-					break;
-				}
-				else if(attr.getBooleanValue("WearOnly") && istack.equals(player.getItemInHand())) {
-					wearHoldValid = false;
-					break;
-				}
-			}
-			if(!wearHoldValid)
 				continue;
 			for(Attribute attr : citem.getAttributes())
 				totalAttribs.add(attr);
 		}
 		
-		/* Handle the full element powerup stats */
-		for(int i = 0; i < totalAttribs.size(); i++) {
-			Attribute attr = totalAttribs.get(i);
-			String name = attr.getName();
-			if(name.equalsIgnoreCase("Air") || name.equalsIgnoreCase("Water") 
-					|| name.equalsIgnoreCase("Earth") || name.equalsIgnoreCase("Fire") 
-					|| name.equalsIgnoreCase("Chi")) {
-				Element elem = Element.getType(name);
-				if(elem != null) {
-					double val = 1;
-					try {
-						val = Double.parseDouble(attr.getValues().get(0));
-					}
-					catch (NumberFormatException e) {
-						continue;
-					}
-					for(Attribute listAttr : AttributeList.ATTRIBUTES) {
-						if(listAttr.getElement() == elem) {
-							Attribute newAttr = new Attribute(listAttr);
-							newAttr.setValues(val * newAttr.getBenefit());
-							totalAttribs.add(newAttr);
-						}
-					}
-				}
-			}
+		/* Handles the "Air", "Water", "Earth", and "Fire" stats */
+		ArrayList<Attribute> fullElementAttribs = new ArrayList<Attribute>();
+		for(Attribute attr : totalAttribs) {
+			fullElementAttribs.addAll(getFullElementAttributes(attr));
 		}
+		totalAttribs.addAll(fullElementAttribs);
 			
 		for(Attribute attr : totalAttribs) {
 			if(attr.getValues().size() != 1)
@@ -124,16 +64,18 @@ public class AttributeUtils {
 			double val = 0;
 			if(map.containsKey(attr.getName())) 
 				val = map.get(attr.getName());
-			try {
-				val += Double.parseDouble(attr.getValues().get(0));
-				map.put(attr.getName(), val);
-			} catch (NumberFormatException e) {
-				continue;
-			}
+			val += attr.getValueAsDouble();
+			map.put(attr.getName(), val);
 		}
 		return map;
 	}
 
+	/**
+	 * Takes an attribute stat and tries to split its values into
+	 * a list of PotionEffects.
+	 * @param attr the attribute to split
+	 * @return a list of the new PotionEffects
+	 */
 	public static ArrayList<PotionEffect> parsePotionEffects(Attribute attr) {
 		ArrayList<PotionEffect> effects = new ArrayList<PotionEffect>();
 		if(attr.getValues() == null)
@@ -157,6 +99,8 @@ public class AttributeUtils {
 	 * This method will handle logging the bad effects for both itself and
 	 * the parsePotionEffects. If there was a mistake in the effect it would not pass
 	 * the PotionEffectType.getByName check, and it would break on the parsing.
+	 * @param attr the attribute containing a list of bending effects as values
+	 * @return a list of new attributes representing the bending effects
 	 */
 	public static ArrayList<Attribute> parseBendingEffects(Attribute attr) {
 		ArrayList<Attribute> effects = new ArrayList<Attribute>();
@@ -193,15 +137,22 @@ public class AttributeUtils {
 		return effects;
 	}
 	
+	/**
+	 * Decreases the charges on all of the player's items by 1, if the
+	 * charge type on the item matches the Action type.
+	 * @param player the player to decrease charges
+	 * @param type the action that caused the charge decrease
+	 */
 	public static void decreaseCharges(Player player, Action type) {
 		if(player == null)
 			return;
 		
-		ArrayList<ItemStack> istacks = ItemUtils.getPlayerItems(player);
+		ArrayList<ItemStack> istacks = ItemUtils.getPlayerValidEquipment(player);
 		for(ItemStack istack : istacks) {
 			CustomItem citem = CustomItem.getCustomItem(istack);
 			if(citem == null)
 				continue;
+			
 			ItemMeta meta = istack.getItemMeta();
 			List<String> lore = meta.getLore();
 			if(lore == null)
@@ -234,12 +185,10 @@ public class AttributeUtils {
 			//Check if we need to destroy the item
 			boolean hasDestroyAttr = false;
 			boolean hasIgnoreDestroyMsg = false;
-			for(Attribute attr : citem.getAttributes()) {
-				if(attr.getBooleanValue("DestroyAfterCharges") == true)
-					hasDestroyAttr = true;
-				else if(attr.getBooleanValue("IgnoreDestroyMessage") == true)
-					hasIgnoreDestroyMsg = true;
-			}
+			if(citem.getBooleanAttributeValue("DestroyAfterCharges"))
+				hasDestroyAttr = true;
+			if(citem.getBooleanAttributeValue("IgnoreDestroyMessage"))
+				hasIgnoreDestroyMsg = true;
 			
 			boolean hasChargesLeft = true;
 			for(String line : newLore) {
@@ -294,8 +243,44 @@ public class AttributeUtils {
 					player.getInventory().setArmorContents(armor);
 				}
 			}
-			
 		}
 	}
+	
 
+	/**
+	 * Given an attribute with a name of "Air", "Water", "Earth", or "Fire"
+	 * this method will return a list of all the attributes that
+	 * correspond to that specific element. All of the attributes will have
+	 * a benefit corresponding to the value of the attribute.
+	 * @param attr an attribute with an element as a name
+	 * @return a list of attributes for that element
+	 */
+	public static ArrayList<Attribute> getFullElementAttributes(Attribute attr) {
+		return getFullElementAttributes(attr.getName(), attr.getValueAsDouble());
+	}
+	
+	/**
+	 * Given the String "Air", "Water", "Earth", or "Fire"
+	 * this method will return a list of all the attributes that
+	 * correspond to that specific element. All of the attributes will have
+	 * a benefit of value.
+	 * @param name the name of the element
+	 * @param value the amount of benefit to give
+	 * @return a list of attributes for that element
+	 */
+	public static ArrayList<Attribute> getFullElementAttributes(String name, double value) {
+		ArrayList<Attribute> lst = new ArrayList<Attribute>();
+		Element elem = Element.getType(name);
+		
+		if(elem != null) {
+			for(Attribute listAttr : AttributeList.ATTRIBUTES) {
+				if(listAttr.getElement() == elem) {
+					Attribute newAttr = new Attribute(listAttr);
+					newAttr.setValues(value * newAttr.getBenefit());
+					lst.add(newAttr);
+				}
+			}
+		}
+		return lst;
+	}
 }

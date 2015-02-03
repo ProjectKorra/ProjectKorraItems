@@ -18,6 +18,8 @@ public class AttributeList {
 	{
 		
 		// MISC
+		add(new Attribute("RequireElement", "the user must have one of these elements to use this item. Works with Air, Water, Earth, Fire, Chi, Flight, Spiritual, Blood, Healing, Ice, Plant, Metal, Sand, Lava, Combustion, and Lightning."));
+		
 		add(new Attribute("Air", "improves all Air stats"));
 		add(new Attribute("Water", "improves all Water stats"));
 		add(new Attribute("Earth", "improves all Earth stats"));

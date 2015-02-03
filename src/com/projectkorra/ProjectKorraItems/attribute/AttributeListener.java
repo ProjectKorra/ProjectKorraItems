@@ -90,10 +90,22 @@ public class AttributeListener implements Listener {
 	public void onChangeItem(PlayerItemHeldEvent event) {
 		if(event.isCancelled())
 			return;
+		
 		Player player = event.getPlayer();
-		new Glider(player);
+		ConcurrentHashMap<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
+		boolean auto = Attribute.getBooleanValue("AirGlideAutomatic", attribs);	
+		if(auto)
+			new Glider(player, true);
 	}
 	
+	/**
+	 * Handles the specific stat "WaterSource" and in the future "MetalSource".
+	 * These stats cause specific temporary items to spawn inside of the players
+	 * inventory.
+	 * @param player the player with the WaterSource stat
+	 * @param attrib the name of the stat "WaterSource" or "MetalSource"
+	 * @param istack the ItemStack that will temporarily spawn
+	 */
 	@SuppressWarnings("deprecation")
 	public void handleItemSource(Player player, String attrib, ItemStack istack) {
 		ConcurrentHashMap<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
@@ -124,11 +136,18 @@ public class AttributeListener implements Listener {
 		}
 	}
 
+	/**
+	 * OnActionEffects are PotionEffects and BendingAffects
+	 * that get added to the players Attribute map for a 
+	 * limited amount of time.
+	 * @param player the player receiving the stat modifications
+	 * @param type the type of action that caused this to trigger
+	 */
 	public static void updateOnActionEffects(Player player, Action type) {
 		if(player == null)
 			return;
 		
-		ArrayList<ItemStack> istacks = ItemUtils.getPlayerItems(player);
+		ArrayList<ItemStack> istacks = ItemUtils.getPlayerValidEquipment(player);
 		String[] validAttribs = null;
 		if(type == Action.LEFTCLICK) validAttribs = new String[]{"Effects", "ClickEffects"};
 		else if(type == Action.SHIFT) validAttribs = new String[]{"Effects", "SneakEffects"};
