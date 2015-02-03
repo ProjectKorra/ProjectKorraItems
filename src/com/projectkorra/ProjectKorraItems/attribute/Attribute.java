@@ -31,9 +31,9 @@ public class Attribute {
 		this.duration = other.duration;
 		this.element = other.element;
 		this.benefit = other.benefit;
-		ArrayList<String> newVals = new ArrayList<String>();
-		for(String str : this.values)
-			newVals.add(new String(str));
+		this.values = new ArrayList<String>();
+		for(String str : other.values)
+			this.values.add(new String(str));
 	}
 	
 	public Attribute(String name, String desc, Element element) {
