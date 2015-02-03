@@ -64,8 +64,8 @@ public class Messages {
 	public static final String ITEM_DESTROYED = ChatColor.RED + "has ran out";
 
 	/**
-	 * logs a message, but any consecutive calls will be ignored if the
-	 * delay has not been met.
+	 * Logs a message and stores the value in a timer, preventing
+	 * it from being displayed again for a set amount of time.
 	 * @param msg the message to log
 	 * @param delay the delay between duplicating msg
 	 */
@@ -74,5 +74,15 @@ public class Messages {
 			return;
 		logDelay.put(msg, System.currentTimeMillis() + delay);
 		ProjectKorraItems.log.info(msg);
+	}
+	
+	/**
+	 * Logs a message and stores the value in a timer, preventing
+	 * it from being displayed again for a set amount of time.
+	 * @param msg the message to log
+	 * @param delay the delay between duplicating msg
+	 */
+	public static void logTimedMessage(String msg) {
+		logTimedMessage(msg, Messages.LOG_DELAY);
 	}
 }
