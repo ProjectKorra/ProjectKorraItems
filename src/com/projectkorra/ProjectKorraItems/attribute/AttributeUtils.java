@@ -28,7 +28,7 @@ public class AttributeUtils {
 	 */
 	public static ConcurrentHashMap<String, Double> getSimplePlayerAttributeMap(Player player) {
 		ArrayList<ItemStack> equipment = ItemUtils.getPlayerValidEquipment(player);
-		ConcurrentHashMap<String, Double> map = new ConcurrentHashMap<String, Double>();
+		ConcurrentHashMap<String, Double> attribMap = new ConcurrentHashMap<String, Double>();
 		ArrayList<Attribute> totalAttribs = new ArrayList<Attribute>();
 		
 		/* Handle any potion style bending effects that the player might have */
@@ -62,12 +62,12 @@ public class AttributeUtils {
 				continue;
 			
 			double val = 0;
-			if(map.containsKey(attr.getName())) 
-				val = map.get(attr.getName());
+			if(attribMap.containsKey(attr.getName())) 
+				val = attribMap.get(attr.getName());
 			val += attr.getValueAsDouble();
-			map.put(attr.getName(), val);
+			attribMap.put(attr.getName(), val);
 		}
-		return map;
+		return attribMap;
 	}
 
 	/**

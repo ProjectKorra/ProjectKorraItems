@@ -128,6 +128,7 @@ public class CustomItem {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void updateRecipe(String s) {
 		try {
 			s = s.replaceAll(" ", "");

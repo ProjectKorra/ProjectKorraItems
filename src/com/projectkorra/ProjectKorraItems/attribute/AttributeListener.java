@@ -23,6 +23,10 @@ import com.projectkorra.ProjectKorraItems.abilityupdater.AbilityUpdater;
 import com.projectkorra.ProjectKorraItems.items.CustomItem;
 
 public class AttributeListener implements Listener {	
+	
+	/** Represents the possible actions that a player
+	 * can do while holding or wearing an item.
+	 */
 	public static enum Action {
 		LEFTCLICK, RIGHTCLICK, SHIFT, CONSUME
 	}
