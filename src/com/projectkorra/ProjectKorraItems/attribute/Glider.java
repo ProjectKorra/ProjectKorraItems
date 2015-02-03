@@ -2,6 +2,7 @@ package com.projectkorra.ProjectKorraItems.attribute;
 
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -27,6 +28,20 @@ public class Glider {
 	 * @param p the player that will glide
 	 */
 	public Glider(Player p) {
+		this(p, false);
+	}
+	
+	/**
+	 * A Glider is used for the "AirGlide" stat, and it allows
+	 * users to sore through the air while they are sneaking. The
+	 * glider will persist until the player reaches the ground. Gliders will
+	 * also use up a players charges if the items that they are using have charges.
+	 * Players must be Airbenders to glide.
+	 * 
+	 * @param p the player that will glide
+	 * @param auto if the gliding should start automatically without sneaking
+	 */
+	public Glider(Player p, final boolean auto) {
 		final Player player = p;
 		BendingPlayer bplayer = Methods.getBendingPlayer(player.getName());
 		if(player == null || bplayer == null)
@@ -49,8 +64,7 @@ public class Glider {
 					}
 					
 					ConcurrentHashMap<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
-					boolean auto = Attribute.getBooleanValue("AirGlideAutomatic", attribs);					
-					if(!player.isSneaking() && !auto) {
+					if((!player.isSneaking() && !auto) || (player.isSneaking() && auto)) {
 						this.cancel();
 						return;
 					}
