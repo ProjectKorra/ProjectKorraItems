@@ -103,11 +103,30 @@ public class Attribute {
 	public ArrayList<String> getValues() {
 		return values;
 	}
+	
+	/**
+	 * Attempts to parse the attribute value into a double
+	 * @return the value or 0 the value couldn't be parsed
+	 */
+	public double getValueAsDouble() {
+		if(values.size() == 0)
+			return 0;
+		try {
+			return Double.parseDouble(values.get(0));
+		}
+		catch(NumberFormatException e) {
+			return 0;
+		}
+	}
 
 	public void setValues(ArrayList<String> values) {
 		this.values = values;
 	}
 	
+	/**
+	 * Sets the value of this attribute to a double.
+	 * @param val the value of the attribute
+	 */
 	public void setValues(double val) {
 		this.values = new ArrayList<String>();
 		values.add(val + "");
@@ -159,7 +178,7 @@ public class Attribute {
 	 * @return true if name is in map and it's value isn't 0
 	 */
 	public static boolean getBooleanValue(String name, ConcurrentHashMap<String, Double> map) {
-		boolean val = map.containsKey(map);
+		boolean val = map.containsKey(name);
 		if(val) {
 			try {
 				val = map.get(name).intValue() != 0; 
