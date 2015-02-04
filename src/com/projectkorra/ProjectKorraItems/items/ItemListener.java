@@ -14,6 +14,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.InventoryType.SlotType;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -357,5 +358,16 @@ public class ItemListener implements Listener {
 			event.setCancelled(true);
 			player.sendMessage(Messages.NO_ANVIL);
 		}
+	}
+	
+	/**
+	 * When a player changes their currently held item,
+	 * we need to check if the item was being tracked by an ItemEquip,
+	 * so we will call ItemEquip.updatePlayerSlot
+	 * @param event the item change event
+	 */
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onPlayerItemChange(PlayerItemHeldEvent event) {
+		ItemEquip.updatePlayerSlot(event.getPlayer(), event.getPreviousSlot(), event.getNewSlot());
 	}
 }

@@ -12,6 +12,7 @@ import com.projectkorra.ProjectKorraItems.attribute.Attribute;
 import com.projectkorra.ProjectKorraItems.attribute.AttributeList;
 import com.projectkorra.ProjectKorraItems.items.CustomItem;
 import com.projectkorra.ProjectKorraItems.items.ItemDisplay;
+import com.projectkorra.ProjectKorraItems.items.ItemEquip;
 
 public class CommandManager {
 
@@ -110,7 +111,12 @@ public class CommandManager {
 					return true;
 				}	
 				
-				/* STATS */
+				/*		Stats
+				 * "bi stats" lets a user view all of the
+				 * stats that are currently in existence for their version
+				 * of the plugin. They can also filter out search options by using
+				 * "bi stats <filter>".
+				 */
 				else if(args.length >= 1 && aliasChecker(args[0], Messages.STATS_ALIAS)) {
 					if(!s.hasPermission("bendingitems.command.stats")) {
 						s.sendMessage(Messages.NO_PERM);
@@ -145,6 +151,7 @@ public class CommandManager {
 								}	
 							}
 						}
+						
 						int maxPage = (attribs.size() - 1) / Messages.LINES_PER_PAGE;
 						page -= 1;
 						page = page < 0 ? 0 : page;		
@@ -191,6 +198,30 @@ public class CommandManager {
 					new ItemDisplay(player, showStats);
 					return true;
 				}
+				
+				/*
+				 * 		EQUIP
+				 * "bi equip" lets a user "equip" a custom item.
+				 * Whenever a player switches slots while holding
+				 * the item then the item will continue to follow the player's
+				 * slot, as long as the slot is empty.
+				 * 
+				 */
+				else if(args.length >= 1 && aliasChecker(args[0], Messages.EQUIP_ALIAS)) {
+					if(!s.hasPermission("bendingitems.command.equip")) {
+						s.sendMessage(Messages.NO_PERM);
+						return true;
+					}
+					else if(!(s instanceof Player)) {
+						s.sendMessage(Messages.PLAYER_ONLY);
+						return true;
+					}
+					
+					Player player = (Player) s;
+					new ItemEquip(player);
+					return true;
+				}
+				
 				s.sendMessage(Messages.USAGE);
 				return true;
 			}

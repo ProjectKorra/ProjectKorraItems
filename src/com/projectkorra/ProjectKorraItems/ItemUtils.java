@@ -3,6 +3,7 @@ package com.projectkorra.ProjectKorraItems;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -59,10 +60,10 @@ public class ItemUtils {
 				continue;
 			}
 			
-			Attribute restrictElem = citem.getAttribute("RestrictElement");
-			if(restrictElem != null) {
+			Attribute requireElem = citem.getAttribute("RequireElement");
+			if(requireElem != null) {
 				boolean allowed = false;
-				for(String val : restrictElem.getValues()) {
+				for(String val : requireElem.getValues()) {
 					try {
 						if(ElementUtils.hasElement(player, val)) {
 							allowed = true;

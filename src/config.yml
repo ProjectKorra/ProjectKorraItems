@@ -50,10 +50,9 @@ Item:
     Material: POTION
     Lore: <&8>Makes you dizzy but increases <n><&8>your resistance to damage.<n><&8>Octopusform charges faster<n><&8>Airbenders can glide without a glider
     Stats:
-        Charges: 1
         DestroyAfterCharges: true
         IgnoreDestroyMessage: true
-        Effects: CONFUSION:3:15, DAMAGE_RESISTANCE:2:5, AirGlide:true:15, AirGlideSpeed:50:15, OctopusFormInterval:-100:15
+        ConsumeEffects: CONFUSION:3:15, DAMAGE_RESISTANCE:2:5, AirGlide:true:15, AirGlideSpeed:50:15, OctopusFormInterval:-100:15
 Item:
     Name: example7
     DisplayName: <&b>Water Leggings with Water Pouch
@@ -87,7 +86,7 @@ Item:
     Material: IRON_CHESTPLATE
     UnshapedRecipe: COAL_BLOCK:3, IRON_ORE:3, GOLD_ORE:3, STONE:3, STAINED_CLAY:3:5, STAINED_CLAY:3:13
     Stats:
-        WearOnly:
+        WearOnly: true
         SneakCharges: 25
         EarthTunnelMaxRadius: -60
 Item: 
@@ -99,7 +98,7 @@ Item:
     Glow: true
     Stats:
         LeatherColor: 85, 255, 255
-        WearOnly:
+        WearOnly: true
         IceSpikeRange: 20
         IceBlastRange: 20
         IceBlastDamage: 20
@@ -129,7 +128,7 @@ Item:
     Material: LEATHER_CHESTPLATE
     ShapedRecipe: POTION, AIR, POTION, POTION, LEATHER_CHESTPLATE, POTION, POTION, POTION, POTION
     Stats:
-        WearOnly:
+        WearOnly: true
         LeatherColor: 85, 85, 255
         Charges: 100
         DestroyAfterCharges:

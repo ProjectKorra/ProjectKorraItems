@@ -17,9 +17,10 @@ public class Messages {
 	public static final String[] RELOAD_ALIAS = {"reload", "r", "reloadconfig", "restart"};
 	public static final String[] ITEMS_ALIAS = {"items", "i", "item"};
 	public static final String[] DISPLAY_ALIAS = {"display", "d", "disp", "show"};
-	public static final String[] STATS_ALIAS = {"stats", "s", "attr", "attri", "attribute"};
+	public static final String[] STATS_ALIAS = {"stats", "s", "stat", "attr", "attri", "attribute"};
 	public static final String[] RECIPE_ALIAS = {"recipe", "rec", "formula"};
 	public static final String[] GIVE_ALIAS = {"give", "g", "giv"};
+	public static final String[] EQUIP_ALIAS = {"equip", "e", "equ", "eq", "equi"};
 	
 	public static final String BAD_PREFIX = "an error occured while parsing the prefix";
 	public static final String BAD_ITEM = "an error occured while parsing the item";
@@ -46,11 +47,15 @@ public class Messages {
 	public static final String INVALID_PLAYER = ChatColor.RED + "Player not found.";
 	public static final String ITEM_NOT_FOUND = ChatColor.RED + "Item not found.";
 	public static final String NO_ANVIL = ChatColor.RED + "You can't place this item in an anvil.";
+	public static final String EQUIP_OFF = ChatColor.YELLOW + "You have unequipped";
+	public static final String EQUIP_ON = ChatColor.GREEN + "You have equipped";
+	public static final String CANT_EQUIP = ChatColor.RED + "You cannot equip this item.";
 	
 	public static final String USAGE = 	ChatColor.RED + "/bi items " + ChatColor.YELLOW + "Display all items, click to see their recipes.\n" + 
 									   	ChatColor.RED + "/bi items stats " + ChatColor.YELLOW + "Display all items and their stats.\n" +
 									   	ChatColor.RED + "/bi stats <page> " + ChatColor.YELLOW + "Displays each stat and it's description.\n" +
 									   	ChatColor.RED + "/bi stats [phrase] <page> " + ChatColor.YELLOW + "Displays only the stats that contain the phrase.\n" + 
+									   	ChatColor.RED + "/bi equip " + ChatColor.YELLOW + "Equips the current item so that when you change slots the item will follow.\n" + 
 									   	ChatColor.RED + "/bi give " + ChatColor.YELLOW + "(OP) send players custom items.";
 	
 	public static final String GIVE_USAGE = ChatColor.RED + "/bi give [item] <qty> " + ChatColor.YELLOW + "Gives yourself a bending item.\n" +

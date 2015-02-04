@@ -344,13 +344,15 @@ public class CustomItem {
 	public void setValid(boolean valid) {
 		this.valid = valid;
 	}
-
-	public String toString() {
-		String s = "BendingItem: Name=" + name + " DisplayName=" + displayName + " Material=" + material +
-				" quantity=" + quantity + " damage=" + damage;
-		return s;
-	}
 	
+	@Override
+	public String toString() {
+		return "CustomItem [name=" + name + ", displayName=" + displayName
+				+ ", lore=" + lore + ", material=" + material + ", quantity="
+				+ quantity + ", damage=" + damage + ", recipe=" + recipe
+				+ ", glow=" + glow + "]";
+	}
+
 	public static String colorizeString(String s) {
 		s = s.replaceAll("<", "");
 		s = s.replaceAll(">", "");

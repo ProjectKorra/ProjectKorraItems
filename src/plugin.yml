@@ -22,6 +22,7 @@ permissions:
     children:
       bendingitems.command.stats: true
       bendingitems.command.items: true
+      bendingitems.command.equip: true
   bendingitems.command.items:
     default: true
     description: Grants access to /bi items.
