@@ -18,6 +18,8 @@ public class AttributeList {
 	{
 		
 		// MISC
+		add(new Attribute("ParticleEffect", "plays a particle effect around a player whenever they use an ability"));
+		add(new Attribute("AllowFromInventory", "this item will work from the players inventory, even if it is not being held or worn"));
 		add(new Attribute("RequireElement", "the user must have one of these elements to use this item. Works with Air, Water, Earth, Fire, Chi, Flight, Spiritual, Blood, Healing, Ice, Plant, Metal, Sand, Lava, Combustion, and Lightning."));
 		
 		add(new Attribute("Air", "improves all Air stats"));

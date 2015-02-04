@@ -3,9 +3,10 @@ package com.projectkorra.ProjectKorraItems;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.projectkorra.ProjectKorraItems.attribute.Attribute;
@@ -36,7 +37,26 @@ public class ItemUtils {
 	 * @return a list of the equipment
 	 */
 	public static ArrayList<ItemStack> getPlayerValidEquipment(Player player) {
+		if(player == null) {
+			return new ArrayList<ItemStack>();
+		}
 		ArrayList<ItemStack> equipment = getPlayerEquipment(player);
+		
+		/*
+		 * Get any inventory items that contain the "AllowFromInventory" stat.
+		 */
+		PlayerInventory playerInv = player.getInventory();
+		for(ItemStack invItem : playerInv) {
+			if(invItem == null || invItem.getType() == Material.AIR)
+				continue;
+			
+			CustomItem citem = CustomItem.getCustomItem(invItem);
+			if(citem != null 
+					&& !equipment.contains(invItem) 
+					&& citem.getBooleanAttributeValue("AllowFromInventory")) {
+				equipment.add(invItem);
+			}
+		}
 		
 		for(int i = 0; i < equipment.size(); i++) {
 			ItemStack istack = equipment.get(i);
