@@ -14,7 +14,6 @@ import org.bukkit.potion.PotionEffectType;
 import com.projectkorra.ProjectKorra.Element;
 import com.projectkorra.ProjectKorraItems.ItemUtils;
 import com.projectkorra.ProjectKorraItems.Messages;
-import com.projectkorra.ProjectKorraItems.attribute.AttributeListener.Action;
 import com.projectkorra.ProjectKorraItems.items.CustomItem;
 
 public class AttributeUtils {

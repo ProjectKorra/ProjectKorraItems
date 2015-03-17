@@ -22,15 +22,7 @@ import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
 import com.projectkorra.ProjectKorraItems.abilityupdater.AbilityUpdater;
 import com.projectkorra.ProjectKorraItems.items.CustomItem;
 
-public class AttributeListener implements Listener {	
-	
-	/** Represents the possible actions that a player
-	 * can do while holding or wearing an item.
-	 */
-	public static enum Action {
-		LEFTCLICK, RIGHTCLICK, SHIFT, CONSUME
-	}
-		
+public class AttributeListener implements Listener {			
 	/** A map of player names that holds their current bending potion effects. **/
 	public static final ConcurrentHashMap<String, ConcurrentHashMap<String, Attribute>> currentBendingEffects = new ConcurrentHashMap<String, ConcurrentHashMap<String, Attribute>>();
 	
@@ -48,6 +40,7 @@ public class AttributeListener implements Listener {
 		
 		Player player = event.getPlayer();
 		new Glider(player);
+		new GrapplingHook(player, Action.SHIFT);
 		
 		// Handles the Charges, and ShiftCharges attribute
 		if(!player.isSneaking()) {
@@ -70,6 +63,8 @@ public class AttributeListener implements Listener {
 		AbilityUpdater.tryToConfirmClick(player, AbilityUpdater.CONFIRM_CLICK);
 		updateOnActionEffects(player, Action.LEFTCLICK);
 		handleItemSource(player, "WaterSource", new ItemStack(Material.POTION));
+		
+		new GrapplingHook(player, Action.LEFTCLICK);
 	}
 		
 	/**
