@@ -162,7 +162,7 @@ public class CustomItem {
 		}
 	}
 	
-	public void finalize() {
+	public void build() {
 		if(alreadyFinal)
 			return;
 		alreadyFinal = true;

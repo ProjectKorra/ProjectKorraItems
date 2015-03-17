@@ -89,7 +89,7 @@ public class ConfigManager {
 				continue;
 			if(s.toLowerCase().startsWith(ITEM_PREF.toLowerCase())) {
 				if(newItem != null && !invalid) {
-					newItem.finalize();
+					newItem.build();
 				}
 				invalid = false;
 				newItem = new CustomItem();
@@ -157,7 +157,7 @@ public class ConfigManager {
 			}
 		}
 		if(newItem != null && !invalid) {
-			newItem.finalize();
+			newItem.build();
 		}
 	}
 }
