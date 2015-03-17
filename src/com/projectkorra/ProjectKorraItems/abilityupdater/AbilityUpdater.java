@@ -1,11 +1,14 @@
 package com.projectkorra.ProjectKorraItems.abilityupdater;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.projectkorra.ProjectKorra.Utilities.ParticleEffect;
 import com.projectkorra.ProjectKorra.airbending.AirBlast;
 import com.projectkorra.ProjectKorra.airbending.AirBubble;
 import com.projectkorra.ProjectKorra.airbending.AirScooter;
@@ -44,10 +47,13 @@ import com.projectkorra.ProjectKorra.waterbending.WaterSpout;
 import com.projectkorra.ProjectKorra.waterbending.WaterWall;
 import com.projectkorra.ProjectKorra.waterbending.WaterWave;
 import com.projectkorra.ProjectKorra.waterbending.Wave;
+import com.projectkorra.ProjectKorraItems.ItemUtils;
+import com.projectkorra.ProjectKorraItems.Messages;
 import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
-import com.projectkorra.ProjectKorraItems.attribute.AttributeListener;
+import com.projectkorra.ProjectKorraItems.attribute.Action;
+import com.projectkorra.ProjectKorraItems.attribute.Attribute;
 import com.projectkorra.ProjectKorraItems.attribute.AttributeUtils;
-import com.projectkorra.ProjectKorraItems.attribute.AttributeListener.Action;
+import com.projectkorra.ProjectKorraItems.items.CustomItem;
 
 public class AbilityUpdater {
 	/** 
@@ -370,7 +376,8 @@ public class AbilityUpdater {
 	
 	/**
 	 * Attempts to update an ability based on the attribute
-	 * effects of a specific player.
+	 * effects of a specific player. Also calls a method
+	 * to handle any particle effects that should surround the player.
 	 * @param player the player that initialized the ability
 	 * @param ability the instance of a ProjectKorra ability
 	 */
@@ -378,15 +385,87 @@ public class AbilityUpdater {
 		if(player == null)
 			return;
 		
+		boolean abilityAdded = true;
 		ConcurrentHashMap<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
 		if(FireUpdater.updateAbility(player, ability, attribs)) {}
 		else if(WaterUpdater.updateAbility(player, ability, attribs)){}
 		else if(AirUpdater.updateAbility(player, ability, attribs)){}
 		else if(EarthUpdater.updateAbility(player, ability, attribs)) {}
 		else if(ChiUpdater.updateAbility(player, ability, attribs)){}
+		else {
+			abilityAdded = false;
+		}
 		
-		confirmAbility(player, CONFIRM_CLICK, AttributeListener.Action.LEFTCLICK);
-		confirmAbility(player, CONFIRM_SHIFT, AttributeListener.Action.SHIFT);
+		if(abilityAdded) {
+			updatePlayerParticles(player);
+		}
+		
+		confirmAbility(player, CONFIRM_CLICK, Action.LEFTCLICK);
+		confirmAbility(player, CONFIRM_SHIFT, Action.SHIFT);
+	}
+	
+	/**
+	 * If the player has an item with the stat
+	 * "ParticleEffects" then we will parse the information
+	 * and display a particle effect around the player.
+	 * @param player
+	 */
+	private static void updatePlayerParticles(Player player) {
+		ArrayList<ItemStack> equipment = ItemUtils.getPlayerValidEquipment(player);
+		for(ItemStack istack : equipment) {
+			CustomItem citem = CustomItem.getCustomItem(istack);
+			if(citem == null)
+				continue;
+			
+			Attribute attr = citem.getAttribute("ParticleEffects");
+			if(attr == null)
+				continue;
+			
+			ArrayList<String> values = attr.getValues();
+			for(String value : values) {
+				String[] colonSplit = value.split(":");
+				if(colonSplit.length == 0)
+					continue;
+		
+				String particleName = colonSplit[0];
+				ParticleEffect effect = ParticleEffect.fromName(particleName.trim());
+				if(effect == null) {
+					Messages.logTimedMessage(Messages.BAD_PARTICLE_EFFECT + ": " + particleName);
+					continue;
+				}
+				
+				double amount = 1;
+				double radius = 100;
+				double duration = 1;
+				double speed = 0;
+				try {
+					if(colonSplit.length >= 2)
+						amount = Double.parseDouble(colonSplit[1]);
+					if(colonSplit.length >= 3)
+						radius = Double.parseDouble(colonSplit[2]);
+					if(colonSplit.length >= 4)
+						duration = Double.parseDouble(colonSplit[3]);
+					if(colonSplit.length >= 5)
+						speed = Double.parseDouble(colonSplit[4]);
+				}
+				catch(NumberFormatException e) {}
+				
+				radius /= 100;
+				speed /= 100;
+				final ParticleEffect feffect = effect;
+				final double fradius = radius;
+				final double famount = amount;
+				final double fspeed = speed;
+				final Player fplayer = player;
+				for(int i = 0; i < duration; i++) {
+					new BukkitRunnable() {
+						public void run() {
+							feffect.display(fplayer.getEyeLocation(), (float) fradius, (float) fradius, (float) fradius, (float) fspeed, (int) famount);
+						}
+					}.runTaskLater(ProjectKorraItems.plugin, i);
+				}
+			}
+		}
 	}
 	
 	/**

@@ -1,5 +1,6 @@
 package com.projectkorra.ProjectKorraItems;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import com.projectkorra.ProjectKorra.BendingPlayer;
@@ -83,5 +84,19 @@ public class ElementUtils {
 		}
 		
 		throw new IllegalArgumentException(element + " is not a valid element");
+	}
+	
+	/**
+	 * Determines if a specific material is transparent.
+	 * @param mat the material to check
+	 * @return true if it is transparent
+	 */
+	@SuppressWarnings("deprecation")
+	public static boolean isTransparent(Material mat) {
+		for(int x : Methods.transparentToEarthbending) {
+			if(mat.getId() == x)
+				return true;
+		}
+		return false;
 	}
 }

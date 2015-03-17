@@ -38,6 +38,7 @@ public class Messages {
 	public static final String BAD_NAME = "invalid name";
 	public static final String BAD_CHARGES = "invalid charges value";
 	public static final String BAD_VALUE = "an issue occured with this value";
+	public static final String BAD_PARTICLE_EFFECT = "this particle effect could not be found";
 	public static final String MISSING_VALUES = "an attribute is missing it's values";
 	public static final String MISSING_EFFECT_VALUES = "an effect is missing values (Effect:Power:Duration)";
 	

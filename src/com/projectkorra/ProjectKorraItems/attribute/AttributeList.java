@@ -14,13 +14,13 @@ public class AttributeList {
 	public static final String CLICK_CHARGES_STR = ChatColor.GOLD + "ClickCharges: ";
 	
 	public static final ArrayList<Attribute> ATTRIBUTES = new ArrayList<Attribute>(){
-		private static final long serialVersionUID = 1L;
-	{
-		
+		private static final long serialVersionUID = 1L; {
 		// MISC
-		add(new Attribute("ParticleEffect", "plays a particle effect around a player whenever they use an ability"));
-		add(new Attribute("AllowFromInventory", "this item will work from the players inventory, even if it is not being held or worn"));
-		add(new Attribute("RequireElement", "the user must have one of these elements to use this item. Works with Air, Water, Earth, Fire, Chi, Flight, Spiritual, Blood, Healing, Ice, Plant, Metal, Sand, Lava, Combustion, and Lightning."));
+		//add(new Attribute("GrapplingHook", "Lets the user shoot out a grappling hook by left clicking. They can then left click to launch themselves toward the destination, or sneak to slowly move to the destination."));
+		add(new Attribute("ParticleEffects", "Plays a particle effect around a player whenever they use an ability. Uses the form 'ParticleEffect: NAME:<AMOUNT>:<RADIUS>:<DURATION>:<SPEED>', amount (1 - inf), radius (0 - 100), duration (1 - inf), and speed (0 - 100) are optional. "));
+		
+		add(new Attribute("AllowFromInventory", "This item will work from the players inventory, even if it is not being held or worn"));
+		add(new Attribute("RequireElement", "The user must have one of these elements to use this item. Works with Air, Water, Earth, Fire, Chi, Flight, Spiritual, Blood, Healing, Ice, Plant, Metal, Sand, Lava, Combustion, and Lightning."));
 		
 		add(new Attribute("Air", "improves all Air stats"));
 		add(new Attribute("Water", "improves all Water stats"));
