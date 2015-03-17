@@ -17,11 +17,11 @@ import com.projectkorra.ProjectKorraItems.Messages;
 import com.projectkorra.ProjectKorraItems.items.CustomItem;
 
 public class AttributeUtils {
-	
+
 	/**
-	 * Generates a map containing all of the attributes on the players
-	 * armor and item in hand. Doesn't return values with multiple commas.
-	 * Doesn't return non numerical values.	
+	 * Generates a map containing all of the attributes on the players armor and item in hand.
+	 * Doesn't return values with multiple commas. Doesn't return non numerical values.
+	 * 
 	 * @param player the player to create the effects of
 	 * @return a map containing attribute effects
 	 */
@@ -29,39 +29,39 @@ public class AttributeUtils {
 		ArrayList<ItemStack> equipment = ItemUtils.getPlayerValidEquipment(player);
 		ConcurrentHashMap<String, Double> attribMap = new ConcurrentHashMap<String, Double>();
 		ArrayList<Attribute> totalAttribs = new ArrayList<Attribute>();
-		
+
 		/* Handle any potion style bending effects that the player might have */
-		if(AttributeListener.currentBendingEffects.containsKey(player.getName())) {
+		if (AttributeListener.currentBendingEffects.containsKey(player.getName())) {
 			ConcurrentHashMap<String, Attribute> effects = AttributeListener.currentBendingEffects.get(player.getName());
-			for(Attribute effect : effects.values()) {
-				if(System.currentTimeMillis() - effect.getTime() < effect.getDuration()) {
+			for (Attribute effect : effects.values()) {
+				if (System.currentTimeMillis() - effect.getTime() < effect.getDuration()) {
 					totalAttribs.add(effect);
 				}
 			}
 		}
-		
-		/* Handle any armor bending effects */	
-		for(ItemStack istack : equipment) {
+
+		/* Handle any armor bending effects */
+		for (ItemStack istack : equipment) {
 			CustomItem citem = CustomItem.getCustomItem(istack);
-			if(citem == null)
+			if (citem == null)
 				continue;
-			for(Attribute attr : citem.getAttributes())
+			for (Attribute attr : citem.getAttributes())
 				totalAttribs.add(attr);
 		}
-		
+
 		/* Handles the "Air", "Water", "Earth", and "Fire" stats */
 		ArrayList<Attribute> fullElementAttribs = new ArrayList<Attribute>();
-		for(Attribute attr : totalAttribs) {
+		for (Attribute attr : totalAttribs) {
 			fullElementAttribs.addAll(getFullElementAttributes(attr));
 		}
 		totalAttribs.addAll(fullElementAttribs);
-			
-		for(Attribute attr : totalAttribs) {
-			if(attr.getValues().size() != 1)
+
+		for (Attribute attr : totalAttribs) {
+			if (attr.getValues().size() != 1)
 				continue;
-			
+
 			double val = 0;
-			if(attribMap.containsKey(attr.getName())) 
+			if (attribMap.containsKey(attr.getName()))
 				val = attribMap.get(attr.getName());
 			val += attr.getValueAsDouble();
 			attribMap.put(attr.getName(), val);
@@ -70,56 +70,57 @@ public class AttributeUtils {
 	}
 
 	/**
-	 * Takes an attribute stat and tries to split its values into
-	 * a list of PotionEffects.
+	 * Takes an attribute stat and tries to split its values into a list of PotionEffects.
+	 * 
 	 * @param attr the attribute to split
 	 * @return a list of the new PotionEffects
 	 */
 	public static ArrayList<PotionEffect> parsePotionEffects(Attribute attr) {
 		ArrayList<PotionEffect> effects = new ArrayList<PotionEffect>();
-		if(attr.getValues() == null)
+		if (attr.getValues() == null)
 			return effects;
 
-		for(String val : attr.getValues()) {
+		for (String val : attr.getValues()) {
 			String[] colSplit = val.split(":");
 			try {
 				PotionEffectType type = PotionEffectType.getByName(colSplit[0].trim());
 				int strength = Integer.parseInt(colSplit[1].trim());
 				double duration = Double.parseDouble(colSplit[2].trim());
-				PotionEffect pot = new PotionEffect(type, (int)(duration * 20), strength - 1);
+				PotionEffect pot = new PotionEffect(type, (int) (duration * 20), strength - 1);
 				effects.add(pot);
+			} catch (Exception e) {
 			}
-			catch (Exception e) {}
 		}
 		return effects;
 	}
-	
+
 	/**
-	 * This method will handle logging the bad effects for both itself and
-	 * the parsePotionEffects. If there was a mistake in the effect it would not pass
-	 * the PotionEffectType.getByName check, and it would break on the parsing.
+	 * This method will handle logging the bad effects for both itself and the parsePotionEffects.
+	 * If there was a mistake in the effect it would not pass the PotionEffectType.getByName check,
+	 * and it would break on the parsing.
+	 * 
 	 * @param attr the attribute containing a list of bending effects as values
 	 * @return a list of new attributes representing the bending effects
 	 */
 	public static ArrayList<Attribute> parseBendingEffects(Attribute attr) {
 		ArrayList<Attribute> effects = new ArrayList<Attribute>();
-		if(attr.getValues() == null)
+		if (attr.getValues() == null)
 			return effects;
 
-		for(String val : attr.getValues()) {
+		for (String val : attr.getValues()) {
 			String[] colSplit = val.split(":");
-			if(colSplit.length < 3) {
+			if (colSplit.length < 3) {
 				Messages.logTimedMessage(Messages.MISSING_EFFECT_VALUES + ": " + val, Messages.LOG_DELAY);
 				continue;
 			}
 			try {
 				String name = colSplit[0].trim();
-				
-				//Make sure its not a potion
+
+				// Make sure its not a potion
 				PotionEffectType type = PotionEffectType.getByName(name);
-				if(type != null)
+				if (type != null)
 					continue;
-				
+
 				final String modifier = colSplit[1].trim();
 				double duration = Double.parseDouble(colSplit[2].trim());
 				Attribute newAttr = new Attribute(Attribute.getAttribute(name));
@@ -128,113 +129,109 @@ public class AttributeUtils {
 				newAttr.setValues(vals);
 				newAttr.setDuration(duration * 1000);
 				effects.add(newAttr);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				Messages.logTimedMessage(Messages.BAD_VALUE + ": " + val, Messages.LOG_DELAY);
 			}
 		}
 		return effects;
 	}
-	
+
 	/**
-	 * Decreases the charges on all of the player's items by 1, if the
-	 * charge type on the item matches the Action type.
+	 * Decreases the charges on all of the player's items by 1, if the charge type on the item
+	 * matches the Action type.
+	 * 
 	 * @param player the player to decrease charges
 	 * @param type the action that caused the charge decrease
 	 */
 	public static void decreaseCharges(Player player, Action type) {
-		if(player == null)
+		if (player == null)
 			return;
-		
+
 		ArrayList<ItemStack> istacks = ItemUtils.getPlayerValidEquipment(player);
-		for(ItemStack istack : istacks) {
+		for (ItemStack istack : istacks) {
 			CustomItem citem = CustomItem.getCustomItem(istack);
-			if(citem == null)
+			if (citem == null)
 				continue;
-			
+
 			ItemMeta meta = istack.getItemMeta();
 			List<String> lore = meta.getLore();
-			if(lore == null)
+			if (lore == null)
 				continue;
-			
+
 			boolean displayDestroyMsg = false;
 			List<String> newLore = new ArrayList<String>();
-			for(String line : lore) {
+			for (String line : lore) {
 				String newLine = line;
 				try {
-					if(line.startsWith(AttributeList.CHARGES_STR) 
+					if (line.startsWith(AttributeList.CHARGES_STR)
 							|| (line.startsWith(AttributeList.CLICK_CHARGES_STR) && type == Action.LEFTCLICK)
 							|| (line.startsWith(AttributeList.SNEAK_CHARGES_STR) && type == Action.SHIFT)) {
 						String start = line.substring(0, line.indexOf(": "));
 						String end = line.substring(line.indexOf(": ") + 1, line.length());
 						end = end.trim();
 						int val = Integer.parseInt(end) - 1;
-						if(val == 0)
+						if (val == 0)
 							displayDestroyMsg = true;
-						if(val >= 0)
+						if (val >= 0)
 							newLine = start + ": " + val;
 					}
+				} catch (Exception e) {
 				}
-				catch (Exception e) {}
 				newLore.add(newLine);
 			}
 			meta.setLore(newLore);
 			istack.setItemMeta(meta);
-			
-			//Check if we need to destroy the item
+
+			// Check if we need to destroy the item
 			boolean hasDestroyAttr = false;
 			boolean hasIgnoreDestroyMsg = false;
-			if(citem.getBooleanAttributeValue("DestroyAfterCharges"))
+			if (citem.getBooleanAttributeValue("DestroyAfterCharges"))
 				hasDestroyAttr = true;
-			if(citem.getBooleanAttributeValue("IgnoreDestroyMessage"))
+			if (citem.getBooleanAttributeValue("IgnoreDestroyMessage"))
 				hasIgnoreDestroyMsg = true;
-			
+
 			boolean hasChargesLeft = true;
-			for(String line : newLore) {
+			for (String line : newLore) {
 				try {
-					if(line.startsWith(AttributeList.CHARGES_STR) || line.startsWith(AttributeList.CLICK_CHARGES_STR)
+					if (line.startsWith(AttributeList.CHARGES_STR) || line.startsWith(AttributeList.CLICK_CHARGES_STR)
 							|| line.startsWith(AttributeList.SNEAK_CHARGES_STR)) {
 						String tmpStr = line.substring(line.indexOf(": ") + 1, line.length()).trim();
 						int value = Integer.parseInt(tmpStr);
-						if(value <= 0)
+						if (value <= 0)
 							hasChargesLeft = false;
 						else {
 							hasChargesLeft = true;
 							break;
 						}
 					}
+				} catch (Exception e) {
 				}
-				catch(Exception e) {}
-			}	
-			
+			}
+
 			/*
-			 * When we go to destroy an item we need to check that there
-			 * were not multiple items in that stack. If there were
-			 * multiple items then we need to just remove 1 and change the lore
-			 * back to the start.
+			 * When we go to destroy an item we need to check that there were not multiple items in
+			 * that stack. If there were multiple items then we need to just remove 1 and change the
+			 * lore back to the start.
 			 */
-			if(!hasChargesLeft && !hasIgnoreDestroyMsg && displayDestroyMsg)
+			if (!hasChargesLeft && !hasIgnoreDestroyMsg && displayDestroyMsg)
 				player.sendMessage(citem.getDisplayName() + " " + Messages.ITEM_DESTROYED);
-			if(hasDestroyAttr && !hasChargesLeft) {
-				if(player.getInventory().contains(istack)) {
-					if(istack.getAmount() > 1) {
+			if (hasDestroyAttr && !hasChargesLeft) {
+				if (player.getInventory().contains(istack)) {
+					if (istack.getAmount() > 1) {
 						istack.setAmount(istack.getAmount() - 1);
 						ItemStack newStack = citem.generateItem();
 						ItemUtils.setLore(istack, newStack.getItemMeta().getLore());
-					}
-					else
+					} else
 						player.getInventory().remove(istack);
-				}
-				else {
+				} else {
 					ItemStack[] armor = player.getInventory().getArmorContents();
-					for(int i = 0; i < armor.length; i++) {
-						if(armor[i].equals(istack)) {
-							if(istack.getAmount() > 1) {
+					for (int i = 0; i < armor.length; i++) {
+						if (armor[i].equals(istack)) {
+							if (istack.getAmount() > 1) {
 								armor[i].setAmount(armor[i].getAmount() - 1);
 								ItemStack newStack = citem.generateItem();
 								ItemUtils.setLore(armor[i], newStack.getItemMeta().getLore());
-							}
-							else
+							} else
 								armor[i] = new ItemStack(Material.AIR);
 							break;
 						}
@@ -244,25 +241,24 @@ public class AttributeUtils {
 			}
 		}
 	}
-	
 
 	/**
-	 * Given an attribute with a name of "Air", "Water", "Earth", or "Fire"
-	 * this method will return a list of all the attributes that
-	 * correspond to that specific element. All of the attributes will have
-	 * a benefit corresponding to the value of the attribute.
+	 * Given an attribute with a name of "Air", "Water", "Earth", or "Fire" this method will return
+	 * a list of all the attributes that correspond to that specific element. All of the attributes
+	 * will have a benefit corresponding to the value of the attribute.
+	 * 
 	 * @param attr an attribute with an element as a name
 	 * @return a list of attributes for that element
 	 */
 	public static ArrayList<Attribute> getFullElementAttributes(Attribute attr) {
 		return getFullElementAttributes(attr.getName(), attr.getValueAsDouble());
 	}
-	
+
 	/**
-	 * Given the String "Air", "Water", "Earth", or "Fire"
-	 * this method will return a list of all the attributes that
-	 * correspond to that specific element. All of the attributes will have
-	 * a benefit of value.
+	 * Given the String "Air", "Water", "Earth", or "Fire" this method will return a list of all the
+	 * attributes that correspond to that specific element. All of the attributes will have a
+	 * benefit of value.
+	 * 
 	 * @param name the name of the element
 	 * @param value the amount of benefit to give
 	 * @return a list of attributes for that element
@@ -270,10 +266,10 @@ public class AttributeUtils {
 	public static ArrayList<Attribute> getFullElementAttributes(String name, double value) {
 		ArrayList<Attribute> lst = new ArrayList<Attribute>();
 		Element elem = Element.getType(name);
-		
-		if(elem != null) {
-			for(Attribute listAttr : AttributeList.ATTRIBUTES) {
-				if(listAttr.getElement() == elem) {
+
+		if (elem != null) {
+			for (Attribute listAttr : AttributeList.ATTRIBUTES) {
+				if (listAttr.getElement() == elem) {
 					Attribute newAttr = new Attribute(listAttr);
 					newAttr.setValues(value * newAttr.getBenefit());
 					lst.add(newAttr);

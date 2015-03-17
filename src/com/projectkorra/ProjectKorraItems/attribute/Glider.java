@@ -16,26 +16,24 @@ import com.projectkorra.ProjectKorra.Methods;
 import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
 
 public class Glider {
-	
+
 	/**
-	 * A Glider is used for the "AirGlide" stat, and it allows
-	 * users to sore through the air while they are sneaking. The
-	 * glider will persist until the player reaches the ground. Gliders will
-	 * also use up a players charges if the items that they are using have charges.
-	 * Players must be Airbenders to glide.
+	 * A Glider is used for the "AirGlide" stat, and it allows users to sore through the air while
+	 * they are sneaking. The glider will persist until the player reaches the ground. Gliders will
+	 * also use up a players charges if the items that they are using have charges. Players must be
+	 * Airbenders to glide.
 	 * 
 	 * @param p the player that will glide
 	 */
 	public Glider(Player p) {
 		this(p, false);
 	}
-	
+
 	/**
-	 * A Glider is used for the "AirGlide" stat, and it allows
-	 * users to sore through the air while they are sneaking. The
-	 * glider will persist until the player reaches the ground. Gliders will
-	 * also use up a players charges if the items that they are using have charges.
-	 * Players must be Airbenders to glide.
+	 * A Glider is used for the "AirGlide" stat, and it allows users to sore through the air while
+	 * they are sneaking. The glider will persist until the player reaches the ground. Gliders will
+	 * also use up a players charges if the items that they are using have charges. Players must be
+	 * Airbenders to glide.
 	 * 
 	 * @param p the player that will glide
 	 * @param auto if the gliding should start automatically without sneaking
@@ -43,48 +41,48 @@ public class Glider {
 	public Glider(Player p, final boolean auto) {
 		final Player player = p;
 		BendingPlayer bplayer = Methods.getBendingPlayer(player.getName());
-		if(player == null || bplayer == null)
+		if (player == null || bplayer == null)
 			return;
-		
-		if(!player.isSneaking() && player.getLocation().getBlock().getType() == Material.AIR
-				&& bplayer.hasElement(Element.Air)) {
-			
+
+		if (!player.isSneaking() && player.getLocation().getBlock().getType() == Material.AIR && bplayer.hasElement(Element.Air)) {
+
 			/*
-			 * The gliding action will be performed on a separate runnable
-			 * that will cancel itself once it is done.
+			 * The gliding action will be performed on a separate runnable that will cancel itself
+			 * once it is done.
 			 */
 			new BukkitRunnable() {
 				int counter = 0;
+
 				public void run() {
 					Block block = player.getLocation().add(0, -0.5, 0).getBlock();
-					if(block.getType() != Material.AIR) {
+					if (block.getType() != Material.AIR) {
 						this.cancel();
 						return;
 					}
-					
+
 					ConcurrentHashMap<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
-					if((!player.isSneaking() && !auto) || (player.isSneaking() && auto)) {
+					if ((!player.isSneaking() && !auto) || (player.isSneaking() && auto)) {
 						this.cancel();
 						return;
 					}
-					
-					if(attribs.containsKey("AirGlide")) {
+
+					if (attribs.containsKey("AirGlide")) {
 						double speed = AttributeList.AIR_GLIDE_SPEED;
 						double fallSpeed = AttributeList.AIR_GLIDE_FALL;
-						if(attribs.containsKey("AirGlideSpeed")) 
+						if (attribs.containsKey("AirGlideSpeed"))
 							speed = speed + speed * attribs.get("AirGlideSpeed") / 100.0;
-						if(attribs.containsKey("AirGlideFallSpeed")) 
+						if (attribs.containsKey("AirGlideFallSpeed"))
 							fallSpeed = fallSpeed + fallSpeed * attribs.get("AirGlideFallSpeed") / 100.0;
-						
+
 						Location loc = player.getEyeLocation();
 						loc.setPitch(0);
 						Vector vel = loc.getDirection();
-						vel.normalize();						
+						vel.normalize();
 						vel.multiply(speed);
 						vel.setY(fallSpeed);
 						player.setFallDistance(0);
 						player.setVelocity(vel);
-						if(counter == 0)
+						if (counter == 0)
 							AttributeUtils.decreaseCharges(player, Action.SHIFT);
 						counter++;
 					}
