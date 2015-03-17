@@ -14,6 +14,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.projectkorra.ProjectKorraItems.attribute.Attribute;
 
+/**
+ * ItemDisplays are used to display all of the
+ * previously created CustomItems when the player uses
+ * the "/bi items" command. If the total number of CustomItems
+ * becomes too large then the display must use multiple pages.
+ */
 public class ItemDisplay {
 	public static final ConcurrentHashMap<Player, ItemDisplay> displays = new ConcurrentHashMap<Player, ItemDisplay>();
 	public static final ItemStack PREV_BUTTON = new ItemStack(Material.WOOL, 1, (short) 14);
@@ -26,6 +32,13 @@ public class ItemDisplay {
 	private Inventory inventory;
 	private Inventory prevInv;
 	
+	/**
+	 * Creates a new ItemDisplay inventory that will allow
+	 * the user to cycle through the "/bi items" command
+	 * @param player the player that this inventory will display for
+	 * @param showStats if the items should have their attributes shown as lore
+	 * @param page the page number for the inventory (almost always 0)
+	 */
 	public ItemDisplay(Player player, boolean showStats, int page) {
 		this.player = player;
 		this.showStats = showStats;
@@ -40,14 +53,31 @@ public class ItemDisplay {
 		createInventory();
 	}
 	
+	/**
+	 * Creates a new ItemDisplay inventory that will allow
+	 * the user to cycle through the "/bi items" command
+	 * @param player the player that this inventory will display for
+	 * @param showStats if the items should have their attributes shown as lore
+	 */
 	public ItemDisplay(Player player, boolean showStats) {
 		this(player, showStats, 0);
 	}
 	
+	/**
+	 * Creates a new ItemDisplay inventory that will allow
+	 * the user to cycle through the "/bi items" command.
+	 * The items will not have their stats displayed.
+	 * @param player the player that this inventory will display for
+	 */
 	public ItemDisplay(Player player) {
 		this(player, false, 0);
 	}
 	
+	/**
+	 * Parses through all of the previously created
+	 * CustomItems, and places them into this newly formed
+	 * Inventory. The items will be displayed for the user.
+	 */
 	public void createInventory() {
 		if(page < 0)
 			page = 0;

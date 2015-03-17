@@ -14,6 +14,15 @@ public class Attribute {
 	private double duration, time;
 	private int benefit;
 	
+	/**
+	 * Creates a new Attribute with a specific name, description,
+	 * element, and benefit.
+	 * @param name the name of the Attribute
+	 * @param desc a description of the Attribute
+	 * @param element if the element belongs to a specific element, this can be null
+	 * @param benefit either -1 or 1, if increasing this attribute causes the player to be
+	 * better off then the benefit should be 1, else -1.
+	 */
 	public Attribute(String name, String desc, Element element, int benefit) {
 		this.name = name;
 		this.desc = desc;
@@ -24,6 +33,11 @@ public class Attribute {
 		values = new ArrayList<String>();
 	}
 	
+	/**
+	 * Copies the details from another Attribute into
+	 * this Attribute.
+	 * @param other the Attribute to copy
+	 */
 	public Attribute(Attribute other) {
 		this.name = other.name;
 		this.desc = other.desc;
