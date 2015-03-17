@@ -75,6 +75,8 @@ public class ItemUtils {
 				keepItem = false;
 			} else if(!AttributeUtils.hasRequiredWorld(player, citem)) {
 				keepItem = false;
+			} else if(!AttributeUtils.hasRequiredPermission(player, citem)) {
+				keepItem = false;
 			}
 			
 			if (!keepItem) {

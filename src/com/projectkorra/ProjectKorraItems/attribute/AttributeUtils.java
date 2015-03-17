@@ -328,11 +328,35 @@ public class AttributeUtils {
 		if (player == null || citem == null) {
 			return false;
 		}
-		Attribute requireElem = citem.getAttribute("RequireWorld");
-		if (requireElem != null) {
-			return requireElem.getValues().contains(player.getWorld());
+		Attribute require = citem.getAttribute("RequireWorld");
+		if (require != null) {
+			return require.getValues().contains(player.getWorld().getName());
 		}
 		return true;
 	}
 
+	/**
+	 * Determines if a player is allowed to use a specific CustomItem, depending on if the
+	 * CustomItem has the "RequirePermission" Attribute. If the item has the Attribute then it compares
+	 * all of the CustomItem's permissions to see if the player has at least one of them.
+	 * 
+	 * @param player the player using the custom item
+	 * @param citem a custom item in the player's inventory
+	 * @return true if the player can use this custom item
+	 */
+	public static boolean hasRequiredPermission(Player player, CustomItem citem) {
+		if (player == null || citem == null) {
+			return false;
+		}
+		Attribute require = citem.getAttribute("RequirePermission");
+		if (require != null) {
+			for (String perm : require.getValues()) {
+				if (player.hasPermission(perm)) {
+					return true;
+				}
+			}
+			return false;
+		}
+		return true;
+	}
 }
