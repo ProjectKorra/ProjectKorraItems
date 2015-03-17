@@ -11,6 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.projectkorra.ProjectKorraItems.attribute.Attribute;
 import com.projectkorra.ProjectKorraItems.attribute.AttributeList;
+import com.projectkorra.ProjectKorraItems.attribute.AttributeUtils;
 import com.projectkorra.ProjectKorraItems.items.CustomItem;
 
 public class ItemUtils {
@@ -62,40 +63,24 @@ public class ItemUtils {
 			CustomItem citem = CustomItem.getCustomItem(istack);
 			if (citem == null)
 				continue;
-
+			
+			boolean keepItem = true;
 			if (!hasValidCharges(istack)) {
-				equipment.remove(i);
-				i--;
-				continue;
+				keepItem = false;
 			} else if (citem.getBooleanAttributeValue("HoldOnly") && !istack.equals(player.getItemInHand())) {
-				equipment.remove(i);
-				i--;
-				continue;
+				keepItem = false;
 			} else if (citem.getBooleanAttributeValue("WearOnly") && istack.equals(player.getItemInHand())) {
+				keepItem = false;
+			} else if(!AttributeUtils.hasRequiredElement(player, citem)) {
+				keepItem = false;
+			} else if(!AttributeUtils.hasRequiredWorld(player, citem)) {
+				keepItem = false;
+			}
+			
+			if (!keepItem) {
 				equipment.remove(i);
 				i--;
 				continue;
-			}
-
-			Attribute requireElem = citem.getAttribute("RequireElement");
-			if (requireElem != null) {
-				boolean allowed = false;
-				for (String val : requireElem.getValues()) {
-					try {
-						if (ElementUtils.hasElement(player, val)) {
-							allowed = true;
-							break;
-						}
-					} catch (IllegalArgumentException e) {
-						Messages.logTimedMessage(e.getMessage());
-					}
-				}
-
-				if (!allowed) {
-					equipment.remove(i);
-					i--;
-					continue;
-				}
 			}
 		}
 		return equipment;

@@ -12,6 +12,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.projectkorra.ProjectKorra.Element;
+import com.projectkorra.ProjectKorraItems.ElementUtils;
 import com.projectkorra.ProjectKorraItems.ItemUtils;
 import com.projectkorra.ProjectKorraItems.Messages;
 import com.projectkorra.ProjectKorraItems.items.CustomItem;
@@ -265,8 +266,11 @@ public class AttributeUtils {
 	 */
 	public static ArrayList<Attribute> getFullElementAttributes(String name, double value) {
 		ArrayList<Attribute> lst = new ArrayList<Attribute>();
-		Element elem = Element.getType(name);
+		if (name == null) {
+			return lst;
+		}
 
+		Element elem = Element.getType(name);
 		if (elem != null) {
 			for (Attribute listAttr : AttributeList.ATTRIBUTES) {
 				if (listAttr.getElement() == elem) {
@@ -278,4 +282,57 @@ public class AttributeUtils {
 		}
 		return lst;
 	}
+
+	/**
+	 * Determines if a player is allowed to use a specific CustomItem, depending on if the
+	 * CustomItem has the "RequireElement" Attribute. If the item has the Attribute then it compares
+	 * the elements to the player's element.
+	 * 
+	 * @param player the player using the custom item
+	 * @param citem a custom item in the player's inventory
+	 * @return true if the player can use this custom item
+	 */
+	public static boolean hasRequiredElement(Player player, CustomItem citem) {
+		if (player == null || citem == null) {
+			return false;
+		}
+		Attribute requireElem = citem.getAttribute("RequireElement");
+		if (requireElem != null) {
+			boolean allowed = false;
+			for (String val : requireElem.getValues()) {
+				try {
+					if (ElementUtils.hasElement(player, val)) {
+						allowed = true;
+						break;
+					}
+				} catch (IllegalArgumentException e) {
+					Messages.logTimedMessage(e.getMessage());
+				}
+			}
+
+			return allowed;
+		}
+		return true;
+	}
+
+	/**
+	 * Determines if a player is allowed to use a specific CustomItem, depending on if the
+	 * CustomItem has the "RequireWorld" Attribute. If the item has the Attribute then it compares
+	 * the player's current world to any of the item's possible worlds.
+	 * 
+	 * @param player the player using the custom item
+	 * @param citem a custom item in the player's inventory
+	 * @return true if the player can use this custom item
+	 */
+	public static boolean hasRequiredWorld(Player player, CustomItem citem) {
+		if (player == null || citem == null) {
+			return false;
+		}
+		Attribute requireElem = citem.getAttribute("RequireWorld");
+		if (requireElem != null) {
+			return requireElem.getValues().contains(player.getWorld());
+		}
+		return true;
+	}
+
 }

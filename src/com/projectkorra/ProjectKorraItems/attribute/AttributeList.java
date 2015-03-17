@@ -20,7 +20,8 @@ public class AttributeList {
 		add(new Attribute("ParticleEffects", "Plays a particle effect around a player whenever they use an ability. Uses the form 'ParticleEffect: NAME:<AMOUNT>:<RADIUS>:<DURATION>:<SPEED>', amount (1 - inf), radius (0 - 100), duration (1 - inf), and speed (0 - 100) are optional. "));
 		
 		add(new Attribute("AllowFromInventory", "This item will work from the players inventory, even if it is not being held or worn"));
-		add(new Attribute("RequireElement", "The user must have one of these elements to use this item. Works with Air, Water, Earth, Fire, Chi, Flight, Spiritual, Blood, Healing, Ice, Plant, Metal, Sand, Lava, Combustion, and Lightning."));
+		add(new Attribute("RequireElement", "The user must have one of these elements to use this item. Works with Air, Water, Earth, Fire, Chi, Flight, Spiritual, Blood, Healing, Ice, Plant, Metal, Sand, Lava, Combustion, and Lightning. For example: 'RequireElement: Fire, Air, Chi'"));
+		add(new Attribute("RequireWorld", "The user must be located in one of these specific worlds to use this item. For example: 'RequireWorld: bendingworld, bendingarena, bendingrpg'"));
 		
 		add(new Attribute("Air", "improves all Air stats"));
 		add(new Attribute("Water", "improves all Water stats"));
