@@ -18,13 +18,11 @@ import com.projectkorra.ProjectKorraItems.items.CustomItem;
 
 public class AttributeUtils {
 	
-	/**
-	 * Generates a map containing all of the attributes on the players
-	 * armor and item in hand. Doesn't return values with multiple commas.
-	 * Doesn't return non numerical values.	
+	/** Generates a map containing all of the attributes on the players armor and
+	 * item in hand. Doesn't return values with multiple commas. Doesn't return
+	 * non numerical values.
 	 * @param player the player to create the effects of
-	 * @return a map containing attribute effects
-	 */
+	 * @return a map containing attribute effects */
 	public static ConcurrentHashMap<String, Double> getSimplePlayerAttributeMap(Player player) {
 		ArrayList<ItemStack> equipment = ItemUtils.getPlayerValidEquipment(player);
 		ConcurrentHashMap<String, Double> attribMap = new ConcurrentHashMap<String, Double>();

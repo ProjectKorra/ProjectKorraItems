@@ -56,298 +56,294 @@ import com.projectkorra.ProjectKorraItems.attribute.AttributeUtils;
 import com.projectkorra.ProjectKorraItems.items.CustomItem;
 
 public class AbilityUpdater {
-	/** 
-	 * Confirming an ability instance causes the charges on an item to decrease.
-	 * To avoid causing unnecessary charge decreases we use a confirmation system
-	 * to double check that the ability actually got executed once the player
-	 * clicks or shifts.
-	 */
+	/** Confirming an ability instance causes the charges on an item to decrease.
+	 * To avoid causing unnecessary charge decreases we use a confirmation
+	 * system to double check that the ability actually got executed once the
+	 * player clicks or shifts. */
 	public static final ConcurrentHashMap<Player, BukkitRunnable> CONFIRM_CLICK = new ConcurrentHashMap<Player, BukkitRunnable>();
 	public static final ConcurrentHashMap<Player, BukkitRunnable> CONFIRM_SHIFT = new ConcurrentHashMap<Player, BukkitRunnable>();
 
-	
 	public static final long CLEANUP_TIME = 300000;
 	private static final ConcurrentHashMap<Object, Long> UPDATED_ABILITIES = new ConcurrentHashMap<Object, Long>();
 	private static BukkitRunnable updater, cleaner;
-	
-	private AbilityUpdater(){}
-	
-	/**
-	 * Hooks into the instance maps of all the ProjectKorra
-	 * abilities, searching for any new instances of abilities.
-	 * When a new ability is found it is put into UPDATED_ABILITIES.
-	 */
+
+	private AbilityUpdater() {
+	}
+
+	/** Hooks into the instance maps of all the ProjectKorra abilities, searching
+	 * for any new instances of abilities. When a new ability is found it is put
+	 * into UPDATED_ABILITIES. */
 	public static void startUpdater() {
 		updater = new BukkitRunnable() {
 			public void run() {
-				for(Integer ID : AirBlast.instances.keySet()) {
+				for (Integer ID : AirBlast.instances.keySet()) {
 					AirBlast abil = AirBlast.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : AirSwipe.instances.keySet()) {
+				for (Integer ID : AirSwipe.instances.keySet()) {
 					AirSwipe abil = AirSwipe.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : AirShield.instances.keySet()) {
+				for (Integer ID : AirShield.instances.keySet()) {
 					AirShield abil = AirShield.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : AirBubble.instances.keySet()) {
+				for (Integer ID : AirBubble.instances.keySet()) {
 					AirBubble abil = AirBubble.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Player ID : AirScooter.instances.keySet()) {
+				for (Player ID : AirScooter.instances.keySet()) {
 					AirScooter abil = AirScooter.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : Tornado.instances.keySet()) {
+				for (Integer ID : Tornado.instances.keySet()) {
 					Tornado abil = Tornado.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Player ID : AirSpout.instances.keySet()) {
+				for (Player ID : AirSpout.instances.keySet()) {
 					AirSpout abil = AirSpout.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : AirSuction.instances.keySet()) {
+				for (Integer ID : AirSuction.instances.keySet()) {
 					AirSuction abil = AirSuction.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				
-				for(Player ID : AcrobatStance.instances.keySet()) {
+
+				for (Player ID : AcrobatStance.instances.keySet()) {
 					AcrobatStance abil = AcrobatStance.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Player ID : RapidPunch.instances.keySet()) {
+				for (Player ID : RapidPunch.instances.keySet()) {
 					RapidPunch abil = RapidPunch.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Player ID : WarriorStance.instances.keySet()) {
+				for (Player ID : WarriorStance.instances.keySet()) {
 					WarriorStance abil = WarriorStance.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				
-				for(Integer ID : Catapult.instances.keySet()) {
+
+				for (Integer ID : Catapult.instances.keySet()) {
 					Catapult abil = Catapult.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Player ID : EarthArmor.instances.keySet()) {
+				for (Player ID : EarthArmor.instances.keySet()) {
 					EarthArmor abil = EarthArmor.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : EarthBlast.instances.keySet()) {
+				for (Integer ID : EarthBlast.instances.keySet()) {
 					EarthBlast abil = EarthBlast.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Player ID : EarthTunnel.instances.keySet()) {
+				for (Player ID : EarthTunnel.instances.keySet()) {
 					EarthTunnel abil = EarthTunnel.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : Ripple.instances.keySet()) {
+				for (Integer ID : Ripple.instances.keySet()) {
 					Ripple abil = Ripple.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Player ID : Shockwave.instances.keySet()) {
+				for (Player ID : Shockwave.instances.keySet()) {
 					Shockwave abil = Shockwave.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(EarthSmash abil : EarthSmash.instances)
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+				for (EarthSmash abil : EarthSmash.instances)
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
-				/*for(Player ID : MetalClips.instances.keySet()) {
-					MetalClips abil = MetalClips.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
-						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
-						updateAbility(abil.getPlayer(), abil);
-					}
-				}*/
-				
-				
-				for(Player ID : Cook.instances.keySet()) {
+				/*
+				 * for(Player ID : MetalClips.instances.keySet()) { MetalClips
+				 * abil = MetalClips.instances.get(ID);
+				 * if(!UPDATED_ABILITIES.containsKey(abil)) {
+				 * UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
+				 * updateAbility(abil.getPlayer(), abil); } }
+				 */
+
+				for (Player ID : Cook.instances.keySet()) {
 					Cook abil = Cook.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : Fireball.instances.keySet()) {
+				for (Integer ID : Fireball.instances.keySet()) {
 					Fireball abil = Fireball.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : FireBlast.instances.keySet()) {
+				for (Integer ID : FireBlast.instances.keySet()) {
 					FireBlast abil = FireBlast.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Player ID : FireJet.instances.keySet()) {
+				for (Player ID : FireJet.instances.keySet()) {
 					FireJet abil = FireJet.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Player ID : FireShield.instances.keySet()) {
+				for (Player ID : FireShield.instances.keySet()) {
 					FireShield abil = FireShield.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : FireStream.instances.keySet()) {
+				for (Integer ID : FireStream.instances.keySet()) {
 					FireStream abil = FireStream.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Player ID : WallOfFire.instances.keySet()) {
+				for (Player ID : WallOfFire.instances.keySet()) {
 					WallOfFire abil = WallOfFire.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Lightning abil : Lightning.instances)
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+				for (Lightning abil : Lightning.instances)
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
-				
-				for(Player ID : Bloodbending.instances.keySet()) {
+
+				for (Player ID : Bloodbending.instances.keySet()) {
 					Bloodbending abil = Bloodbending.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : IceBlast.instances.keySet()) {
+				for (Integer ID : IceBlast.instances.keySet()) {
 					IceBlast abil = IceBlast.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : IceSpike.instances.keySet()) {
+				for (Integer ID : IceSpike.instances.keySet()) {
 					IceSpike abil = IceSpike.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : IceSpike2.instances.keySet()) {
+				for (Integer ID : IceSpike2.instances.keySet()) {
 					IceSpike2 abil = IceSpike2.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Player ID : OctopusForm.instances.keySet()) {
+				for (Player ID : OctopusForm.instances.keySet()) {
 					OctopusForm abil = OctopusForm.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Player ID : Torrent.instances.keySet()) {
+				for (Player ID : Torrent.instances.keySet()) {
 					Torrent abil = Torrent.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : TorrentBurst.instances.keySet()) {
+				for (Integer ID : TorrentBurst.instances.keySet()) {
 					TorrentBurst abil = TorrentBurst.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : WaterManipulation.instances.keySet()) {
-					WaterManipulation abil = WaterManipulation.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+				for (Integer ID : WaterManipulation.instances.keySet()) {
+					WaterManipulation abil = WaterManipulation.instances
+							.get(ID);
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Player ID : WaterSpout.instances.keySet()) {
+				for (Player ID : WaterSpout.instances.keySet()) {
 					WaterSpout abil = WaterSpout.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(WaterWave abil : WaterWave.instances)
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+				for (WaterWave abil : WaterWave.instances)
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
-				for(Integer ID : WaterWall.instances.keySet()) {
+				for (Integer ID : WaterWall.instances.keySet()) {
 					WaterWall abil = WaterWall.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : Wave.instances.keySet()) {
+				for (Integer ID : Wave.instances.keySet()) {
 					Wave abil = Wave.instances.get(ID);
-					if(!UPDATED_ABILITIES.containsKey(abil)) {
+					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
@@ -356,100 +352,98 @@ public class AbilityUpdater {
 		};
 		updater.runTaskTimer(ProjectKorraItems.plugin, 0, 1);
 	}
-	
-	/**
-	 * The cleaner scans through each ability instance
-	 * inside of UPDATED_ABILITIES and removes the oldest ones.
-	 */
+
+	/** The cleaner scans through each ability instance inside of
+	 * UPDATED_ABILITIES and removes the oldest ones. */
 	public static void startCleanup() {
 		cleaner = new BukkitRunnable() {
 			public void run() {
-				for (Object key : new HashSet<Object>(UPDATED_ABILITIES.keySet())) {
-				    long val = UPDATED_ABILITIES.get(key);
-				    if(System.currentTimeMillis() - val >= CLEANUP_TIME)
-				    	UPDATED_ABILITIES.remove(key);
+				for (Object key : new HashSet<Object>(
+						UPDATED_ABILITIES.keySet())) {
+					long val = UPDATED_ABILITIES.get(key);
+					if (System.currentTimeMillis() - val >= CLEANUP_TIME)
+						UPDATED_ABILITIES.remove(key);
 				}
 			}
 		};
 		cleaner.runTaskTimer(ProjectKorraItems.plugin, 0, 600);
 	}
-	
-	/**
-	 * Attempts to update an ability based on the attribute
-	 * effects of a specific player. Also calls a method
-	 * to handle any particle effects that should surround the player.
+
+	/** Attempts to update an ability based on the attribute effects of a
+	 * specific player. Also calls a method to handle any particle effects that
+	 * should surround the player.
 	 * @param player the player that initialized the ability
-	 * @param ability the instance of a ProjectKorra ability
-	 */
+	 * @param ability the instance of a ProjectKorra ability */
 	public static void updateAbility(Player player, Object ability) {
-		if(player == null)
+		if (player == null)
 			return;
-		
+
 		boolean abilityAdded = true;
-		ConcurrentHashMap<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
-		if(FireUpdater.updateAbility(player, ability, attribs)) {}
-		else if(WaterUpdater.updateAbility(player, ability, attribs)){}
-		else if(AirUpdater.updateAbility(player, ability, attribs)){}
-		else if(EarthUpdater.updateAbility(player, ability, attribs)) {}
-		else if(ChiUpdater.updateAbility(player, ability, attribs)){}
-		else {
+		ConcurrentHashMap<String, Double> attribs = AttributeUtils
+				.getSimplePlayerAttributeMap(player);
+		if (FireUpdater.updateAbility(player, ability, attribs)) {
+		} else if (WaterUpdater.updateAbility(player, ability, attribs)) {
+		} else if (AirUpdater.updateAbility(player, ability, attribs)) {
+		} else if (EarthUpdater.updateAbility(player, ability, attribs)) {
+		} else if (ChiUpdater.updateAbility(player, ability, attribs)) {
+		} else {
 			abilityAdded = false;
 		}
-		
-		if(abilityAdded) {
+
+		if (abilityAdded) {
 			updatePlayerParticles(player);
 		}
-		
+
 		confirmAbility(player, CONFIRM_CLICK, Action.LEFTCLICK);
 		confirmAbility(player, CONFIRM_SHIFT, Action.SHIFT);
 	}
-	
-	/**
-	 * If the player has an item with the stat
-	 * "ParticleEffects" then we will parse the information
-	 * and display a particle effect around the player.
-	 * @param player
-	 */
+
+	/** If the player has an item with the stat "ParticleEffects" then we will
+	 * parse the information and display a particle effect around the player.
+	 * @param player */
 	private static void updatePlayerParticles(Player player) {
-		ArrayList<ItemStack> equipment = ItemUtils.getPlayerValidEquipment(player);
-		for(ItemStack istack : equipment) {
+		ArrayList<ItemStack> equipment = ItemUtils
+				.getPlayerValidEquipment(player);
+		for (ItemStack istack : equipment) {
 			CustomItem citem = CustomItem.getCustomItem(istack);
-			if(citem == null)
+			if (citem == null)
 				continue;
-			
+
 			Attribute attr = citem.getAttribute("ParticleEffects");
-			if(attr == null)
+			if (attr == null)
 				continue;
-			
+
 			ArrayList<String> values = attr.getValues();
-			for(String value : values) {
+			for (String value : values) {
 				String[] colonSplit = value.split(":");
-				if(colonSplit.length == 0)
+				if (colonSplit.length == 0)
 					continue;
-		
+
 				String particleName = colonSplit[0];
-				ParticleEffect effect = ParticleEffect.fromName(particleName.trim());
-				if(effect == null) {
-					Messages.logTimedMessage(Messages.BAD_PARTICLE_EFFECT + ": " + particleName);
+				ParticleEffect effect = ParticleEffect.fromName(particleName
+						.trim());
+				if (effect == null) {
+					Messages.logTimedMessage(Messages.BAD_PARTICLE_EFFECT
+							+ ": " + particleName);
 					continue;
 				}
-				
+
 				double amount = 1;
 				double radius = 100;
 				double duration = 1;
 				double speed = 0;
 				try {
-					if(colonSplit.length >= 2)
+					if (colonSplit.length >= 2)
 						amount = Double.parseDouble(colonSplit[1]);
-					if(colonSplit.length >= 3)
+					if (colonSplit.length >= 3)
 						radius = Double.parseDouble(colonSplit[2]);
-					if(colonSplit.length >= 4)
+					if (colonSplit.length >= 4)
 						duration = Double.parseDouble(colonSplit[3]);
-					if(colonSplit.length >= 5)
+					if (colonSplit.length >= 5)
 						speed = Double.parseDouble(colonSplit[4]);
+				} catch (NumberFormatException e) {
 				}
-				catch(NumberFormatException e) {}
-				
+
 				radius /= 100;
 				speed /= 100;
 				final ParticleEffect feffect = effect;
@@ -457,31 +451,34 @@ public class AbilityUpdater {
 				final double famount = amount;
 				final double fspeed = speed;
 				final Player fplayer = player;
-				for(int i = 0; i < duration; i++) {
+				for (int i = 0; i < duration; i++) {
 					new BukkitRunnable() {
 						public void run() {
-							feffect.display(fplayer.getEyeLocation(), (float) fradius, (float) fradius, (float) fradius, (float) fspeed, (int) famount);
+							feffect.display(fplayer.getEyeLocation(),
+									(float) fradius, (float) fradius,
+									(float) fradius, (float) fspeed,
+									(int) famount);
 						}
 					}.runTaskLater(ProjectKorraItems.plugin, i);
 				}
 			}
 		}
 	}
-	
-	/**
-	 * When a player left clicks we can't be completely sure that
-	 * the ability actually executed. If it didn't execute we can't take away
-	 * a charge or click charge.
+
+	/** When a player left clicks we can't be completely sure that the ability
+	 * actually executed. If it didn't execute we can't take away a charge or
+	 * click charge.
 	 * 
-	 * To determine if the click executed we will store the players name temporarily
-	 * and then wait for the AbilityUpdater to let us know if it went through.
-	 */
-	public static void tryToConfirmClick(Player player, ConcurrentHashMap<Player, BukkitRunnable> map) {
-		if(map.containsKey(player)) {
+	 * To determine if the click executed we will store the players name
+	 * temporarily and then wait for the AbilityUpdater to let us know if it
+	 * went through. */
+	public static void tryToConfirmClick(Player player,
+			ConcurrentHashMap<Player, BukkitRunnable> map) {
+		if (map.containsKey(player)) {
 			map.get(player).cancel();
 			CONFIRM_CLICK.remove(player);
 		}
-		
+
 		final Player fplayer = player;
 		final ConcurrentHashMap<Player, BukkitRunnable> fmap = map;
 		BukkitRunnable br = new BukkitRunnable() {
@@ -492,12 +489,13 @@ public class AbilityUpdater {
 		br.runTaskLater(ProjectKorraItems.plugin, 3);
 		map.put(player, br);
 	}
-	
-	public static void confirmAbility(Player player, ConcurrentHashMap<Player, BukkitRunnable> map, Action type) {
-		if(map.containsKey(player)) {
+
+	public static void confirmAbility(Player player,
+			ConcurrentHashMap<Player, BukkitRunnable> map, Action type) {
+		if (map.containsKey(player)) {
 			map.get(player).cancel();
 			map.remove(player);
 			AttributeUtils.decreaseCharges(player, type);
 		}
-	}	
+	}
 }

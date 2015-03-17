@@ -7,17 +7,17 @@ public class RecipeIngredient {
 	private Material material;
 	private int quantity;
 	private short damage;
-	
+
 	public RecipeIngredient(Material material, int quantity, short damage) {
 		this.material = material;
 		this.quantity = quantity;
 		this.damage = damage;
 	}
-	
+
 	public RecipeIngredient(Material material, int quantity) {
 		this(material, quantity, (short) 0);
 	}
-	
+
 	public RecipeIngredient(Material mat) {
 		this(mat, 1);
 	}
@@ -45,15 +45,14 @@ public class RecipeIngredient {
 	public void setDamage(short damage) {
 		this.damage = damage;
 	}
-	
+
 	public ItemStack getItemStack() {
 		return new ItemStack(material, quantity, damage);
 	}
 
 	public String toString() {
-		return "RecipeIngredient [material=" + material + ", quantity="
-				+ quantity + ", damage=" + damage + "]";
+		return "RecipeIngredient [material=" + material + ", quantity=" + quantity + ", damage="
+				+ damage + "]";
 	}
 
-	
 }
