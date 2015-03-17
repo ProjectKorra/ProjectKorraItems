@@ -39,7 +39,7 @@ public class AttributeListener implements Listener {
 
 		Player player = event.getPlayer();
 		new Glider(player);
-		new GrapplingHook(player, Action.SHIFT);
+		//new GrapplingHook(player, Action.SHIFT);
 
 		// Handles the Charges, and ShiftCharges attribute
 		if (!player.isSneaking()) {
@@ -64,7 +64,7 @@ public class AttributeListener implements Listener {
 		updateOnActionEffects(player, Action.LEFTCLICK);
 		handleItemSource(player, "WaterSource", new ItemStack(Material.POTION));
 
-		new GrapplingHook(player, Action.LEFTCLICK);
+		//new GrapplingHook(player, Action.LEFTCLICK);
 	}
 
 	/**
