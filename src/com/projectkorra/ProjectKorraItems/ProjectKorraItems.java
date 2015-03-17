@@ -1,5 +1,4 @@
 package com.projectkorra.ProjectKorraItems;
-
 import java.util.logging.Logger;
 
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -27,7 +26,7 @@ public class ProjectKorraItems extends JavaPlugin {
 		AbilityUpdater.startUpdater();
 		AbilityUpdater.startCleanup();
 	}
-
+	
 	@Override
 	public void onDisable() {
 		PluginDescriptionFile pdfFile = this.getDescription();

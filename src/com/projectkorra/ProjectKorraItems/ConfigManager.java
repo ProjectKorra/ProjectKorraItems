@@ -10,7 +10,7 @@ import com.projectkorra.ProjectKorraItems.attribute.Attribute;
 import com.projectkorra.ProjectKorraItems.items.CustomItem;
 
 public class ConfigManager {
-
+	
 	public static final String PATH = ProjectKorraItems.plugin.getDataFolder() + "/config.yml";
 	public static final String ITEM_PREF = "Item:";
 	public static final String DNAME_PREF = "DisplayName:";
@@ -23,10 +23,10 @@ public class ConfigManager {
 	public static final String AMT_PREF = "Amount:";
 	public static final String ATTR_PREF = "Stats:";
 	public static final String GLOW_PREF = "Glow:";
-	public static final String[] PREFIXES = { ITEM_PREF, DNAME_PREF, NAME_PREF, LORE_PREF,
-			SHAPED_RECIPE_PREF, UNSHAPED_RECIPE_PREF, MATERIAL_PREF, DURA_PREF, AMT_PREF,
-			ATTR_PREF, GLOW_PREF };
-
+	public static final String[] PREFIXES = {ITEM_PREF, DNAME_PREF, NAME_PREF, LORE_PREF, 
+		SHAPED_RECIPE_PREF, UNSHAPED_RECIPE_PREF, MATERIAL_PREF, DURA_PREF, AMT_PREF, ATTR_PREF,
+		GLOW_PREF};
+	
 	public ConfigManager() {
 		CustomItem.items.clear();
 		CustomItem.itemList.clear();
@@ -34,8 +34,10 @@ public class ConfigManager {
 		String str = readConfig();
 		analyzeConfig(str);
 	}
-
-	/** Returns the entire config file as a String. */
+	
+	/**
+	 * Returns the entire config file as a String.
+	 */
 	public String readConfig() {
 		String configStr = "";
 		BufferedReader br = null;
@@ -45,93 +47,100 @@ public class ConfigManager {
 			ProjectKorraItems.log.info(Messages.NO_CONFIG);
 			return configStr;
 		}
-		try {
-			StringBuilder sb = new StringBuilder();
-			String line = br.readLine();
+	    try {
+	        StringBuilder sb = new StringBuilder();
+	        String line = br.readLine();
 
-			while (line != null) {
-				sb.append(line);
-				sb.append("\n");
-				line = br.readLine();
-			}
-			configStr = sb.toString();
-		} catch (IOException e) {
-			ProjectKorraItems.log.info(Messages.BAD_FILE);
+	        while (line != null) {
+	            sb.append(line);
+	            sb.append("\n");
+	            line = br.readLine();
+	        }
+	        configStr = sb.toString();
+	    }
+	    catch (IOException e) {
+	    	ProjectKorraItems.log.info(Messages.BAD_FILE);
 			return configStr;
-		} finally {
-			try {
+	    }
+	    finally {
+	        try {
 				br.close();
 			} catch (IOException e) {
 				ProjectKorraItems.log.info(Messages.BAD_FILE);
 				return configStr;
 			}
-		}
-		return configStr;
+	    }
+	    return configStr;
 	}
-
-	/** Uses a string that represents the configuration file to parse through all
-	 * of the items and create instances of CustomItems.
+	
+	/**
+	 * Uses a string that represents the configuration file to
+	 * parse through all of the items and create instances of CustomItems.
 	 * 
-	 * @param configStr a string version of the config.yml */
+	 * @param configStr a string version of the config.yml
+	 */
 	public void analyzeConfig(String configStr) {
 		String[] items = configStr.split("\n");
 		CustomItem newItem = null;
 		boolean invalid = false;
-		for (String s : items) {
+		for(String s : items) {
 			s = s.trim();
-			if (s.length() == 0)
+			if(s.length() == 0)
 				continue;
-			if (s.toLowerCase().startsWith(ITEM_PREF.toLowerCase())) {
-				if (newItem != null && !invalid) {
+			if(s.toLowerCase().startsWith(ITEM_PREF.toLowerCase())) {
+				if(newItem != null && !invalid) {
 					newItem.build();
 				}
 				invalid = false;
 				newItem = new CustomItem();
-			} else {
+			}
+			else {
 				boolean prefFound = false;
-				for (String prefix : PREFIXES) {
-					if (s.toLowerCase().startsWith(prefix.toLowerCase())) {
+				for(String prefix : PREFIXES) {
+					if(s.toLowerCase().startsWith(prefix.toLowerCase())) {
 						prefFound = true;
 						String tmp = "";
 						try {
 							tmp = s.substring(prefix.length(), s.length());
 							tmp = tmp.trim();
-							if (prefix.equalsIgnoreCase(NAME_PREF))
+							if(prefix.equalsIgnoreCase(NAME_PREF))
 								newItem.updateName(tmp);
-							else if (prefix.equalsIgnoreCase(DNAME_PREF))
+							else if(prefix.equalsIgnoreCase(DNAME_PREF))
 								newItem.updateDisplayName(tmp);
-							else if (prefix.equalsIgnoreCase(LORE_PREF))
+							else if(prefix.equalsIgnoreCase(LORE_PREF))
 								newItem.updateLore(tmp);
-							else if (prefix.equalsIgnoreCase(SHAPED_RECIPE_PREF)) {
+							else if(prefix.equalsIgnoreCase(SHAPED_RECIPE_PREF)) {
 								newItem.updateRecipe(tmp);
 								newItem.setUnshapedRecipe(false);
-							} else if (prefix.equalsIgnoreCase(UNSHAPED_RECIPE_PREF)) {
+							}
+							else if(prefix.equalsIgnoreCase(UNSHAPED_RECIPE_PREF)) {
 								newItem.updateRecipe(tmp);
 								newItem.setUnshapedRecipe(true);
-							} else if (prefix.equalsIgnoreCase(MATERIAL_PREF))
+							}
+							else if(prefix.equalsIgnoreCase(MATERIAL_PREF))
 								newItem.updateMaterial(tmp);
-							else if (prefix.equalsIgnoreCase(DURA_PREF))
+							else if(prefix.equalsIgnoreCase(DURA_PREF))
 								newItem.updateDamage(tmp);
-							else if (prefix.equalsIgnoreCase(AMT_PREF))
+							else if(prefix.equalsIgnoreCase(AMT_PREF))
 								newItem.updateQuantity(tmp);
-							else if (prefix.equalsIgnoreCase(GLOW_PREF))
+							else if(prefix.equalsIgnoreCase(GLOW_PREF))
 								newItem.updateGlow(tmp);
-						} catch (Exception e) {
+						} catch(Exception e) {
 							ProjectKorraItems.log.info(Messages.BAD_PREFIX + ": " + prefix);
 							invalid = false;
 						}
 					}
 				}
-
+				
 				/* Check if it is an attribute */
-				if (!prefFound) {
+				if(!prefFound) {
 					try {
 						String prefix = s.substring(0, s.indexOf(":"));
 						String valueStr = s.substring(s.indexOf(":") + 1, s.length()).trim();
 						valueStr = valueStr.replaceAll("(?i)true", "1");
 						valueStr = valueStr.replaceAll("(?i)false", "0");
 						String[] commaSplit = valueStr.split(",");
-						if (commaSplit.length == 0) {
+						if(commaSplit.length == 0) {
 							ProjectKorraItems.log.info(Messages.MISSING_VALUES + ": " + s);
 							invalid = false;
 						}
@@ -139,15 +148,15 @@ public class ConfigManager {
 						Attribute newAtt = new Attribute(att.getName());
 						newAtt.getValues().addAll(Arrays.asList(commaSplit));
 						newItem.getAttributes().add(newAtt);
-					} catch (Exception e) {
+					} catch(Exception e) {
 						ProjectKorraItems.log.info(Messages.BAD_PREFIX + ": " + s);
 						invalid = false;
 					}
 				}
-
+				
 			}
 		}
-		if (newItem != null && !invalid) {
+		if(newItem != null && !invalid) {
 			newItem.build();
 		}
 	}

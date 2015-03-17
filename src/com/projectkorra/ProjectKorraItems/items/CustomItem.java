@@ -20,7 +20,7 @@ import com.projectkorra.ProjectKorraItems.attribute.AttributeList;
 public class CustomItem {
 	public static ConcurrentHashMap<String, CustomItem> items = new ConcurrentHashMap<String, CustomItem>();
 	public static ArrayList<CustomItem> itemList = new ArrayList<CustomItem>();
-
+	
 	private String name;
 	private String displayName;
 	private ArrayList<String> lore;
@@ -33,7 +33,7 @@ public class CustomItem {
 	private boolean alreadyFinal;
 	private boolean glow;
 	private ArrayList<Attribute> attributes;
-
+	
 	public CustomItem() {
 		name = "";
 		displayName = "";
@@ -49,45 +49,49 @@ public class CustomItem {
 	}
 
 	public void updateName(String s) {
-		if (s == null || s.length() == 0 || s.contains(" ")) {
+		if(s == null || s.length() == 0 || s.contains(" ")) {
 			valid = false;
 			ProjectKorraItems.log.info(Messages.BAD_NAME + ": " + toString());
-			if (s != null)
+			if(s != null)
 				name = s;
-		} else {
+		}
+		else {
 			name = s;
 		}
 	}
 
 	public void updateDisplayName(String s) {
-		if (s == null || s.length() == 0) {
+		if(s == null || s.length() == 0) {
 			valid = false;
 			ProjectKorraItems.log.info(Messages.BAD_DNAME + ": " + toString());
-		} else {
-			if (!s.contains("<&"))
+		}
+		else {
+			if(!s.contains("<&"))
 				s = "<&f>" + s;
 			displayName = colorizeString(s);
 		}
 	}
 
 	public void updateLore(String s) {
-		if (s == null || s.length() == 0) {
+		if(s == null || s.length() == 0) {
 			valid = false;
 			ProjectKorraItems.log.info(Messages.BAD_LORE + ": " + toString());
-		} else {
+		}
+		else {
 			String[] lines = s.split("<n>");
-			for (String line : lines)
+			for(String line : lines)
 				lore.add(colorizeString(line));
 		}
 	}
 
 	public void updateMaterial(String s) {
-		if (s == null || s.length() == 0) {
+		if(s == null || s.length() == 0) {
 			valid = false;
 			ProjectKorraItems.log.info(Messages.BAD_MATERIAL + ": " + toString());
-		} else {
+		}
+		else {
 			material = Material.getMaterial(s);
-			if (material == null) {
+			if(material == null) {
 				valid = false;
 				ProjectKorraItems.log.info(Messages.BAD_MATERIAL + ": " + s);
 			}
@@ -97,7 +101,8 @@ public class CustomItem {
 	public void updateQuantity(String s) {
 		try {
 			quantity = Integer.parseInt(s);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			valid = false;
 			ProjectKorraItems.log.info(Messages.BAD_QUANTITY + ": " + toString());
 		}
@@ -106,130 +111,133 @@ public class CustomItem {
 	public void updateDamage(String s) {
 		try {
 			damage = (short) Integer.parseInt(s);
-		} catch (Exception e) {
+		}
+		catch (Exception e){
 			valid = false;
 			ProjectKorraItems.log.info(Messages.BAD_DAMAGE + ": " + toString());
 		}
 	}
-
+	
 	public void updateGlow(String s) {
 		try {
 			glow = Boolean.parseBoolean(s);
-		} catch (Exception e) {
+		}
+		catch (Exception e){
 			valid = false;
 			ProjectKorraItems.log.info(Messages.BAD_GLOW + ": " + toString());
 		}
 	}
-
+	
 	@SuppressWarnings("deprecation")
 	public void updateRecipe(String s) {
 		try {
 			s = s.replaceAll(" ", "");
 			String[] commas = s.split(",");
-			for (String comma : commas) {
+			for(String comma : commas) {
 				String[] colons = comma.split(":");
 				Material mat = Material.getMaterial(colons[0]);
-				if (mat == null)
+				if(mat == null)
 					try {
 						mat = Material.getMaterial(Integer.parseInt(colons[0]));
-					} catch (NumberFormatException e) {
-					}
+					} catch (NumberFormatException e) {}
 				int quantity = 1;
 				short damage = 0;
-				if (mat == null) {
+				if(mat == null) { 
 					ProjectKorraItems.log.info(Messages.BAD_RECIPE_MAT + ": " + colons[0]);
 					valid = false;
 					continue;
 				}
-				if (colons.length > 1)
+				if(colons.length > 1)
 					quantity = Integer.parseInt(colons[1]);
-				if (colons.length > 2)
+				if(colons.length > 2) 
 					damage = (short) Integer.parseInt(colons[2]);
 				recipe.add(new RecipeIngredient(mat, quantity, damage));
 			}
-			while (recipe.size() < 9)
+			while(recipe.size() < 9)
 				recipe.add(new RecipeIngredient(Material.AIR));
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			ProjectKorraItems.log.info(Messages.BAD_RECIPE + ": " + s);
 			valid = false;
 		}
 	}
-
+	
 	public void build() {
-		if (alreadyFinal)
+		if(alreadyFinal)
 			return;
 		alreadyFinal = true;
-		if (!valid)
+		if(!valid) 
 			ProjectKorraItems.log.info(Messages.BAD_ITEM + ": " + toString());
-		else if (items.containsKey(name.toLowerCase()))
+		else if(items.containsKey(name.toLowerCase()))
 			ProjectKorraItems.log.info(Messages.DUPLICATE_ITEM + ": " + toString());
-		else if (name.length() == 0)
+		else if(name.length() == 0) 
 			ProjectKorraItems.log.info(Messages.BAD_NAME + ": " + toString());
-		else if (displayName.length() == 0)
+		else if(displayName.length() == 0)
 			ProjectKorraItems.log.info(Messages.BAD_DNAME + ": " + toString());
-		else if (material == null)
+		else if(material == null) 
 			ProjectKorraItems.log.info(Messages.BAD_MATERIAL + ": " + toString());
 		else {
 			items.put(name.toLowerCase(), this);
 			itemList.add(this);
 		}
 	}
-
+	
 	public ItemStack generateItem() {
 		ItemStack istack = new ItemStack(material, quantity, damage);
 		ItemMeta meta = istack.getItemMeta();
 		List<String> tempLore = new ArrayList<String>(lore);
 		meta.setDisplayName(displayName);
-
-		for (Attribute attr : attributes) {
+		
+		for(Attribute attr : attributes) {
 			try {
-				if (attr.getName().equalsIgnoreCase("Charges"))
-					tempLore.add(AttributeList.CHARGES_STR
-							+ Integer.parseInt(attr.getValues().get(0)));
-				else if (attr.getName().equalsIgnoreCase("ClickCharges"))
-					tempLore.add(AttributeList.CLICK_CHARGES_STR
-							+ Integer.parseInt(attr.getValues().get(0)));
-				else if (attr.getName().equalsIgnoreCase("SneakCharges"))
-					tempLore.add(AttributeList.SNEAK_CHARGES_STR
-							+ Integer.parseInt(attr.getValues().get(0)));
-			} catch (Exception e) {
+				if(attr.getName().equalsIgnoreCase("Charges"))
+					tempLore.add(AttributeList.CHARGES_STR + Integer.parseInt(attr.getValues().get(0)));
+				else if(attr.getName().equalsIgnoreCase("ClickCharges"))
+					tempLore.add(AttributeList.CLICK_CHARGES_STR + Integer.parseInt(attr.getValues().get(0)));
+				else if(attr.getName().equalsIgnoreCase("SneakCharges"))
+					tempLore.add(AttributeList.SNEAK_CHARGES_STR + Integer.parseInt(attr.getValues().get(0)));
 			}
-
+			catch (Exception e) {}
+			
 			try {
-				if (attr.getName().equalsIgnoreCase("LeatherColor")) {
+				if(attr.getName().equalsIgnoreCase("LeatherColor")) {
 					LeatherArmorMeta lmeta = (LeatherArmorMeta) meta;
-					lmeta.setColor(Color.fromRGB(Integer.parseInt(attr.getValues().get(0).trim()),
-							Integer.parseInt(attr.getValues().get(1).trim()),
+					lmeta.setColor(Color.fromRGB(Integer.parseInt(attr.getValues().get(0).trim()), 
+							Integer.parseInt(attr.getValues().get(1).trim()), 
 							Integer.parseInt(attr.getValues().get(2).trim())));
 					meta = lmeta;
 				}
-			} catch (Exception e) {
 			}
+			catch (Exception e) {}
 		}
-
+		
+		
 		meta.setLore(tempLore);
 		istack.setItemMeta(meta);
-		if (glow)
-			EnchantGlow.addGlow(istack);
-
+		if(glow)
+			EnchantGlow.addGlow(istack);	
+		
 		return istack;
 	}
-
-	/** Checks if a customitem has a specific attribute, and also that the
-	 * attribute has a boolean value of true.
+	
+	/**
+	 * Checks if a customitem has a specific attribute,
+	 * and also that the attribute has a boolean value of true.
 	 * 
-	 * If the value is false, or it was not found, then this returns false.
+	 * If the value is false, or it was not found, then
+	 * this returns false.
 	 * @param attrib the name of the attribute
-	 * @return true if the attribute was found and true */
+	 * @return true if the attribute was found and true
+	 */
 	public boolean getBooleanAttributeValue(String attrib) {
-		for (Attribute attr : attributes) {
-			if (attr.getBooleanValue(attrib)) {
+		for(Attribute attr : attributes) {
+			if(attr.getBooleanValue(attrib)) {
 				return true;
 			}
 		}
 		return false;
 	}
-
+	
 	public static ConcurrentHashMap<String, CustomItem> getItems() {
 		return items;
 	}
@@ -269,14 +277,16 @@ public class CustomItem {
 	public ArrayList<Attribute> getAttributes() {
 		return attributes;
 	}
-
-	/** Given an attribute name, returns the attribute if this item has it, else
-	 * returns null.
+	
+	/**
+	 * Given an attribute name, returns the attribute if
+	 * this item has it, else returns null.
 	 * @param attrName the name of the attribute
-	 * @return an attribute or null */
+	 * @return an attribute or null
+	 */
 	public Attribute getAttribute(String attrName) {
-		for (Attribute attr : attributes) {
-			if (attr.getName().equalsIgnoreCase(attrName)) {
+		for(Attribute attr : attributes) {
+			if(attr.getName().equalsIgnoreCase(attrName)) {
 				return attr;
 			}
 		}
@@ -334,12 +344,13 @@ public class CustomItem {
 	public void setValid(boolean valid) {
 		this.valid = valid;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "CustomItem [name=" + name + ", displayName=" + displayName + ", lore=" + lore
-				+ ", material=" + material + ", quantity=" + quantity + ", damage=" + damage
-				+ ", recipe=" + recipe + ", glow=" + glow + "]";
+		return "CustomItem [name=" + name + ", displayName=" + displayName
+				+ ", lore=" + lore + ", material=" + material + ", quantity="
+				+ quantity + ", damage=" + damage + ", recipe=" + recipe
+				+ ", glow=" + glow + "]";
 	}
 
 	public static String colorizeString(String s) {
@@ -348,20 +359,20 @@ public class CustomItem {
 		s = ChatColor.translateAlternateColorCodes('&', s);
 		return s;
 	}
-
+		
 	public static CustomItem getCustomItem(ItemStack istack) {
 		ItemMeta meta = istack.getItemMeta();
-		if (meta == null || meta.getDisplayName() == null)
+		if(meta == null || meta.getDisplayName() == null)
 			return null;
-		for (CustomItem citem : items.values()) {
-			if (meta.getDisplayName().equals(citem.getDisplayName()))
+		for(CustomItem citem : items.values()) {
+			if(meta.getDisplayName().equals(citem.getDisplayName()))
 				return citem;
 		}
 		return null;
 	}
-
+	
 	public static CustomItem getCustomItem(String s) {
-		if (items.containsKey(s.toLowerCase()))
+		if(items.containsKey(s.toLowerCase()))
 			return items.get(s.toLowerCase());
 		return null;
 	}
