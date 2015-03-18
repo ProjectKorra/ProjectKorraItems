@@ -337,8 +337,8 @@ public class AttributeUtils {
 
 	/**
 	 * Determines if a player is allowed to use a specific CustomItem, depending on if the
-	 * CustomItem has the "RequirePermission" Attribute. If the item has the Attribute then it compares
-	 * all of the CustomItem's permissions to see if the player has at least one of them.
+	 * CustomItem has the "RequirePermission" Attribute. If the item has the Attribute then it
+	 * compares all of the CustomItem's permissions to see if the player has at least one of them.
 	 * 
 	 * @param player the player using the custom item
 	 * @param citem a custom item in the player's inventory

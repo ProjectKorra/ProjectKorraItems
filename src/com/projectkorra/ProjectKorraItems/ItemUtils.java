@@ -63,7 +63,7 @@ public class ItemUtils {
 			CustomItem citem = CustomItem.getCustomItem(istack);
 			if (citem == null)
 				continue;
-			
+
 			boolean keepItem = true;
 			if (!hasValidCharges(istack)) {
 				keepItem = false;
@@ -71,14 +71,14 @@ public class ItemUtils {
 				keepItem = false;
 			} else if (citem.getBooleanAttributeValue("WearOnly") && istack.equals(player.getItemInHand())) {
 				keepItem = false;
-			} else if(!AttributeUtils.hasRequiredElement(player, citem)) {
+			} else if (!AttributeUtils.hasRequiredElement(player, citem)) {
 				keepItem = false;
-			} else if(!AttributeUtils.hasRequiredWorld(player, citem)) {
+			} else if (!AttributeUtils.hasRequiredWorld(player, citem)) {
 				keepItem = false;
-			} else if(!AttributeUtils.hasRequiredPermission(player, citem)) {
+			} else if (!AttributeUtils.hasRequiredPermission(player, citem)) {
 				keepItem = false;
 			}
-			
+
 			if (!keepItem) {
 				equipment.remove(i);
 				i--;
