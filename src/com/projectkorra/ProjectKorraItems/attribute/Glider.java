@@ -2,7 +2,6 @@ package com.projectkorra.ProjectKorraItems.attribute;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -12,7 +11,7 @@ import org.bukkit.util.Vector;
 
 import com.projectkorra.ProjectKorra.BendingPlayer;
 import com.projectkorra.ProjectKorra.Element;
-import com.projectkorra.ProjectKorra.Methods;
+import com.projectkorra.ProjectKorra.GeneralMethods;
 import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
 
 public class Glider {
@@ -40,7 +39,7 @@ public class Glider {
 	 */
 	public Glider(Player p, final boolean auto) {
 		final Player player = p;
-		BendingPlayer bplayer = Methods.getBendingPlayer(player.getName());
+		BendingPlayer bplayer = GeneralMethods.getBendingPlayer(player.getName());
 		if (player == null || bplayer == null)
 			return;
 

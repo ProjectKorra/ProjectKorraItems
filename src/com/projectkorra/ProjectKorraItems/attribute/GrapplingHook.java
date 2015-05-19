@@ -10,7 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
 
-import com.projectkorra.ProjectKorra.Methods;
+import com.projectkorra.ProjectKorra.GeneralMethods;
 import com.projectkorra.ProjectKorra.Utilities.ParticleEffect;
 import com.projectkorra.ProjectKorraItems.ElementUtils;
 import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
@@ -157,7 +157,7 @@ public class GrapplingHook {
 	 */
 	public static void playAnimation(Location loc1, Location loc2, double incr, float density, float r, float g, float b) {
 		Location iter = loc1.clone();
-		Vector dir = Methods.getDirection(loc1, loc2).normalize();
+		Vector dir = GeneralMethods.getDirection(loc1, loc2).normalize();
 		while (iter.distanceSquared(loc1) <= iter.distanceSquared(loc2)) {
 			ParticleEffect.RED_DUST.display(r, g, b, density, 0, iter, 256);
 			iter = iter.add(dir.clone().multiply(incr));

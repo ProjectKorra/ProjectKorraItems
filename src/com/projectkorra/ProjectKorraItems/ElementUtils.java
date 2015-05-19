@@ -4,7 +4,11 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import com.projectkorra.ProjectKorra.BendingPlayer;
-import com.projectkorra.ProjectKorra.Methods;
+import com.projectkorra.ProjectKorra.GeneralMethods;
+import com.projectkorra.ProjectKorra.airbending.AirMethods;
+import com.projectkorra.ProjectKorra.earthbending.EarthMethods;
+import com.projectkorra.ProjectKorra.firebending.FireMethods;
+import com.projectkorra.ProjectKorra.waterbending.WaterMethods;
 
 public class ElementUtils {
 	/**
@@ -25,7 +29,7 @@ public class ElementUtils {
 		if (player == null)
 			return false;
 
-		BendingPlayer bplayer = Methods.getBendingPlayer(player.getName());
+		BendingPlayer bplayer = GeneralMethods.getBendingPlayer(player.getName());
 		if (bplayer == null)
 			return false;
 
@@ -40,27 +44,27 @@ public class ElementUtils {
 		} else if (element.toLowerCase().startsWith(Element.CHI.name().toLowerCase())) {
 			return bplayer.hasElement(com.projectkorra.ProjectKorra.Element.Chi);
 		} else if (element.toLowerCase().startsWith(Element.FLIGHT.name().toLowerCase())) {
-			return Methods.canAirFlight(player);
+			return AirMethods.canAirFlight(player);
 		} else if (element.toLowerCase().startsWith(Element.SPIRITUAL.name().toLowerCase())) {
-			return Methods.canUseSpiritualProjection(player);
+			return AirMethods.canUseSpiritualProjection(player);
 		} else if (element.toLowerCase().startsWith(Element.BLOOD.name().toLowerCase())) {
-			return Methods.canBloodbend(player);
+			return WaterMethods.canBloodbend(player);
 		} else if (element.toLowerCase().startsWith(Element.HEALING.name().toLowerCase())) {
-			return Methods.canWaterHeal(player);
+			return WaterMethods.canWaterHeal(player);
 		} else if (element.toLowerCase().startsWith(Element.ICE.name().toLowerCase())) {
-			return Methods.canIcebend(player);
+			return WaterMethods.canIcebend(player);
 		} else if (element.toLowerCase().startsWith(Element.PLANT.name().toLowerCase())) {
-			return Methods.canPlantbend(player);
+			return WaterMethods.canPlantbend(player);
 		} else if (element.toLowerCase().startsWith(Element.METAL.name().toLowerCase())) {
-			return Methods.canMetalbend(player);
+			return EarthMethods.canMetalbend(player);
 		} else if (element.toLowerCase().startsWith(Element.SAND.name().toLowerCase())) {
-			return Methods.canSandbend(player);
+			return EarthMethods.canSandbend(player);
 		} else if (element.toLowerCase().startsWith(Element.LAVA.name().toLowerCase())) {
-			return Methods.canLavabend(player);
+			return EarthMethods.canLavabend(player);
 		} else if (element.toLowerCase().startsWith(Element.COMBUSTION.name().toLowerCase())) {
-			return Methods.canCombustionbend(player);
+			return FireMethods.canCombustionbend(player);
 		} else if (element.toLowerCase().startsWith(Element.LIGHTNING.name().toLowerCase())) {
-			return Methods.canLightningbend(player);
+			return FireMethods.canLightningbend(player);
 		}
 
 		throw new IllegalArgumentException(element + " is not a valid element");
@@ -74,7 +78,7 @@ public class ElementUtils {
 	 */
 	@SuppressWarnings("deprecation")
 	public static boolean isTransparent(Material mat) {
-		for (int x : Methods.transparentToEarthbending) {
+		for (int x : EarthMethods.transparentToEarthbending) {
 			if (mat.getId() == x)
 				return true;
 		}
