@@ -4,18 +4,18 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.entity.Player;
 
-import com.projectkorra.ProjectKorra.waterbending.Bloodbending;
-import com.projectkorra.ProjectKorra.waterbending.IceBlast;
-import com.projectkorra.ProjectKorra.waterbending.IceSpike;
-import com.projectkorra.ProjectKorra.waterbending.IceSpike2;
-import com.projectkorra.ProjectKorra.waterbending.OctopusForm;
-import com.projectkorra.ProjectKorra.waterbending.Torrent;
-import com.projectkorra.ProjectKorra.waterbending.TorrentBurst;
-import com.projectkorra.ProjectKorra.waterbending.WaterManipulation;
-import com.projectkorra.ProjectKorra.waterbending.WaterSpout;
-import com.projectkorra.ProjectKorra.waterbending.WaterWall;
-import com.projectkorra.ProjectKorra.waterbending.WaterWave;
-import com.projectkorra.ProjectKorra.waterbending.Wave;
+import com.projectkorra.projectkorra.waterbending.Bloodbending;
+import com.projectkorra.projectkorra.waterbending.IceBlast;
+import com.projectkorra.projectkorra.waterbending.IceSpike;
+import com.projectkorra.projectkorra.waterbending.IceSpike2;
+import com.projectkorra.projectkorra.waterbending.OctopusForm;
+import com.projectkorra.projectkorra.waterbending.Torrent;
+import com.projectkorra.projectkorra.waterbending.TorrentBurst;
+import com.projectkorra.projectkorra.waterbending.WaterManipulation;
+import com.projectkorra.projectkorra.waterbending.WaterSpout;
+import com.projectkorra.projectkorra.waterbending.WaterWall;
+import com.projectkorra.projectkorra.waterbending.WaterWave;
+import com.projectkorra.projectkorra.waterbending.Wave;
 
 public class WaterUpdater {
 	

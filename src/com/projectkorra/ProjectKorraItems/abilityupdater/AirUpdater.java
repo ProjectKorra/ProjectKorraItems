@@ -4,14 +4,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.entity.Player;
 
-import com.projectkorra.ProjectKorra.airbending.AirBlast;
-import com.projectkorra.ProjectKorra.airbending.AirBubble;
-import com.projectkorra.ProjectKorra.airbending.AirScooter;
-import com.projectkorra.ProjectKorra.airbending.AirShield;
-import com.projectkorra.ProjectKorra.airbending.AirSpout;
-import com.projectkorra.ProjectKorra.airbending.AirSuction;
-import com.projectkorra.ProjectKorra.airbending.AirSwipe;
-import com.projectkorra.ProjectKorra.airbending.Tornado;
+import com.projectkorra.projectkorra.airbending.AirBlast;
+import com.projectkorra.projectkorra.airbending.AirBubble;
+import com.projectkorra.projectkorra.airbending.AirScooter;
+import com.projectkorra.projectkorra.airbending.AirShield;
+import com.projectkorra.projectkorra.airbending.AirSpout;
+import com.projectkorra.projectkorra.airbending.AirSuction;
+import com.projectkorra.projectkorra.airbending.AirSwipe;
+import com.projectkorra.projectkorra.airbending.Tornado;
 
 public class AirUpdater {
 	
@@ -68,7 +68,7 @@ public class AirUpdater {
 		else if(ability instanceof AirScooter) {
 			AirScooter abil = (AirScooter) ability;
 			if(attribs.containsKey("AirScooterSpeed"))
-				abil.setSpeed(abil.getSpeed() + abil.getSpeed() * attribs.get("AirScooterSpeed") / 100.0);
+				((AirScooter) abil).setSpeed(abil.getSpeed() + abil.getSpeed() * attribs.get("AirScooterSpeed") / 100.0);
 			return true;
 		}
 		else if(ability instanceof Tornado) {

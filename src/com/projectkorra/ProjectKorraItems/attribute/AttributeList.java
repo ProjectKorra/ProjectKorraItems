@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
 
-import com.projectkorra.ProjectKorra.Element;
+import com.projectkorra.projectkorra.Element;
+
 
 public class AttributeList {
 	public static final double AIR_GLIDE_SPEED = 0.6;

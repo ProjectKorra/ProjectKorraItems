@@ -4,13 +4,13 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.entity.Player;
 
-import com.projectkorra.ProjectKorra.earthbending.Catapult;
-import com.projectkorra.ProjectKorra.earthbending.EarthArmor;
-import com.projectkorra.ProjectKorra.earthbending.EarthBlast;
-import com.projectkorra.ProjectKorra.earthbending.EarthSmash;
-import com.projectkorra.ProjectKorra.earthbending.EarthTunnel;
-import com.projectkorra.ProjectKorra.earthbending.Ripple;
-import com.projectkorra.ProjectKorra.earthbending.Shockwave;
+import com.projectkorra.projectkorra.earthbending.Catapult;
+import com.projectkorra.projectkorra.earthbending.EarthArmor;
+import com.projectkorra.projectkorra.earthbending.EarthBlast;
+import com.projectkorra.projectkorra.earthbending.EarthSmash;
+import com.projectkorra.projectkorra.earthbending.EarthTunnel;
+import com.projectkorra.projectkorra.earthbending.Ripple;
+import com.projectkorra.projectkorra.earthbending.Shockwave;
 
 public class EarthUpdater {
 	

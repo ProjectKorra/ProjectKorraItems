@@ -3,7 +3,8 @@ package com.projectkorra.ProjectKorraItems.attribute;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.projectkorra.ProjectKorra.Element;
+import com.projectkorra.projectkorra.Element;
+
 
 public class Attribute {
 	private String name;

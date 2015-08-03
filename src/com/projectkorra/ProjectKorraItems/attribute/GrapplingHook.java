@@ -10,10 +10,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
 
-import com.projectkorra.ProjectKorra.GeneralMethods;
-import com.projectkorra.ProjectKorra.Utilities.ParticleEffect;
 import com.projectkorra.ProjectKorraItems.ElementUtils;
 import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
+import com.projectkorra.projectkorra.GeneralMethods;
+import com.projectkorra.projectkorra.util.ParticleEffect;
 
 /**
  * Grappling Hooks let the player grab onto blocks and fling themselves toward a destination

@@ -4,9 +4,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.entity.Player;
 
-import com.projectkorra.ProjectKorra.chiblocking.AcrobatStance;
-import com.projectkorra.ProjectKorra.chiblocking.RapidPunch;
-import com.projectkorra.ProjectKorra.chiblocking.WarriorStance;
+import com.projectkorra.projectkorra.chiblocking.AcrobatStance;
+import com.projectkorra.projectkorra.chiblocking.RapidPunch;
+import com.projectkorra.projectkorra.chiblocking.WarriorStance;
 
 public class ChiUpdater {
 	

@@ -4,14 +4,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.entity.Player;
 
-import com.projectkorra.ProjectKorra.firebending.Cook;
-import com.projectkorra.ProjectKorra.firebending.FireBlast;
-import com.projectkorra.ProjectKorra.firebending.FireJet;
-import com.projectkorra.ProjectKorra.firebending.FireShield;
-import com.projectkorra.ProjectKorra.firebending.FireStream;
-import com.projectkorra.ProjectKorra.firebending.Fireball;
-import com.projectkorra.ProjectKorra.firebending.Lightning;
-import com.projectkorra.ProjectKorra.firebending.WallOfFire;
+import com.projectkorra.projectkorra.firebending.Cook;
+import com.projectkorra.projectkorra.firebending.FireBlast;
+import com.projectkorra.projectkorra.firebending.FireJet;
+import com.projectkorra.projectkorra.firebending.FireShield;
+import com.projectkorra.projectkorra.firebending.FireStream;
+import com.projectkorra.projectkorra.firebending.Fireball;
+import com.projectkorra.projectkorra.firebending.Lightning;
+import com.projectkorra.projectkorra.firebending.WallOfFire;
 
 public class FireUpdater {
 	

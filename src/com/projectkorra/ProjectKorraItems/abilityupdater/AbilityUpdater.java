@@ -8,45 +8,46 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.projectkorra.ProjectKorra.Utilities.ParticleEffect;
-import com.projectkorra.ProjectKorra.airbending.AirBlast;
-import com.projectkorra.ProjectKorra.airbending.AirBubble;
-import com.projectkorra.ProjectKorra.airbending.AirScooter;
-import com.projectkorra.ProjectKorra.airbending.AirShield;
-import com.projectkorra.ProjectKorra.airbending.AirSpout;
-import com.projectkorra.ProjectKorra.airbending.AirSuction;
-import com.projectkorra.ProjectKorra.airbending.AirSwipe;
-import com.projectkorra.ProjectKorra.airbending.Tornado;
-import com.projectkorra.ProjectKorra.chiblocking.AcrobatStance;
-import com.projectkorra.ProjectKorra.chiblocking.RapidPunch;
-import com.projectkorra.ProjectKorra.chiblocking.WarriorStance;
-import com.projectkorra.ProjectKorra.earthbending.Catapult;
-import com.projectkorra.ProjectKorra.earthbending.EarthArmor;
-import com.projectkorra.ProjectKorra.earthbending.EarthBlast;
-import com.projectkorra.ProjectKorra.earthbending.EarthSmash;
-import com.projectkorra.ProjectKorra.earthbending.EarthTunnel;
-import com.projectkorra.ProjectKorra.earthbending.Ripple;
-import com.projectkorra.ProjectKorra.earthbending.Shockwave;
-import com.projectkorra.ProjectKorra.firebending.Cook;
-import com.projectkorra.ProjectKorra.firebending.FireBlast;
-import com.projectkorra.ProjectKorra.firebending.FireJet;
-import com.projectkorra.ProjectKorra.firebending.FireShield;
-import com.projectkorra.ProjectKorra.firebending.FireStream;
-import com.projectkorra.ProjectKorra.firebending.Fireball;
-import com.projectkorra.ProjectKorra.firebending.Lightning;
-import com.projectkorra.ProjectKorra.firebending.WallOfFire;
-import com.projectkorra.ProjectKorra.waterbending.Bloodbending;
-import com.projectkorra.ProjectKorra.waterbending.IceBlast;
-import com.projectkorra.ProjectKorra.waterbending.IceSpike;
-import com.projectkorra.ProjectKorra.waterbending.IceSpike2;
-import com.projectkorra.ProjectKorra.waterbending.OctopusForm;
-import com.projectkorra.ProjectKorra.waterbending.Torrent;
-import com.projectkorra.ProjectKorra.waterbending.TorrentBurst;
-import com.projectkorra.ProjectKorra.waterbending.WaterManipulation;
-import com.projectkorra.ProjectKorra.waterbending.WaterSpout;
-import com.projectkorra.ProjectKorra.waterbending.WaterWall;
-import com.projectkorra.ProjectKorra.waterbending.WaterWave;
-import com.projectkorra.ProjectKorra.waterbending.Wave;
+import com.projectkorra.projectkorra.ability.api.CoreAbility;
+import com.projectkorra.projectkorra.airbending.AirBlast;
+import com.projectkorra.projectkorra.airbending.AirBubble;
+import com.projectkorra.projectkorra.airbending.AirScooter;
+import com.projectkorra.projectkorra.airbending.AirShield;
+import com.projectkorra.projectkorra.airbending.AirSpout;
+import com.projectkorra.projectkorra.airbending.AirSuction;
+import com.projectkorra.projectkorra.airbending.AirSwipe;
+import com.projectkorra.projectkorra.airbending.Tornado;
+import com.projectkorra.projectkorra.chiblocking.AcrobatStance;
+import com.projectkorra.projectkorra.chiblocking.RapidPunch;
+import com.projectkorra.projectkorra.chiblocking.WarriorStance;
+import com.projectkorra.projectkorra.earthbending.Catapult;
+import com.projectkorra.projectkorra.earthbending.EarthArmor;
+import com.projectkorra.projectkorra.earthbending.EarthBlast;
+import com.projectkorra.projectkorra.earthbending.EarthSmash;
+import com.projectkorra.projectkorra.earthbending.EarthTunnel;
+import com.projectkorra.projectkorra.earthbending.Ripple;
+import com.projectkorra.projectkorra.earthbending.Shockwave;
+import com.projectkorra.projectkorra.firebending.Cook;
+import com.projectkorra.projectkorra.firebending.FireBlast;
+import com.projectkorra.projectkorra.firebending.FireJet;
+import com.projectkorra.projectkorra.firebending.FireShield;
+import com.projectkorra.projectkorra.firebending.FireStream;
+import com.projectkorra.projectkorra.firebending.Fireball;
+import com.projectkorra.projectkorra.firebending.Lightning;
+import com.projectkorra.projectkorra.firebending.WallOfFire;
+import com.projectkorra.projectkorra.util.ParticleEffect;
+import com.projectkorra.projectkorra.waterbending.Bloodbending;
+import com.projectkorra.projectkorra.waterbending.IceBlast;
+import com.projectkorra.projectkorra.waterbending.IceSpike;
+import com.projectkorra.projectkorra.waterbending.IceSpike2;
+import com.projectkorra.projectkorra.waterbending.OctopusForm;
+import com.projectkorra.projectkorra.waterbending.Torrent;
+import com.projectkorra.projectkorra.waterbending.TorrentBurst;
+import com.projectkorra.projectkorra.waterbending.WaterManipulation;
+import com.projectkorra.projectkorra.waterbending.WaterSpout;
+import com.projectkorra.projectkorra.waterbending.WaterWall;
+import com.projectkorra.projectkorra.waterbending.WaterWave;
+import com.projectkorra.projectkorra.waterbending.Wave;
 import com.projectkorra.ProjectKorraItems.ItemUtils;
 import com.projectkorra.ProjectKorraItems.Messages;
 import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
@@ -80,57 +81,57 @@ public class AbilityUpdater {
 	public static void startUpdater() {
 		updater = new BukkitRunnable() {
 			public void run() {
-				for(Integer ID : AirBlast.instances.keySet()) {
-					AirBlast abil = AirBlast.instances.get(ID);
+				for(Integer ID : CoreAbility.getInstances(AirBlast.class).keySet()) {
+					AirBlast abil = (AirBlast) CoreAbility.getInstances(AirBlast.class).get(ID);
 					if(!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : AirSwipe.instances.keySet()) {
-					AirSwipe abil = AirSwipe.instances.get(ID);
+				for(Integer ID : CoreAbility.getInstances(AirSwipe.class).keySet()) {
+					AirSwipe abil = (AirSwipe) CoreAbility.getInstances(AirSwipe.class).get(ID);
 					if(!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : AirShield.instances.keySet()) {
-					AirShield abil = AirShield.instances.get(ID);
+				for(Integer ID : CoreAbility.getInstances(AirShield.class).keySet()) {
+					AirShield abil = (AirShield) CoreAbility.getInstances(AirShield.class).get(ID);
 					if(!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : AirBubble.instances.keySet()) {
-					AirBubble abil = AirBubble.instances.get(ID);
+				for(Integer ID : CoreAbility.getInstances(AirBubble.class).keySet()) {
+					AirBubble abil = (AirBubble) CoreAbility.getInstances(AirBubble.class).get(ID);
 					if(!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Player ID : AirScooter.instances.keySet()) {
-					AirScooter abil = AirScooter.instances.get(ID);
+				for(Integer ID : CoreAbility.getInstances(AirScooter.class).keySet()) {
+					AirScooter abil = (AirScooter) CoreAbility.getInstances(AirScooter.class).get(ID);
 					if(!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : Tornado.instances.keySet()) {
-					Tornado abil = Tornado.instances.get(ID);
+				for(Integer ID : CoreAbility.getInstances(Tornado.class).keySet()) {
+					Tornado abil = (Tornado) CoreAbility.getInstances(Tornado.class).get(ID);
 					if(!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Player ID : AirSpout.instances.keySet()) {
-					AirSpout abil = AirSpout.instances.get(ID);
+				for(Integer ID : CoreAbility.getInstances(AirSpout.class).keySet()) {
+					AirSpout abil = (AirSpout) CoreAbility.getInstances(AirSpout.class).get(ID);
 					if(!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : AirSuction.instances.keySet()) {
-					AirSuction abil = AirSuction.instances.get(ID);
+				for(Integer ID : CoreAbility.getInstances(AirSuction.class).keySet()) {
+					AirSuction abil = (AirSuction) CoreAbility.getInstances(AirSuction.class).get(ID);
 					if(!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
@@ -215,60 +216,62 @@ public class AbilityUpdater {
 				}*/
 				
 				
-				for(Player ID : Cook.instances.keySet()) {
-					Cook abil = Cook.instances.get(ID);
+				for(Integer ID : CoreAbility.getInstances(Cook.class).keySet()) {
+					Cook abil = (Cook) CoreAbility.getInstances(Cook.class).get(ID);
 					if(!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : Fireball.instances.keySet()) {
-					Fireball abil = Fireball.instances.get(ID);
+				for(Integer ID : CoreAbility.getInstances(Fireball.class).keySet()) {
+					Fireball abil = (Fireball) CoreAbility.getInstances(Fireball.class).get(ID);
 					if(!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : FireBlast.instances.keySet()) {
-					FireBlast abil = FireBlast.instances.get(ID);
+				for(Integer ID : CoreAbility.getInstances(FireBlast.class).keySet()) {
+					FireBlast abil = (FireBlast) CoreAbility.getInstances(FireBlast.class).get(ID);
 					if(!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Player ID : FireJet.instances.keySet()) {
-					FireJet abil = FireJet.instances.get(ID);
+				for(Integer ID : CoreAbility.getInstances(FireJet.class).keySet()) {
+					FireJet abil = (FireJet) CoreAbility.getInstances(FireJet.class).get(ID);
 					if(!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Player ID : FireShield.instances.keySet()) {
-					FireShield abil = FireShield.instances.get(ID);
+				for(Integer ID : CoreAbility.getInstances(FireShield.class).keySet()) {
+					FireShield abil = (FireShield) CoreAbility.getInstances(FireShield.class).get(ID);
 					if(!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Integer ID : FireStream.instances.keySet()) {
-					FireStream abil = FireStream.instances.get(ID);
+				for(Integer ID : CoreAbility.getInstances(FireStream.class).keySet()) {
+					FireStream abil = (FireStream) CoreAbility.getInstances(FireStream.class).get(ID);
 					if(!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Player ID : WallOfFire.instances.keySet()) {
-					WallOfFire abil = WallOfFire.instances.get(ID);
+				for(Integer ID : CoreAbility.getInstances(WallOfFire.class).keySet()) {
+					WallOfFire abil = (WallOfFire) CoreAbility.getInstances(WallOfFire.class).get(ID);
 					if(!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
 				}
-				for(Lightning abil : Lightning.instances)
+				for(Integer ID : CoreAbility.getInstances(Lightning.class).keySet()) {
+					Lightning abil = (Lightning) CoreAbility.getInstances(Lightning.class).get(ID);
 					if(!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
 					}
+				}
 				
 				for(Player ID : Bloodbending.instances.keySet()) {
 					Bloodbending abil = Bloodbending.instances.get(ID);
