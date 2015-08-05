@@ -1,8 +1,10 @@
 package com.projectkorra.ProjectKorraItems.attribute;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
+import com.projectkorra.ProjectKorraItems.ElementUtils;
+import com.projectkorra.ProjectKorraItems.ItemUtils;
+import com.projectkorra.ProjectKorraItems.Messages;
+import com.projectkorra.ProjectKorraItems.items.CustomItem;
+import com.projectkorra.projectkorra.Element;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -11,17 +13,16 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import com.projectkorra.ProjectKorraItems.ElementUtils;
-import com.projectkorra.ProjectKorraItems.ItemUtils;
-import com.projectkorra.ProjectKorraItems.Messages;
-import com.projectkorra.ProjectKorraItems.items.CustomItem;
-import com.projectkorra.projectkorra.Element;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class AttributeUtils {
 
 	/**
-	 * Generates a map containing all of the attributes on the players armor and item in hand.
-	 * Doesn't return values with multiple commas. Doesn't return non numerical values.
+	 * Generates a map containing all of the attributes on the players armor and
+	 * item in hand. Doesn't return values with multiple commas. Doesn't return
+	 * non numerical values.
 	 * 
 	 * @param player the player to create the effects of
 	 * @return a map containing attribute effects
@@ -71,7 +72,8 @@ public class AttributeUtils {
 	}
 
 	/**
-	 * Takes an attribute stat and tries to split its values into a list of PotionEffects.
+	 * Takes an attribute stat and tries to split its values into a list of
+	 * PotionEffects.
 	 * 
 	 * @param attr the attribute to split
 	 * @return a list of the new PotionEffects
@@ -89,16 +91,18 @@ public class AttributeUtils {
 				double duration = Double.parseDouble(colSplit[2].trim());
 				PotionEffect pot = new PotionEffect(type, (int) (duration * 20), strength - 1);
 				effects.add(pot);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 			}
 		}
 		return effects;
 	}
 
 	/**
-	 * This method will handle logging the bad effects for both itself and the parsePotionEffects.
-	 * If there was a mistake in the effect it would not pass the PotionEffectType.getByName check,
-	 * and it would break on the parsing.
+	 * This method will handle logging the bad effects for both itself and the
+	 * parsePotionEffects. If there was a mistake in the effect it would not
+	 * pass the PotionEffectType.getByName check, and it would break on the
+	 * parsing.
 	 * 
 	 * @param attr the attribute containing a list of bending effects as values
 	 * @return a list of new attributes representing the bending effects
@@ -130,7 +134,8 @@ public class AttributeUtils {
 				newAttr.setValues(vals);
 				newAttr.setDuration(duration * 1000);
 				effects.add(newAttr);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				Messages.logTimedMessage(Messages.BAD_VALUE + ": " + val, Messages.LOG_DELAY);
 			}
 		}
@@ -138,8 +143,8 @@ public class AttributeUtils {
 	}
 
 	/**
-	 * Decreases the charges on all of the player's items by 1, if the charge type on the item
-	 * matches the Action type.
+	 * Decreases the charges on all of the player's items by 1, if the charge
+	 * type on the item matches the Action type.
 	 * 
 	 * @param player the player to decrease charges
 	 * @param type the action that caused the charge decrease
@@ -164,9 +169,7 @@ public class AttributeUtils {
 			for (String line : lore) {
 				String newLine = line;
 				try {
-					if (line.startsWith(AttributeList.CHARGES_STR)
-							|| (line.startsWith(AttributeList.CLICK_CHARGES_STR) && type == Action.LEFTCLICK)
-							|| (line.startsWith(AttributeList.SNEAK_CHARGES_STR) && type == Action.SHIFT)) {
+					if (line.startsWith(AttributeList.CHARGES_STR) || (line.startsWith(AttributeList.CLICK_CHARGES_STR) && type == Action.LEFTCLICK) || (line.startsWith(AttributeList.SNEAK_CHARGES_STR) && type == Action.SHIFT)) {
 						String start = line.substring(0, line.indexOf(": "));
 						String end = line.substring(line.indexOf(": ") + 1, line.length());
 						end = end.trim();
@@ -176,7 +179,8 @@ public class AttributeUtils {
 						if (val >= 0)
 							newLine = start + ": " + val;
 					}
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 				}
 				newLore.add(newLine);
 			}
@@ -194,8 +198,7 @@ public class AttributeUtils {
 			boolean hasChargesLeft = true;
 			for (String line : newLore) {
 				try {
-					if (line.startsWith(AttributeList.CHARGES_STR) || line.startsWith(AttributeList.CLICK_CHARGES_STR)
-							|| line.startsWith(AttributeList.SNEAK_CHARGES_STR)) {
+					if (line.startsWith(AttributeList.CHARGES_STR) || line.startsWith(AttributeList.CLICK_CHARGES_STR) || line.startsWith(AttributeList.SNEAK_CHARGES_STR)) {
 						String tmpStr = line.substring(line.indexOf(": ") + 1, line.length()).trim();
 						int value = Integer.parseInt(tmpStr);
 						if (value <= 0)
@@ -205,14 +208,16 @@ public class AttributeUtils {
 							break;
 						}
 					}
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 				}
 			}
 
 			/*
-			 * When we go to destroy an item we need to check that there were not multiple items in
-			 * that stack. If there were multiple items then we need to just remove 1 and change the
-			 * lore back to the start.
+			 * When we go to destroy an item we need to check that there were
+			 * not multiple items in that stack. If there were multiple items
+			 * then we need to just remove 1 and change the lore back to the
+			 * start.
 			 */
 			if (!hasChargesLeft && !hasIgnoreDestroyMsg && displayDestroyMsg)
 				player.sendMessage(citem.getDisplayName() + " " + Messages.ITEM_DESTROYED);
@@ -244,9 +249,10 @@ public class AttributeUtils {
 	}
 
 	/**
-	 * Given an attribute with a name of "Air", "Water", "Earth", or "Fire" this method will return
-	 * a list of all the attributes that correspond to that specific element. All of the attributes
-	 * will have a benefit corresponding to the value of the attribute.
+	 * Given an attribute with a name of "Air", "Water", "Earth", or "Fire" this
+	 * method will return a list of all the attributes that correspond to that
+	 * specific element. All of the attributes will have a benefit corresponding
+	 * to the value of the attribute.
 	 * 
 	 * @param attr an attribute with an element as a name
 	 * @return a list of attributes for that element
@@ -256,9 +262,9 @@ public class AttributeUtils {
 	}
 
 	/**
-	 * Given the String "Air", "Water", "Earth", or "Fire" this method will return a list of all the
-	 * attributes that correspond to that specific element. All of the attributes will have a
-	 * benefit of value.
+	 * Given the String "Air", "Water", "Earth", or "Fire" this method will
+	 * return a list of all the attributes that correspond to that specific
+	 * element. All of the attributes will have a benefit of value.
 	 * 
 	 * @param name the name of the element
 	 * @param value the amount of benefit to give
@@ -284,9 +290,9 @@ public class AttributeUtils {
 	}
 
 	/**
-	 * Determines if a player is allowed to use a specific CustomItem, depending on if the
-	 * CustomItem has the "RequireElement" Attribute. If the item has the Attribute then it compares
-	 * the elements to the player's element.
+	 * Determines if a player is allowed to use a specific CustomItem, depending
+	 * on if the CustomItem has the "RequireElement" Attribute. If the item has
+	 * the Attribute then it compares the elements to the player's element.
 	 * 
 	 * @param player the player using the custom item
 	 * @param citem a custom item in the player's inventory
@@ -305,7 +311,8 @@ public class AttributeUtils {
 						allowed = true;
 						break;
 					}
-				} catch (IllegalArgumentException e) {
+				}
+				catch (IllegalArgumentException e) {
 					Messages.logTimedMessage(e.getMessage());
 				}
 			}
@@ -316,9 +323,10 @@ public class AttributeUtils {
 	}
 
 	/**
-	 * Determines if a player is allowed to use a specific CustomItem, depending on if the
-	 * CustomItem has the "RequireWorld" Attribute. If the item has the Attribute then it compares
-	 * the player's current world to any of the item's possible worlds.
+	 * Determines if a player is allowed to use a specific CustomItem, depending
+	 * on if the CustomItem has the "RequireWorld" Attribute. If the item has
+	 * the Attribute then it compares the player's current world to any of the
+	 * item's possible worlds.
 	 * 
 	 * @param player the player using the custom item
 	 * @param citem a custom item in the player's inventory
@@ -336,9 +344,10 @@ public class AttributeUtils {
 	}
 
 	/**
-	 * Determines if a player is allowed to use a specific CustomItem, depending on if the
-	 * CustomItem has the "RequirePermission" Attribute. If the item has the Attribute then it
-	 * compares all of the CustomItem's permissions to see if the player has at least one of them.
+	 * Determines if a player is allowed to use a specific CustomItem, depending
+	 * on if the CustomItem has the "RequirePermission" Attribute. If the item
+	 * has the Attribute then it compares all of the CustomItem's permissions to
+	 * see if the player has at least one of them.
 	 * 
 	 * @param player the player using the custom item
 	 * @param citem a custom item in the player's inventory

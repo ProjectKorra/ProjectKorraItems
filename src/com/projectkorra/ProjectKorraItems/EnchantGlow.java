@@ -1,11 +1,11 @@
 package com.projectkorra.ProjectKorraItems;
 
-import java.lang.reflect.Field;
-
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.enchantments.EnchantmentWrapper;
 import org.bukkit.inventory.ItemStack;
+
+import java.lang.reflect.Field;
 
 public class EnchantGlow extends EnchantmentWrapper {
 	private static Enchantment glow;
@@ -53,14 +53,16 @@ public class EnchantGlow extends EnchantmentWrapper {
 			Field f = Enchantment.class.getDeclaredField("acceptingNew");
 			f.setAccessible(true);
 			f.set(null, true);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		glow = new EnchantGlow(255);
 		try {
 			Enchantment.registerEnchantment(glow);
-		} catch (IllegalArgumentException e) {
+		}
+		catch (IllegalArgumentException e) {
 		}
 
 		return glow;

@@ -1,7 +1,9 @@
 package com.projectkorra.ProjectKorraItems.attribute;
 
-import java.util.ArrayList;
-import java.util.concurrent.ConcurrentHashMap;
+import com.projectkorra.ProjectKorraItems.ItemUtils;
+import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
+import com.projectkorra.ProjectKorraItems.abilityupdater.AbilityUpdater;
+import com.projectkorra.ProjectKorraItems.items.CustomItem;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,18 +19,17 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.projectkorra.ProjectKorraItems.ItemUtils;
-import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
-import com.projectkorra.ProjectKorraItems.abilityupdater.AbilityUpdater;
-import com.projectkorra.ProjectKorraItems.items.CustomItem;
+import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class AttributeListener implements Listener {
 	/** A map of player names that holds their current bending potion effects. **/
 	public static final ConcurrentHashMap<String, ConcurrentHashMap<String, Attribute>> currentBendingEffects = new ConcurrentHashMap<String, ConcurrentHashMap<String, Attribute>>();
 
 	/**
-	 * When the player sneaks we should attempt to let them Glide. The Glider class will handle
-	 * whether or not they can actually glide. Attempt to confirm an ability to decrease charges.
+	 * When the player sneaks we should attempt to let them Glide. The Glider
+	 * class will handle whether or not they can actually glide. Attempt to
+	 * confirm an ability to decrease charges.
 	 * 
 	 * @param event a sneak event
 	 */
@@ -50,8 +51,8 @@ public class AttributeListener implements Listener {
 	}
 
 	/**
-	 * Confirm if an ability was executed via clicking. Also handle specific stats that related to
-	 * left clicking.
+	 * Confirm if an ability was executed via clicking. Also handle specific
+	 * stats that related to left clicking.
 	 * 
 	 * @param event a player animation event
 	 */
@@ -68,7 +69,8 @@ public class AttributeListener implements Listener {
 	}
 
 	/**
-	 * Make a call to allow all consume based affects for the custom item that the player ate.
+	 * Make a call to allow all consume based affects for the custom item that
+	 * the player ate.
 	 * 
 	 * @param event a consume event
 	 */
@@ -80,8 +82,8 @@ public class AttributeListener implements Listener {
 	}
 
 	/**
-	 * Because of the "AirGliderAutomatic" stat, we need to attempt to glide whenever the user
-	 * switches their item.
+	 * Because of the "AirGliderAutomatic" stat, we need to attempt to glide
+	 * whenever the user switches their item.
 	 * 
 	 * @param event item change event
 	 */
@@ -98,14 +100,14 @@ public class AttributeListener implements Listener {
 	}
 
 	/**
-	 * Handles the specific stat "WaterSource" and in the future "MetalSource". These stats cause
-	 * specific temporary items to spawn inside of the players inventory.
+	 * Handles the specific stat "WaterSource" and in the future "MetalSource".
+	 * These stats cause specific temporary items to spawn inside of the players
+	 * inventory.
 	 * 
 	 * @param player the player with the WaterSource stat
 	 * @param attrib the name of the stat "WaterSource" or "MetalSource"
 	 * @param istack the ItemStack that will temporarily spawn
 	 */
-	@SuppressWarnings("deprecation")
 	public void handleItemSource(Player player, String attrib, ItemStack istack) {
 		ConcurrentHashMap<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
 		if (attribs.containsKey(attrib) && attribs.get(attrib) == 1) {
@@ -135,8 +137,8 @@ public class AttributeListener implements Listener {
 	}
 
 	/**
-	 * OnActionEffects are PotionEffects and BendingAffects that get added to the players Attribute
-	 * map for a limited amount of time.
+	 * OnActionEffects are PotionEffects and BendingAffects that get added to
+	 * the players Attribute map for a limited amount of time.
 	 * 
 	 * @param player the player receiving the stat modifications
 	 * @param type the type of action that caused this to trigger

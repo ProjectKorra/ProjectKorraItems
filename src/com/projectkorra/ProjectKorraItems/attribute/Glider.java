@@ -1,6 +1,9 @@
 package com.projectkorra.ProjectKorraItems.attribute;
 
-import java.util.concurrent.ConcurrentHashMap;
+import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
+import com.projectkorra.projectkorra.BendingPlayer;
+import com.projectkorra.projectkorra.Element;
+import com.projectkorra.projectkorra.GeneralMethods;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -9,18 +12,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
-import com.projectkorra.projectkorra.BendingPlayer;
-import com.projectkorra.projectkorra.Element;
-import com.projectkorra.projectkorra.GeneralMethods;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Glider {
 
 	/**
-	 * A Glider is used for the "AirGlide" stat, and it allows users to sore through the air while
-	 * they are sneaking. The glider will persist until the player reaches the ground. Gliders will
-	 * also use up a players charges if the items that they are using have charges. Players must be
-	 * Airbenders to glide.
+	 * A Glider is used for the "AirGlide" stat, and it allows users to sore
+	 * through the air while they are sneaking. The glider will persist until
+	 * the player reaches the ground. Gliders will also use up a players charges
+	 * if the items that they are using have charges. Players must be Airbenders
+	 * to glide.
 	 * 
 	 * @param p the player that will glide
 	 */
@@ -29,10 +30,11 @@ public class Glider {
 	}
 
 	/**
-	 * A Glider is used for the "AirGlide" stat, and it allows users to sore through the air while
-	 * they are sneaking. The glider will persist until the player reaches the ground. Gliders will
-	 * also use up a players charges if the items that they are using have charges. Players must be
-	 * Airbenders to glide.
+	 * A Glider is used for the "AirGlide" stat, and it allows users to sore
+	 * through the air while they are sneaking. The glider will persist until
+	 * the player reaches the ground. Gliders will also use up a players charges
+	 * if the items that they are using have charges. Players must be Airbenders
+	 * to glide.
 	 * 
 	 * @param p the player that will glide
 	 * @param auto if the gliding should start automatically without sneaking
@@ -46,8 +48,8 @@ public class Glider {
 		if (!player.isSneaking() && player.getLocation().getBlock().getType() == Material.AIR && bplayer.hasElement(Element.Air)) {
 
 			/*
-			 * The gliding action will be performed on a separate runnable that will cancel itself
-			 * once it is done.
+			 * The gliding action will be performed on a separate runnable that
+			 * will cancel itself once it is done.
 			 */
 			new BukkitRunnable() {
 				int counter = 0;

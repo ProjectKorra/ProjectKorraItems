@@ -1,8 +1,6 @@
 package com.projectkorra.ProjectKorraItems.items;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
+import com.projectkorra.ProjectKorraItems.attribute.Attribute;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,12 +10,14 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.projectkorra.ProjectKorraItems.attribute.Attribute;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * ItemDisplays are used to display all of the previously created CustomItems when the player uses
- * the "/bi items" command. If the total number of CustomItems becomes too large then the display
- * must use multiple pages.
+ * ItemDisplays are used to display all of the previously created CustomItems
+ * when the player uses the "/bi items" command. If the total number of
+ * CustomItems becomes too large then the display must use multiple pages.
  */
 public class ItemDisplay {
 	public static final ConcurrentHashMap<Player, ItemDisplay> displays = new ConcurrentHashMap<Player, ItemDisplay>();
@@ -32,8 +32,8 @@ public class ItemDisplay {
 	private Inventory prevInv;
 
 	/**
-	 * Creates a new ItemDisplay inventory that will allow the user to cycle through the "/bi items"
-	 * command
+	 * Creates a new ItemDisplay inventory that will allow the user to cycle
+	 * through the "/bi items" command
 	 * 
 	 * @param player the player that this inventory will display for
 	 * @param showStats if the items should have their attributes shown as lore
@@ -54,8 +54,8 @@ public class ItemDisplay {
 	}
 
 	/**
-	 * Creates a new ItemDisplay inventory that will allow the user to cycle through the "/bi items"
-	 * command
+	 * Creates a new ItemDisplay inventory that will allow the user to cycle
+	 * through the "/bi items" command
 	 * 
 	 * @param player the player that this inventory will display for
 	 * @param showStats if the items should have their attributes shown as lore
@@ -65,8 +65,9 @@ public class ItemDisplay {
 	}
 
 	/**
-	 * Creates a new ItemDisplay inventory that will allow the user to cycle through the "/bi items"
-	 * command. The items will not have their stats displayed.
+	 * Creates a new ItemDisplay inventory that will allow the user to cycle
+	 * through the "/bi items" command. The items will not have their stats
+	 * displayed.
 	 * 
 	 * @param player the player that this inventory will display for
 	 */
@@ -75,8 +76,9 @@ public class ItemDisplay {
 	}
 
 	/**
-	 * Parses through all of the previously created CustomItems, and places them into this newly
-	 * formed Inventory. The items will be displayed for the user.
+	 * Parses through all of the previously created CustomItems, and places them
+	 * into this newly formed Inventory. The items will be displayed for the
+	 * user.
 	 */
 	public void createInventory() {
 		if (page < 0)

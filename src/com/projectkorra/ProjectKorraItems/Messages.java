@@ -1,18 +1,22 @@
 package com.projectkorra.ProjectKorraItems;
 
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.bukkit.ChatColor;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 public class Messages {
-	/** logDelay is used to store the times that a message was logged by logTimedMessage **/
+	/**
+	 * logDelay is used to store the times that a message was logged by
+	 * logTimedMessage.
+	 **/
 	public static ConcurrentHashMap<String, Long> logDelay = new ConcurrentHashMap<String, Long>();
 
-	/** the amount of stats that are displayed when calling /bi stats **/
+	/** The amount of stats that are displayed when calling /bi stats **/
 	public static final int LINES_PER_PAGE = 10;
 
 	/**
-	 * the min amount of milliseconds before a message gets logged by logTimedMessage, prevents spam
+	 * The min amount of milliseconds before a message gets logged by
+	 * logTimedMessage, prevents spam
 	 **/
 	public static final long LOG_DELAY = 30000;
 
@@ -54,29 +58,17 @@ public class Messages {
 	public static final String EQUIP_ON = ChatColor.GREEN + "You have equipped";
 	public static final String CANT_EQUIP = ChatColor.RED + "You cannot equip this item.";
 
-	public static final String USAGE = ChatColor.RED + "/bi items " + ChatColor.YELLOW
-			+ "Display all items, click to see their recipes.\n" + ChatColor.RED + "/bi items stats " + ChatColor.YELLOW
-			+ "Display all items and their stats.\n" + ChatColor.RED + "/bi stats <page> " + ChatColor.YELLOW
-			+ "Displays each stat and it's description.\n" + ChatColor.RED + "/bi stats [phrase] <page> " + ChatColor.YELLOW
-			+ "Displays only the stats that contain the phrase.\n" + ChatColor.RED + "/bi equip " + ChatColor.YELLOW
-			+ "Equips the current item so that when you change slots the item will follow.\n" + ChatColor.RED + "/bi give "
-			+ ChatColor.YELLOW + "(OP) send players custom items.";
+	public static final String USAGE = ChatColor.RED + "/bi items " + ChatColor.YELLOW + "Display all items, click to see their recipes.\n" + ChatColor.RED + "/bi items stats " + ChatColor.YELLOW + "Display all items and their stats.\n" + ChatColor.RED + "/bi stats <page> " + ChatColor.YELLOW + "Displays each stat and it's description.\n" + ChatColor.RED + "/bi stats [phrase] <page> " + ChatColor.YELLOW + "Displays only the stats that contain the phrase.\n" + ChatColor.RED + "/bi equip " + ChatColor.YELLOW + "Equips the current item so that when you change slots the item will follow.\n" + ChatColor.RED + "/bi give " + ChatColor.YELLOW + "(OP) send players custom items.";
 
-	public static final String GIVE_USAGE = ChatColor.RED + "/bi give [item] <qty> " + ChatColor.YELLOW
-			+ "Gives yourself a bending item.\n" + ChatColor.RED + "/bi give [item] [player] <qty> " + ChatColor.YELLOW
-			+ "Gives the player a bending item.\n" + ChatColor.RED + "/bi give display " + ChatColor.YELLOW
-			+ "Shows the exact names of all the items.";
+	public static final String GIVE_USAGE = ChatColor.RED + "/bi give [item] <qty> " + ChatColor.YELLOW + "Gives yourself a bending item.\n" + ChatColor.RED + "/bi give [item] [player] <qty> " + ChatColor.YELLOW + "Gives the player a bending item.\n" + ChatColor.RED + "/bi give display " + ChatColor.YELLOW + "Shows the exact names of all the items.";
 
-	public static final String STATS_USAGE = ChatColor.RED + "/bi stats <page> " + ChatColor.YELLOW
-			+ "Displays each stat and it's description.\n" + ChatColor.RED + "/bi stats [phrase] <page> " + ChatColor.YELLOW
-			+ "Displays only the stats that contain the phrase.\n" + ChatColor.RED
-			+ "ex:\n/bi stats Air\n/bi stats Tornado\n/bi stats blast 2";
+	public static final String STATS_USAGE = ChatColor.RED + "/bi stats <page> " + ChatColor.YELLOW + "Displays each stat and it's description.\n" + ChatColor.RED + "/bi stats [phrase] <page> " + ChatColor.YELLOW + "Displays only the stats that contain the phrase.\n" + ChatColor.RED + "ex:\n/bi stats Air\n/bi stats Tornado\n/bi stats blast 2";
 
 	public static final String ITEM_DESTROYED = ChatColor.RED + "has ran out";
 
 	/**
-	 * Logs a message and stores the value in a timer, preventing it from being displayed again for
-	 * a set amount of time.
+	 * Logs a message and stores the value in a timer, preventing it from being
+	 * displayed again for a set amount of time.
 	 * 
 	 * @param msg the message to log
 	 * @param delay the delay between duplicating msg
@@ -89,8 +81,8 @@ public class Messages {
 	}
 
 	/**
-	 * Logs a message and stores the value in a timer, preventing it from being displayed again for
-	 * a set amount of time.
+	 * Logs a message and stores the value in a timer, preventing it from being
+	 * displayed again for a set amount of time.
 	 * 
 	 * @param msg the message to log
 	 * @param delay the delay between duplicating msg

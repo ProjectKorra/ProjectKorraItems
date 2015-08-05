@@ -1,6 +1,10 @@
 package com.projectkorra.ProjectKorraItems;
 
-import java.util.ArrayList;
+import com.projectkorra.ProjectKorraItems.attribute.Attribute;
+import com.projectkorra.ProjectKorraItems.attribute.AttributeList;
+import com.projectkorra.ProjectKorraItems.items.CustomItem;
+import com.projectkorra.ProjectKorraItems.items.ItemDisplay;
+import com.projectkorra.ProjectKorraItems.items.ItemEquip;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -9,11 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import com.projectkorra.ProjectKorraItems.attribute.Attribute;
-import com.projectkorra.ProjectKorraItems.attribute.AttributeList;
-import com.projectkorra.ProjectKorraItems.items.CustomItem;
-import com.projectkorra.ProjectKorraItems.items.ItemDisplay;
-import com.projectkorra.ProjectKorraItems.items.ItemEquip;
+import java.util.ArrayList;
 
 public class CommandManager {
 
@@ -22,13 +22,13 @@ public class CommandManager {
 	}
 
 	/**
-	 * Any command that relates to "/bending items" will be ran through this new CommandExecutor. It
-	 * displays any help information related to a specific command, opens up display inventories,
-	 * and gives items to specific players.
+	 * Any command that relates to "/bending items" will be ran through this new
+	 * CommandExecutor. It displays any help information related to a specific
+	 * command, opens up display inventories, and gives items to specific
+	 * players.
 	 */
 	public void init() {
 		CommandExecutor exe = new CommandExecutor() {
-			@SuppressWarnings("deprecation")
 			@Override
 			public boolean onCommand(CommandSender s, Command c, String label, String[] args) {
 				if (args.length >= 1 && aliasChecker(args[0], Messages.RELOAD_ALIAS)) {
@@ -73,7 +73,8 @@ public class CommandManager {
 							player = (Player) s;
 							try {
 								qty = Integer.parseInt(args[2]);
-							} catch (Exception e) {
+							}
+							catch (Exception e) {
 								// If the qty wasn't parsable then they were attemping to send a
 								// name
 								s.sendMessage(Messages.INVALID_PLAYER);
@@ -85,7 +86,8 @@ public class CommandManager {
 						player = ProjectKorraItems.plugin.getServer().getPlayer(args[2]);
 						try {
 							qty = Integer.parseInt(args[3]);
-						} catch (Exception e) {
+						}
+						catch (Exception e) {
 						}
 					}
 
@@ -106,9 +108,10 @@ public class CommandManager {
 				}
 
 				/*
-				 * Stats "bi stats" lets a user view all of the stats that are currently in
-				 * existence for their version of the plugin. They can also filter out search
-				 * options by using "bi stats <filter>".
+				 * Stats "bi stats" lets a user view all of the stats that are
+				 * currently in existence for their version of the plugin. They
+				 * can also filter out search options by using
+				 * "bi stats <filter>".
 				 */
 				else if (args.length >= 1 && aliasChecker(args[0], Messages.STATS_ALIAS)) {
 					if (!s.hasPermission("bendingitems.command.stats")) {
@@ -120,14 +123,16 @@ public class CommandManager {
 						if (args.length == 2) {
 							try {
 								page = Integer.parseInt(args[1]);
-							} catch (Exception e) {
+							}
+							catch (Exception e) {
 								phrase = args[1];
 							}
 						} else if (args.length >= 3) {
 							phrase = args[1];
 							try {
 								page = Integer.parseInt(args[2]);
-							} catch (Exception e) {
+							}
+							catch (Exception e) {
 							}
 						}
 
@@ -147,9 +152,7 @@ public class CommandManager {
 						page = page < 0 ? 0 : page;
 						page = page > maxPage ? maxPage : page;
 						int pageIndex = page * Messages.LINES_PER_PAGE;
-						s.sendMessage(ChatColor.YELLOW + " ---- " + ChatColor.GOLD + "Stats " + ChatColor.YELLOW + "-- "
-								+ ChatColor.GOLD + "Page " + ChatColor.RED + (page + 1) + ChatColor.GOLD + "/" + ChatColor.RED
-								+ (maxPage + 1) + ChatColor.YELLOW + " ----");
+						s.sendMessage(ChatColor.YELLOW + " ---- " + ChatColor.GOLD + "Stats " + ChatColor.YELLOW + "-- " + ChatColor.GOLD + "Page " + ChatColor.RED + (page + 1) + ChatColor.GOLD + "/" + ChatColor.RED + (maxPage + 1) + ChatColor.YELLOW + " ----");
 						for (int i = pageIndex; i < pageIndex + Messages.LINES_PER_PAGE; i++) {
 							if (i >= 0 && i < attribs.size()) {
 								Attribute att = attribs.get(i);
@@ -187,9 +190,10 @@ public class CommandManager {
 				}
 
 				/*
-				 * EQUIP "bi equip" lets a user "equip" a custom item. Whenever a player switches
-				 * slots while holding the item then the item will continue to follow the player's
-				 * slot, as long as the slot is empty.
+				 * EQUIP "bi equip" lets a user "equip" a custom item. Whenever
+				 * a player switches slots while holding the item then the item
+				 * will continue to follow the player's slot, as long as the
+				 * slot is empty.
 				 */
 				else if (args.length >= 1 && aliasChecker(args[0], Messages.EQUIP_ALIAS)) {
 					if (!s.hasPermission("bendingitems.command.equip")) {

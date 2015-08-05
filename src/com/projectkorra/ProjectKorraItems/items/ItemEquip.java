@@ -1,6 +1,7 @@
 package com.projectkorra.ProjectKorraItems.items;
 
-import java.util.concurrent.ConcurrentHashMap;
+import com.projectkorra.ProjectKorraItems.Messages;
+import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -8,14 +9,15 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.projectkorra.ProjectKorraItems.Messages;
-import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * ItemEquip handles allowing the player to use the "bi equip" command. It focuses an item so that
- * whenever the player changes their item slot the focused item will follow.
+ * ItemEquip handles allowing the player to use the "bi equip" command. It
+ * focuses an item so that whenever the player changes their item slot the
+ * focused item will follow.
  * 
- * If a player uses the equip command a second time then the previous item will stop being followed.
+ * If a player uses the equip command a second time then the previous item will
+ * stop being followed.
  */
 public class ItemEquip {
 	public static final ConcurrentHashMap<String, ItemEquip> INSTANCES = new ConcurrentHashMap<String, ItemEquip>();
@@ -25,7 +27,8 @@ public class ItemEquip {
 	private Player player;
 
 	/**
-	 * Creates a new ItemEquip for the player or removes a pre-existing ItemEquip for player.
+	 * Creates a new ItemEquip for the player or removes a pre-existing
+	 * ItemEquip for player.
 	 * 
 	 * @param player the player to add or remove an ItemEquip
 	 */
@@ -54,8 +57,8 @@ public class ItemEquip {
 	}
 
 	/**
-	 * Attempts to move an equipped item to the newSlot, only if the item is currently in the
-	 * players inventory.
+	 * Attempts to move an equipped item to the newSlot, only if the item is
+	 * currently in the players inventory.
 	 * 
 	 * @param player the player with an equipped item
 	 * @param prevSlot the previous item slot
@@ -78,8 +81,8 @@ public class ItemEquip {
 		}
 
 		/*
-		 * We update itemEq.item everytime because the lore may be constantly changing if the item
-		 * had charges on it.
+		 * We update itemEq.item everytime because the lore may be constantly
+		 * changing if the item had charges on it.
 		 */
 		if (inv.contains(itemEq.item)) {
 			int foundSlot = inv.first(itemEq.item);
@@ -96,8 +99,7 @@ public class ItemEquip {
 			inv.setItem(foundSlot, new ItemStack(Material.AIR));
 
 			return true;
-		} else if (prevSlotItem != null && prevSlotItem.hasItemMeta() && prevSlotItem.getItemMeta().hasDisplayName()
-				&& prevSlotItem.getItemMeta().getDisplayName().equals(itemEq.customItem.getDisplayName())) {
+		} else if (prevSlotItem != null && prevSlotItem.hasItemMeta() && prevSlotItem.getItemMeta().hasDisplayName() && prevSlotItem.getItemMeta().getDisplayName().equals(itemEq.customItem.getDisplayName())) {
 
 			final ItemStack prevItem = inv.getItem(prevSlot);
 			final ItemEquip fitemEq = itemEq;

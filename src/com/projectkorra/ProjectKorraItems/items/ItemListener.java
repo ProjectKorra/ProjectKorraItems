@@ -1,6 +1,7 @@
 package com.projectkorra.ProjectKorraItems.items;
 
-import java.util.ArrayList;
+import com.projectkorra.ProjectKorraItems.Messages;
+import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -19,15 +20,15 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.projectkorra.ProjectKorraItems.Messages;
-import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
+import java.util.ArrayList;
 
 public class ItemListener implements Listener {
 
 	/**
-	 * When the player places an item into a crafting table we need to check if the current crafting
-	 * table contains the correct ingredients for a custom item. If they have placed the items
-	 * correctly then we will place a custom item into the resulting inventory slot.
+	 * When the player places an item into a crafting table we need to check if
+	 * the current crafting table contains the correct ingredients for a custom
+	 * item. If they have placed the items correctly then we will place a custom
+	 * item into the resulting inventory slot.
 	 * 
 	 * @param event the click event
 	 */
@@ -42,7 +43,7 @@ public class ItemListener implements Listener {
 			return;
 
 		new BukkitRunnable() {
-			@SuppressWarnings({ "unchecked", "deprecation" })
+			@SuppressWarnings("unchecked")
 			public void run() {
 				Player player = (Player) humEnt;
 				ItemStack[] tempInvItems = fevent.getInventory().getContents();
@@ -52,8 +53,8 @@ public class ItemListener implements Listener {
 					originalInvItems.add(istack);
 
 				/*
-				 * Remove the resultant slot because we don't wish to consider it for the purpose of
-				 * calculating the recipe.
+				 * Remove the resultant slot because we don't wish to consider
+				 * it for the purpose of calculating the recipe.
 				 */
 				originalInvItems.remove(0);
 				ArrayList<ItemStack> invItemsClone = (ArrayList<ItemStack>) originalInvItems.clone();
@@ -72,8 +73,9 @@ public class ItemListener implements Listener {
 						for (int j = 0; j < invItemsClone.size(); j++) {
 
 							/*
-							 * The index of a perfectly shaped recipe will always stay at 0 because
-							 * the ingredients are being removed as we attempt to cycle through the
+							 * The index of a perfectly shaped recipe will
+							 * always stay at 0 because the ingredients are
+							 * being removed as we attempt to cycle through the
 							 * list.
 							 */
 							if (i > 0 || j > 0)
@@ -86,8 +88,7 @@ public class ItemListener implements Listener {
 								i--;
 								j--;
 								break;
-							} else if (ing.getMaterial() == item.getType() && item.getAmount() >= ing.getQuantity()
-									&& item.getDurability() == ing.getDamage()) {
+							} else if (ing.getMaterial() == item.getType() && item.getAmount() >= ing.getQuantity() && item.getDurability() == ing.getDamage()) {
 								if (item.getAmount() / ing.getQuantity() < maxQuantity)
 									maxQuantity = item.getAmount() / ing.getQuantity();
 								recipeClone.remove(i);
@@ -100,9 +101,10 @@ public class ItemListener implements Listener {
 					}
 
 					/*
-					 * Once there are no more recipes left in this cloned list then we know that the
-					 * recipe was correct, we can now determine whether or not we let the user
-					 * receive the item.
+					 * Once there are no more recipes left in this cloned list
+					 * then we know that the recipe was correct, we can now
+					 * determine whether or not we let the user receive the
+					 * item.
 					 */
 					if (recipeClone.size() == 0 && invItemsClone.size() == 0) {
 						if (citem.isUnshapedRecipe() || validShape) {
@@ -120,17 +122,16 @@ public class ItemListener implements Listener {
 	}
 
 	/**
-	 * Once the player attempts to grab a newly formed custom item, we need to place the item in
-	 * their hand and then calculate the remaining amount of items that will stay inside of the
-	 * crafting table.
+	 * Once the player attempts to grab a newly formed custom item, we need to
+	 * place the item in their hand and then calculate the remaining amount of
+	 * items that will stay inside of the crafting table.
 	 * 
 	 * @param event the click event
 	 */
 	@SuppressWarnings("unchecked")
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onGrabResultItem(InventoryClickEvent event) {
-		if (event.isCancelled() || event.getSlotType() != SlotType.RESULT || event.getSlot() != 0
-				|| event.getInventory().getType() != InventoryType.WORKBENCH)
+		if (event.isCancelled() || event.getSlotType() != SlotType.RESULT || event.getSlot() != 0 || event.getInventory().getType() != InventoryType.WORKBENCH)
 			return;
 
 		HumanEntity humEnt = event.getWhoClicked();
@@ -149,8 +150,8 @@ public class ItemListener implements Listener {
 		int amountCreated = curItem.getAmount() / citem.getQuantity();
 
 		/*
-		 * Once a player clicks the resultant item we need to calculate the amount of items that
-		 * will remain in the crafting bench.
+		 * Once a player clicks the resultant item we need to calculate the
+		 * amount of items that will remain in the crafting bench.
 		 */
 		ItemStack[] tempInvItems = event.getInventory().getContents();
 		ArrayList<RecipeIngredient> recipeClone = (ArrayList<RecipeIngredient>) citem.getRecipe().clone();
@@ -194,11 +195,10 @@ public class ItemListener implements Listener {
 		final Player fplayer = player;
 
 		/*
-		 * Update the players inventory on a short delay so that they see the newly calculated
-		 * changes to each ItemStack in the inventory.
+		 * Update the players inventory on a short delay so that they see the
+		 * newly calculated changes to each ItemStack in the inventory.
 		 */
 		new BukkitRunnable() {
-			@SuppressWarnings("deprecation")
 			public void run() {
 				fevent.getInventory().setContents(finalItems);
 				fplayer.updateInventory();
@@ -207,9 +207,10 @@ public class ItemListener implements Listener {
 	}
 
 	/**
-	 * When the player clicks in an inventory it is possible that they are viewing an inventory used
-	 * to display the custom items with /bi items. If they click in one of these inventorys then we
-	 * need to handle stuff differently.
+	 * When the player clicks in an inventory it is possible that they are
+	 * viewing an inventory used to display the custom items with /bi items. If
+	 * they click in one of these inventorys then we need to handle stuff
+	 * differently.
 	 * 
 	 * @param event the click event
 	 */
@@ -236,17 +237,17 @@ public class ItemListener implements Listener {
 		boolean hasPerm = player.hasPermission("bendingitems.command.give");
 
 		/*
-		 * If they have permissions and right click, they are probably holding an item
+		 * If they have permissions and right click, they are probably holding
+		 * an item
 		 */
-		if (hasPerm && event.getClick() == ClickType.RIGHT && player.getItemOnCursor().getType() != Material.AIR
-				&& !disp.isShowStats()) {
+		if (hasPerm && event.getClick() == ClickType.RIGHT && player.getItemOnCursor().getType() != Material.AIR && !disp.isShowStats()) {
 			event.setCancelled(false);
 			return;
 		}
 
 		/*
-		 * If the player clicks a prev or next button then we need to regenerate the inventory using
-		 * items from the next or previous page.
+		 * If the player clicks a prev or next button then we need to regenerate
+		 * the inventory using items from the next or previous page.
 		 */
 		ItemStack curItem = event.getCurrentItem();
 		if (curItem == null)
@@ -273,7 +274,8 @@ public class ItemListener implements Listener {
 			return;
 
 		/*
-		 * If they right clicked then they might be able to grab the item or place one down
+		 * If they right clicked then they might be able to grab the item or
+		 * place one down
 		 */
 		if (hasPerm && event.getClick() == ClickType.RIGHT && !disp.isShowStats()) {
 			player.setItemOnCursor(citem.generateItem());
@@ -295,8 +297,9 @@ public class ItemListener implements Listener {
 		recInv.setItem(18, ItemDisplay.PREV_BUTTON);
 
 		/*
-		 * By closing the inventory onCloseDisplayInv is going to remove this ItemDisplay from the
-		 * map. Since we are going to reuse this ItemDisplay, we need to add it back;
+		 * By closing the inventory onCloseDisplayInv is going to remove this
+		 * ItemDisplay from the map. Since we are going to reuse this
+		 * ItemDisplay, we need to add it back;
 		 */
 		ItemDisplay.displays.put(player, disp);
 		disp.setInventory(recInv);
@@ -305,7 +308,8 @@ public class ItemListener implements Listener {
 	}
 
 	/**
-	 * When the inventory closes we need to remove this instance from the ItemDisplay.displays map.
+	 * When the inventory closes we need to remove this instance from the
+	 * ItemDisplay.displays map.
 	 * 
 	 * @param event the close event
 	 */
@@ -325,8 +329,8 @@ public class ItemListener implements Listener {
 	}
 
 	/**
-	 * We can't allow users to place custom items into an anvil, if they rename the item it may
-	 * cause it to break.
+	 * We can't allow users to place custom items into an anvil, if they rename
+	 * the item it may cause it to break.
 	 * 
 	 * @param event the click event
 	 */
@@ -352,8 +356,9 @@ public class ItemListener implements Listener {
 	}
 
 	/**
-	 * When a player changes their currently held item, we need to check if the item was being
-	 * tracked by an ItemEquip, so we will call ItemEquip.updatePlayerSlot
+	 * When a player changes their currently held item, we need to check if the
+	 * item was being tracked by an ItemEquip, so we will call
+	 * ItemEquip.updatePlayerSlot
 	 * 
 	 * @param event the item change event
 	 */
