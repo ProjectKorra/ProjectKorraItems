@@ -1,8 +1,10 @@
 package com.projectkorra.ProjectKorraItems.attribute;
 
-import java.util.concurrent.ConcurrentHashMap;
+import com.projectkorra.ProjectKorraItems.ElementUtils;
+import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
+import com.projectkorra.projectkorra.GeneralMethods;
+import com.projectkorra.projectkorra.util.ParticleEffect;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -10,18 +12,16 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
 
-import com.projectkorra.ProjectKorraItems.ElementUtils;
-import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
-import com.projectkorra.projectkorra.GeneralMethods;
-import com.projectkorra.projectkorra.util.ParticleEffect;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Grappling Hooks let the player grab onto blocks and fling themselves toward a destination
- * location. They can cause a fling to occur by left clicking, or they can hold sneak to slowly
- * climb the Grappling Hook, causing them to slowly ascend to the destination.
+ * Grappling Hooks let the player grab onto blocks and fling themselves toward a
+ * destination location. They can cause a fling to occur by left clicking, or
+ * they can hold sneak to slowly climb the Grappling Hook, causing them to
+ * slowly ascend to the destination.
  * 
- * TODO: This class is unfinished due to some issues with making the particle animations realistic
- * for a grappling hook.
+ * TODO: This class is unfinished due to some issues with making the particle
+ * animations realistic for a grappling hook.
  */
 public class GrapplingHook {
 
@@ -46,8 +46,8 @@ public class GrapplingHook {
 	private double red, green, blue;
 
 	/**
-	 * Attempt to create a new Grappling Hook, fling a currently existing grappling hook, or retract
-	 * a hook, all depending on the type of action.
+	 * Attempt to create a new Grappling Hook, fling a currently existing
+	 * grappling hook, or retract a hook, all depending on the type of action.
 	 * 
 	 * @param player the player that used a grappling hook
 	 * @param action either Action.SHIFT, or Action.LEFTCLICK
@@ -75,9 +75,10 @@ public class GrapplingHook {
 	}
 
 	/**
-	 * The GrapplingHookTask is the manipulates the specific instance of a GrapplingHook after it
-	 * has been initially created. This task does its action based on the State of the GrapplingHook
-	 * that created this task. If that variable is changed then this task will follow in turn.
+	 * The GrapplingHookTask is the manipulates the specific instance of a
+	 * GrapplingHook after it has been initially created. This task does its
+	 * action based on the State of the GrapplingHook that created this task. If
+	 * that variable is changed then this task will follow in turn.
 	 */
 	public class GrapplingHookTask extends BukkitRunnable {
 		GrapplingHook hook;
@@ -92,8 +93,7 @@ public class GrapplingHook {
 				return;
 			}
 			if (currentLoc != null) {
-				if (!player.getWorld().equals(currentLoc.getWorld())
-						|| currentLoc.distanceSquared(player.getEyeLocation()) > Math.pow(range, 2)) {
+				if (!player.getWorld().equals(currentLoc.getWorld()) || currentLoc.distanceSquared(player.getEyeLocation()) > Math.pow(range, 2)) {
 					cancel();
 					return;
 				}
@@ -105,13 +105,12 @@ public class GrapplingHook {
 				currentLoc = player.getEyeLocation();
 			} else if (state == State.SHOOTING) {
 				/*
-				 * Use an iterator in case the speed value is too big, it would normally cause
-				 * blocks to be skipped if we just jumped directly.
+				 * Use an iterator in case the speed value is too big, it would
+				 * normally cause blocks to be skipped if we just jumped
+				 * directly.
 				 */
-				playAnimation(player.getEyeLocation().add(0, -0.5, 0), currentLoc, 1, (float) 0.1, (float) red, (float) green,
-						(float) blue);
-				BlockIterator iter = new BlockIterator(currentLoc.getWorld(), currentLoc.toVector(), direction, 0,
-						(int) speed + 1);
+				playAnimation(player.getEyeLocation().add(0, -0.5, 0), currentLoc, 1, (float) 0.1, (float) red, (float) green, (float) blue);
+				BlockIterator iter = new BlockIterator(currentLoc.getWorld(), currentLoc.toVector(), direction, 0, (int) speed + 1);
 				currentLoc = currentLoc.add(direction.clone().multiply(speed));
 				while (iter.hasNext()) {
 					Block block = iter.next();
@@ -122,8 +121,7 @@ public class GrapplingHook {
 					}
 				}
 			} else if (state == State.HOOKED) {
-				playAnimation(player.getEyeLocation().add(0, -0.5, 0), currentLoc, 1, (float) 0.1, (float) red, (float) green,
-						(float) blue);
+				playAnimation(player.getEyeLocation().add(0, -0.5, 0), currentLoc, 1, (float) 0.1, (float) red, (float) green, (float) blue);
 			}
 
 		}

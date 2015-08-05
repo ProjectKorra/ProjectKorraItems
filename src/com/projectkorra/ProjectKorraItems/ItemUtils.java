@@ -1,7 +1,8 @@
 package com.projectkorra.ProjectKorraItems;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.projectkorra.ProjectKorraItems.attribute.AttributeList;
+import com.projectkorra.ProjectKorraItems.attribute.AttributeUtils;
+import com.projectkorra.ProjectKorraItems.items.CustomItem;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -9,10 +10,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.projectkorra.ProjectKorraItems.attribute.Attribute;
-import com.projectkorra.ProjectKorraItems.attribute.AttributeList;
-import com.projectkorra.ProjectKorraItems.attribute.AttributeUtils;
-import com.projectkorra.ProjectKorraItems.items.CustomItem;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemUtils {
 
@@ -31,9 +30,10 @@ public class ItemUtils {
 	}
 
 	/**
-	 * Returns a list of the players armor and in hand item, ONLY if the item is usable for the
-	 * specific player. If the item has the "HoldOnly", "WearOnly", or "RequireElement" stat, then
-	 * this method may ignore some items.
+	 * Returns a list of the players armor and in hand item, ONLY if the item is
+	 * usable for the specific player. If the item has the "HoldOnly",
+	 * "WearOnly", or "RequireElement" stat, then this method may ignore some
+	 * items.
 	 * 
 	 * @param player the player that has equipment
 	 * @return a list of the equipment
@@ -89,7 +89,8 @@ public class ItemUtils {
 	}
 
 	/**
-	 * Checks if an item has a usable amount of charges, or doesn't require charges at all.
+	 * Checks if an item has a usable amount of charges, or doesn't require
+	 * charges at all.
 	 * 
 	 * @param item the custom item
 	 * @return true if the item has a usable amount of charges, or no charges
@@ -98,8 +99,7 @@ public class ItemUtils {
 		boolean validCharges = true;
 		try {
 			for (String line : item.getItemMeta().getLore()) {
-				if (line.startsWith(AttributeList.CHARGES_STR) || line.startsWith(AttributeList.CLICK_CHARGES_STR)
-						|| line.startsWith(AttributeList.SNEAK_CHARGES_STR)) {
+				if (line.startsWith(AttributeList.CHARGES_STR) || line.startsWith(AttributeList.CLICK_CHARGES_STR) || line.startsWith(AttributeList.SNEAK_CHARGES_STR)) {
 					String tmpStr = line.substring(line.indexOf(": ") + 1, line.length()).trim();
 					int value = Integer.parseInt(tmpStr);
 					if (value <= 0)
@@ -110,7 +110,8 @@ public class ItemUtils {
 					}
 				}
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 		}
 		return validCharges;
 	}

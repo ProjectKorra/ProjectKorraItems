@@ -1,13 +1,13 @@
 package com.projectkorra.ProjectKorraItems;
 
+import com.projectkorra.ProjectKorraItems.attribute.Attribute;
+import com.projectkorra.ProjectKorraItems.items.CustomItem;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
-
-import com.projectkorra.ProjectKorraItems.attribute.Attribute;
-import com.projectkorra.ProjectKorraItems.items.CustomItem;
 
 public class ConfigManager {
 
@@ -23,8 +23,7 @@ public class ConfigManager {
 	public static final String AMT_PREF = "Amount:";
 	public static final String ATTR_PREF = "Stats:";
 	public static final String GLOW_PREF = "Glow:";
-	public static final String[] PREFIXES = { ITEM_PREF, DNAME_PREF, NAME_PREF, LORE_PREF, SHAPED_RECIPE_PREF,
-			UNSHAPED_RECIPE_PREF, MATERIAL_PREF, DURA_PREF, AMT_PREF, ATTR_PREF, GLOW_PREF };
+	public static final String[] PREFIXES = { ITEM_PREF, DNAME_PREF, NAME_PREF, LORE_PREF, SHAPED_RECIPE_PREF, UNSHAPED_RECIPE_PREF, MATERIAL_PREF, DURA_PREF, AMT_PREF, ATTR_PREF, GLOW_PREF };
 
 	public ConfigManager() {
 		CustomItem.items.clear();
@@ -42,7 +41,8 @@ public class ConfigManager {
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader(PATH));
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e) {
 			ProjectKorraItems.log.info(Messages.NO_CONFIG);
 			return configStr;
 		}
@@ -56,13 +56,16 @@ public class ConfigManager {
 				line = br.readLine();
 			}
 			configStr = sb.toString();
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			ProjectKorraItems.log.info(Messages.BAD_FILE);
 			return configStr;
-		} finally {
+		}
+		finally {
 			try {
 				br.close();
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				ProjectKorraItems.log.info(Messages.BAD_FILE);
 				return configStr;
 			}
@@ -71,8 +74,8 @@ public class ConfigManager {
 	}
 
 	/**
-	 * Uses a string that represents the configuration file to parse through all of the items and
-	 * create instances of CustomItems.
+	 * Uses a string that represents the configuration file to parse through all
+	 * of the items and create instances of CustomItems.
 	 * 
 	 * @param configStr a string version of the config.yml
 	 */
@@ -119,7 +122,8 @@ public class ConfigManager {
 								newItem.updateQuantity(tmp);
 							else if (prefix.equalsIgnoreCase(GLOW_PREF))
 								newItem.updateGlow(tmp);
-						} catch (Exception e) {
+						}
+						catch (Exception e) {
 							ProjectKorraItems.log.info(Messages.BAD_PREFIX + ": " + prefix);
 							invalid = false;
 						}
@@ -142,7 +146,8 @@ public class ConfigManager {
 						Attribute newAtt = new Attribute(att.getName());
 						newAtt.getValues().addAll(Arrays.asList(commaSplit));
 						newItem.getAttributes().add(newAtt);
-					} catch (Exception e) {
+					}
+					catch (Exception e) {
 						ProjectKorraItems.log.info(Messages.BAD_PREFIX + ": " + s);
 						invalid = false;
 					}

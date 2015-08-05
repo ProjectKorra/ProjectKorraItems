@@ -1,8 +1,10 @@
 package com.projectkorra.ProjectKorraItems.items;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
+import com.projectkorra.ProjectKorraItems.EnchantGlow;
+import com.projectkorra.ProjectKorraItems.Messages;
+import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
+import com.projectkorra.ProjectKorraItems.attribute.Attribute;
+import com.projectkorra.ProjectKorraItems.attribute.AttributeList;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -11,11 +13,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
-import com.projectkorra.ProjectKorraItems.EnchantGlow;
-import com.projectkorra.ProjectKorraItems.Messages;
-import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
-import com.projectkorra.ProjectKorraItems.attribute.Attribute;
-import com.projectkorra.ProjectKorraItems.attribute.AttributeList;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class CustomItem {
 	public static ConcurrentHashMap<String, CustomItem> items = new ConcurrentHashMap<String, CustomItem>();
@@ -97,7 +97,8 @@ public class CustomItem {
 	public void updateQuantity(String s) {
 		try {
 			quantity = Integer.parseInt(s);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			valid = false;
 			ProjectKorraItems.log.info(Messages.BAD_QUANTITY + ": " + toString());
 		}
@@ -106,7 +107,8 @@ public class CustomItem {
 	public void updateDamage(String s) {
 		try {
 			damage = (short) Integer.parseInt(s);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			valid = false;
 			ProjectKorraItems.log.info(Messages.BAD_DAMAGE + ": " + toString());
 		}
@@ -115,7 +117,8 @@ public class CustomItem {
 	public void updateGlow(String s) {
 		try {
 			glow = Boolean.parseBoolean(s);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			valid = false;
 			ProjectKorraItems.log.info(Messages.BAD_GLOW + ": " + toString());
 		}
@@ -132,7 +135,8 @@ public class CustomItem {
 				if (mat == null)
 					try {
 						mat = Material.getMaterial(Integer.parseInt(colons[0]));
-					} catch (NumberFormatException e) {
+					}
+					catch (NumberFormatException e) {
 					}
 				int quantity = 1;
 				short damage = 0;
@@ -149,7 +153,8 @@ public class CustomItem {
 			}
 			while (recipe.size() < 9)
 				recipe.add(new RecipeIngredient(Material.AIR));
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			ProjectKorraItems.log.info(Messages.BAD_RECIPE + ": " + s);
 			valid = false;
 		}
@@ -189,17 +194,18 @@ public class CustomItem {
 					tempLore.add(AttributeList.CLICK_CHARGES_STR + Integer.parseInt(attr.getValues().get(0)));
 				else if (attr.getName().equalsIgnoreCase("SneakCharges"))
 					tempLore.add(AttributeList.SNEAK_CHARGES_STR + Integer.parseInt(attr.getValues().get(0)));
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 			}
 
 			try {
 				if (attr.getName().equalsIgnoreCase("LeatherColor")) {
 					LeatherArmorMeta lmeta = (LeatherArmorMeta) meta;
-					lmeta.setColor(Color.fromRGB(Integer.parseInt(attr.getValues().get(0).trim()),
-							Integer.parseInt(attr.getValues().get(1).trim()), Integer.parseInt(attr.getValues().get(2).trim())));
+					lmeta.setColor(Color.fromRGB(Integer.parseInt(attr.getValues().get(0).trim()), Integer.parseInt(attr.getValues().get(1).trim()), Integer.parseInt(attr.getValues().get(2).trim())));
 					meta = lmeta;
 				}
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 			}
 		}
 
@@ -212,8 +218,8 @@ public class CustomItem {
 	}
 
 	/**
-	 * Checks if a customitem has a specific attribute, and also that the attribute has a boolean
-	 * value of true.
+	 * Checks if a customitem has a specific attribute, and also that the
+	 * attribute has a boolean value of true.
 	 * 
 	 * If the value is false, or it was not found, then this returns false.
 	 * 
@@ -270,7 +276,8 @@ public class CustomItem {
 	}
 
 	/**
-	 * Given an attribute name, returns the attribute if this item has it, else returns null.
+	 * Given an attribute name, returns the attribute if this item has it, else
+	 * returns null.
 	 * 
 	 * @param attrName the name of the attribute
 	 * @return an attribute or null
@@ -338,8 +345,7 @@ public class CustomItem {
 
 	@Override
 	public String toString() {
-		return "CustomItem [name=" + name + ", displayName=" + displayName + ", lore=" + lore + ", material=" + material
-				+ ", quantity=" + quantity + ", damage=" + damage + ", recipe=" + recipe + ", glow=" + glow + "]";
+		return "CustomItem [name=" + name + ", displayName=" + displayName + ", lore=" + lore + ", material=" + material + ", quantity=" + quantity + ", damage=" + damage + ", recipe=" + recipe + ", glow=" + glow + "]";
 	}
 
 	public static String colorizeString(String s) {

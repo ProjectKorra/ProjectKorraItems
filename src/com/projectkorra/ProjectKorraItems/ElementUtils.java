@@ -1,14 +1,14 @@
 package com.projectkorra.ProjectKorraItems;
 
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-
 import com.projectkorra.projectkorra.BendingPlayer;
 import com.projectkorra.projectkorra.GeneralMethods;
 import com.projectkorra.projectkorra.airbending.AirMethods;
 import com.projectkorra.projectkorra.earthbending.EarthMethods;
 import com.projectkorra.projectkorra.firebending.FireMethods;
 import com.projectkorra.projectkorra.waterbending.WaterMethods;
+
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
 public class ElementUtils {
 	/**
