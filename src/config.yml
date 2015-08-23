@@ -14,7 +14,7 @@ Item:
     Durability: 14
     Lore: <&c>This wool belongs to the Fire Nation<n><&c>Use with care!
     Glow: true
-    UnshapedRecipe: WOOL, WOOL:3:14, WOOL
+    UnshapedRecipe: WOOL, WOOL:3:14, WOOL, example1:3
 Item:
     Name: example3
     DisplayName: <&2>Earth <&a>Walkers
@@ -34,6 +34,9 @@ Item:
         Charges: 20
         BlazeRange: 30
         DestroyAfterCharges: true
+        RequireElement: fire
+        RequireWorld: world
+        ParticleEffects: flame:5:100:10:100
 Item:
     Name: example5
     DisplayName: <&9>Azula Stone
@@ -43,7 +46,9 @@ Item:
         SneakCharges: 1
         DestroyAfterCharges: true
         IgnoreDestroyMessage: true
+        AllowFromInventory: true
         LightningChargeTime: -300
+        ParticleEffects: magiccrit:15:50:10:0
 Item:
     Name: example6
     DisplayName: <&2>Cactus Juice
