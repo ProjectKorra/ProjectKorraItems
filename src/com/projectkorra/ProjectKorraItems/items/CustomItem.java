@@ -15,6 +15,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CustomItem {
@@ -124,35 +125,55 @@ public class CustomItem {
 		}
 	}
 
+	/**
+	 * Updates this CustomItem with a new Recipe. The recipe will consist of
+	 * comma and colon separated entries to define the recipe ingredients. For
+	 * example: <i>UnshapedRecipe: WOOL, WOOL:3:14, WOOL</i> Recipe ingredients
+	 * can be both Material and other CustomItems.
+	 * 
+	 * @param s
+	 * @param customItemNames
+	 */
 	@SuppressWarnings("deprecation")
-	public void updateRecipe(String s) {
+	public void updateRecipe(String s, Set<String> customItemNames) {
 		try {
 			s = s.replaceAll(" ", "");
 			String[] commas = s.split(",");
+
 			for (String comma : commas) {
 				String[] colons = comma.split(":");
 				Material mat = Material.getMaterial(colons[0]);
-				if (mat == null)
+
+				// Try to get the Material by id
+				if (mat == null) {
 					try {
 						mat = Material.getMaterial(Integer.parseInt(colons[0]));
 					}
 					catch (NumberFormatException e) {
 					}
+				}
+
 				int quantity = 1;
 				short damage = 0;
-				if (mat == null) {
-					ProjectKorraItems.log.info(Messages.BAD_RECIPE_MAT + ": " + colons[0]);
-					valid = false;
-					continue;
-				}
 				if (colons.length > 1)
 					quantity = Integer.parseInt(colons[1]);
 				if (colons.length > 2)
 					damage = (short) Integer.parseInt(colons[2]);
-				recipe.add(new RecipeIngredient(mat, quantity, damage));
+
+				// The material is either invalid or it is a custom item name
+				if (mat != null) {
+					recipe.add(new RecipeIngredient(mat, quantity, damage));
+				} else if (customItemNames.contains(colons[0])) {
+					recipe.add(new RecipeIngredient(colons[0], quantity, damage));
+				} else {
+					ProjectKorraItems.log.info(Messages.BAD_RECIPE_MAT + ": " + colons[0]);
+					valid = false;
+					continue;
+				}
 			}
-			while (recipe.size() < 9)
+			while (recipe.size() < 9) {
 				recipe.add(new RecipeIngredient(Material.AIR));
+			}
 		}
 		catch (Exception e) {
 			ProjectKorraItems.log.info(Messages.BAD_RECIPE + ": " + s);
@@ -218,7 +239,7 @@ public class CustomItem {
 	}
 
 	/**
-	 * Checks if a customitem has a specific attribute, and also that the
+	 * Checks if a CustomItem has a specific attribute, and also that the
 	 * attribute has a boolean value of true.
 	 * 
 	 * If the value is false, or it was not found, then this returns false.
@@ -345,7 +366,7 @@ public class CustomItem {
 
 	@Override
 	public String toString() {
-		return "CustomItem [name=" + name + ", displayName=" + displayName + ", lore=" + lore + ", material=" + material + ", quantity=" + quantity + ", damage=" + damage + ", recipe=" + recipe + ", glow=" + glow + "]";
+		return "CustomItem [name=" + name + ", displayName=" + displayName + ", lore=" + lore + ", material=" + material + ", quantity=" + quantity + ", damage=" + damage;
 	}
 
 	public static String colorizeString(String s) {
@@ -366,9 +387,9 @@ public class CustomItem {
 		return null;
 	}
 
-	public static CustomItem getCustomItem(String s) {
-		if (items.containsKey(s.toLowerCase()))
-			return items.get(s.toLowerCase());
+	public static CustomItem getCustomItem(String itemName) {
+		if (items.containsKey(itemName.toLowerCase()))
+			return items.get(itemName.toLowerCase());
 		return null;
 	}
 }

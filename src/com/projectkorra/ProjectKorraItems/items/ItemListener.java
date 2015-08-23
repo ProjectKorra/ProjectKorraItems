@@ -43,7 +43,7 @@ public class ItemListener implements Listener {
 			return;
 
 		new BukkitRunnable() {
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "deprecation" })
 			public void run() {
 				Player player = (Player) humEnt;
 				ItemStack[] tempInvItems = fevent.getInventory().getContents();
@@ -82,20 +82,29 @@ public class ItemListener implements Listener {
 								validShape = false;
 
 							ItemStack item = invItemsClone.get(j);
+							CustomItem citemInSlot = CustomItem.getCustomItem(item);
 							if (ing.getMaterial() == Material.AIR && item.getType() == Material.AIR) {
 								recipeClone.remove(i);
 								invItemsClone.remove(j);
 								i--;
 								j--;
 								break;
-							} else if (ing.getMaterial() == item.getType() && item.getAmount() >= ing.getQuantity() && item.getDurability() == ing.getDamage()) {
-								if (item.getAmount() / ing.getQuantity() < maxQuantity)
-									maxQuantity = item.getAmount() / ing.getQuantity();
-								recipeClone.remove(i);
-								invItemsClone.remove(j);
-								i--;
-								j--;
-								break;
+							} else if (item.getAmount() >= ing.getQuantity()) {
+								// We don't actually care to check the damage value if the ingredient is a custom item
+								if (!ing.isCustomItem() && ing.getMaterial() == item.getType() && item.getDurability() == ing.getDamage() || (citemInSlot != null && citemInSlot.getName().equals(ing.getCustomItemName()))) {
+
+									// Calculate the least possible maximum quantity that can result from
+									// the amount of ingredients that were placed.
+									if (item.getAmount() / ing.getQuantity() < maxQuantity) {
+										maxQuantity = item.getAmount() / ing.getQuantity();
+									}
+
+									recipeClone.remove(i);
+									invItemsClone.remove(j);
+									i--;
+									j--;
+									break;
+								}
 							}
 						}
 					}
@@ -166,25 +175,34 @@ public class ItemListener implements Listener {
 			RecipeIngredient ing = recipeClone.get(0);
 			int ingQuantity = ing.getQuantity() * amountCreated;
 
-			if (ing.getMaterial() != Material.AIR)
+			if (ing.getMaterial() != Material.AIR) {
 				for (int i = 0; i < invItems.size(); i++) {
 					ItemStack istack = invItems.get(i);
+					CustomItem istackCustomItem = CustomItem.getCustomItem(istack);
 
-					if (istack.getType() == ing.getMaterial() && istack.getDurability() == ing.getDamage()) {
-						int itemQuantity = istack.getAmount();
+					if (!ing.isCustomItem() && istack.getDurability() != ing.getDamage()) {
+						continue;
+					} else if (!ing.isCustomItem() && istack.getType() != ing.getMaterial()) {
+						continue;
+					} else if (ing.isCustomItem() && istackCustomItem == null) {
+						continue;
+					} else if (ing.isCustomItem() && !istackCustomItem.getName().equals(ing.getCustomItemName())) {
+						continue;
+					}
 
-						if (ingQuantity > itemQuantity) {
-							invItems.set(i, new ItemStack(Material.AIR));
-							ingQuantity -= itemQuantity;
-						} else if (ingQuantity == itemQuantity) {
-							invItems.set(i, new ItemStack(Material.AIR));
-							break;
-						} else if (ingQuantity < itemQuantity) {
-							istack.setAmount(itemQuantity - ingQuantity);
-							break;
-						}
+					int itemQuantity = istack.getAmount();
+					if (ingQuantity > itemQuantity) {
+						invItems.set(i, new ItemStack(Material.AIR));
+						ingQuantity -= itemQuantity;
+					} else if (ingQuantity == itemQuantity) {
+						invItems.set(i, new ItemStack(Material.AIR));
+						break;
+					} else if (ingQuantity < itemQuantity) {
+						istack.setAmount(itemQuantity - ingQuantity);
+						break;
 					}
 				}
+			}
 			recipeClone.remove(0);
 		}
 
@@ -199,6 +217,7 @@ public class ItemListener implements Listener {
 		 * newly calculated changes to each ItemStack in the inventory.
 		 */
 		new BukkitRunnable() {
+			@SuppressWarnings("deprecation")
 			public void run() {
 				fevent.getInventory().setContents(finalItems);
 				fplayer.updateInventory();
@@ -209,7 +228,7 @@ public class ItemListener implements Listener {
 	/**
 	 * When the player clicks in an inventory it is possible that they are
 	 * viewing an inventory used to display the custom items with /bi items. If
-	 * they click in one of these inventorys then we need to handle stuff
+	 * they click in one of these inventories then we need to handle stuff
 	 * differently.
 	 * 
 	 * @param event the click event

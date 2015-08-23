@@ -1,17 +1,32 @@
 package com.projectkorra.ProjectKorraItems.items;
 
+import com.projectkorra.ProjectKorraItems.Messages;
+import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
+
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public class RecipeIngredient {
+	private String customItemName;
 	private Material material;
 	private int quantity;
 	private short damage;
+	private boolean isCustomItem;
 
-	public RecipeIngredient(Material material, int quantity, short damage) {
+	private RecipeIngredient(String customItemName, Material material, int quantity, short damage, boolean isCustomItem) {
+		this.customItemName = customItemName;
 		this.material = material;
 		this.quantity = quantity;
 		this.damage = damage;
+		this.isCustomItem = isCustomItem;
+	}
+
+	public RecipeIngredient(Material material, int quantity, short damage) {
+		this(null, material, quantity, damage, false);
+	}
+
+	public RecipeIngredient(String customItemName, int quantity, short damage) {
+		this(customItemName, null, quantity, damage, true);
 	}
 
 	public RecipeIngredient(Material material, int quantity) {
@@ -20,6 +35,14 @@ public class RecipeIngredient {
 
 	public RecipeIngredient(Material mat) {
 		this(mat, 1);
+	}
+
+	public String getCustomItemName() {
+		return customItemName;
+	}
+
+	public void setCustomItemName(String customItemName) {
+		this.customItemName = customItemName;
 	}
 
 	public Material getMaterial() {
@@ -46,12 +69,33 @@ public class RecipeIngredient {
 		this.damage = damage;
 	}
 
-	public ItemStack getItemStack() {
-		return new ItemStack(material, quantity, damage);
+	public boolean isCustomItem() {
+		return isCustomItem;
 	}
 
+	public void setCustomItem(boolean isCustomItem) {
+		this.isCustomItem = isCustomItem;
+	}
+
+	public ItemStack getItemStack() {
+		if (isCustomItem) {
+			CustomItem citem = CustomItem.getCustomItem(customItemName);
+			if (citem != null) {
+				ItemStack istack = citem.generateItem();
+				istack.setAmount(quantity);
+				return istack;
+			} else {
+				ProjectKorraItems.log.severe(Messages.ERROR_GENERATING_ITEM + ": " + customItemName);
+				return new ItemStack(Material.AIR);
+			}
+		} else {
+			return new ItemStack(material, quantity, damage);
+		}
+	}
+
+	@Override
 	public String toString() {
-		return "RecipeIngredient [material=" + material + ", quantity=" + quantity + ", damage=" + damage + "]";
+		return "RecipeIngredient [customItemName=" + customItemName + ", material=" + material + ", quantity=" + quantity + ", damage=" + damage + ", isCustomItem=" + isCustomItem + "]";
 	}
 
 }

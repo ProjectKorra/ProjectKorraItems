@@ -8,6 +8,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ConfigManager {
 
@@ -30,7 +32,8 @@ public class ConfigManager {
 		CustomItem.itemList.clear();
 		ProjectKorraItems.plugin.saveDefaultConfig();
 		String str = readConfig();
-		analyzeConfig(str);
+		Set<String> customItemNames = getConfigItemNames(str);
+		analyzeConfig(str, customItemNames);
 	}
 
 	/**
@@ -78,16 +81,19 @@ public class ConfigManager {
 	 * of the items and create instances of CustomItems.
 	 * 
 	 * @param configStr a string version of the config.yml
+	 * @param customItemNames a set containing the names of all the custom items
+	 *            that were defined in the config.
 	 */
-	public void analyzeConfig(String configStr) {
-		String[] items = configStr.split("\n");
+	public void analyzeConfig(String configStr, Set<String> customItemNames) {
+		String[] configLines = configStr.split("\n");
 		CustomItem newItem = null;
 		boolean invalid = false;
-		for (String s : items) {
-			s = s.trim();
-			if (s.length() == 0)
+
+		for (String line : configLines) {
+			line = line.trim();
+			if (line.length() == 0)
 				continue;
-			if (s.toLowerCase().startsWith(ITEM_PREF.toLowerCase())) {
+			if (line.toLowerCase().startsWith(ITEM_PREF.toLowerCase())) {
 				if (newItem != null && !invalid) {
 					newItem.build();
 				}
@@ -96,11 +102,11 @@ public class ConfigManager {
 			} else {
 				boolean prefFound = false;
 				for (String prefix : PREFIXES) {
-					if (s.toLowerCase().startsWith(prefix.toLowerCase())) {
+					if (line.toLowerCase().startsWith(prefix.toLowerCase())) {
 						prefFound = true;
 						String tmp = "";
 						try {
-							tmp = s.substring(prefix.length(), s.length());
+							tmp = line.substring(prefix.length(), line.length());
 							tmp = tmp.trim();
 							if (prefix.equalsIgnoreCase(NAME_PREF))
 								newItem.updateName(tmp);
@@ -109,10 +115,10 @@ public class ConfigManager {
 							else if (prefix.equalsIgnoreCase(LORE_PREF))
 								newItem.updateLore(tmp);
 							else if (prefix.equalsIgnoreCase(SHAPED_RECIPE_PREF)) {
-								newItem.updateRecipe(tmp);
+								newItem.updateRecipe(tmp, customItemNames);
 								newItem.setUnshapedRecipe(false);
 							} else if (prefix.equalsIgnoreCase(UNSHAPED_RECIPE_PREF)) {
-								newItem.updateRecipe(tmp);
+								newItem.updateRecipe(tmp, customItemNames);
 								newItem.setUnshapedRecipe(true);
 							} else if (prefix.equalsIgnoreCase(MATERIAL_PREF))
 								newItem.updateMaterial(tmp);
@@ -133,13 +139,13 @@ public class ConfigManager {
 				/* Check if it is an attribute */
 				if (!prefFound) {
 					try {
-						String prefix = s.substring(0, s.indexOf(":"));
-						String valueStr = s.substring(s.indexOf(":") + 1, s.length()).trim();
+						String prefix = line.substring(0, line.indexOf(":"));
+						String valueStr = line.substring(line.indexOf(":") + 1, line.length()).trim();
 						valueStr = valueStr.replaceAll("(?i)true", "1");
 						valueStr = valueStr.replaceAll("(?i)false", "0");
 						String[] commaSplit = valueStr.split(",");
 						if (commaSplit.length == 0) {
-							ProjectKorraItems.log.info(Messages.MISSING_VALUES + ": " + s);
+							ProjectKorraItems.log.info(Messages.MISSING_VALUES + ": " + line);
 							invalid = false;
 						}
 						Attribute att = Attribute.getAttribute(prefix);
@@ -148,7 +154,7 @@ public class ConfigManager {
 						newItem.getAttributes().add(newAtt);
 					}
 					catch (Exception e) {
-						ProjectKorraItems.log.info(Messages.BAD_PREFIX + ": " + s);
+						ProjectKorraItems.log.info(Messages.BAD_PREFIX + ": " + line);
 						invalid = false;
 					}
 				}
@@ -158,5 +164,27 @@ public class ConfigManager {
 		if (newItem != null && !invalid) {
 			newItem.build();
 		}
+	}
+
+	/**
+	 * Gathers the names of all of the custom items within the config file.
+	 * 
+	 * @param config a String representation of the configuration file
+	 * @return a set containing the item names
+	 */
+	public Set<String> getConfigItemNames(String config) {
+		HashSet<String> names = new HashSet<>();
+		String[] lines = config.split("\n");
+		String prefix = NAME_PREF;
+
+		for (String line : lines) {
+			line = line.trim();
+			if (line.toLowerCase().startsWith(prefix.toLowerCase())) {
+				String itemName = line.substring(prefix.length(), line.length()).trim();
+				names.add(itemName);
+			}
+		}
+
+		return names;
 	}
 }

@@ -23,7 +23,9 @@ import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class AttributeListener implements Listener {
-	/** A map of player names that holds their current bending potion effects. **/
+	/**
+	 * A map of player names that holds their current bending potion effects.
+	 **/
 	public static final ConcurrentHashMap<String, ConcurrentHashMap<String, Attribute>> currentBendingEffects = new ConcurrentHashMap<String, ConcurrentHashMap<String, Attribute>>();
 
 	/**
@@ -108,6 +110,7 @@ public class AttributeListener implements Listener {
 	 * @param attrib the name of the stat "WaterSource" or "MetalSource"
 	 * @param istack the ItemStack that will temporarily spawn
 	 */
+	@SuppressWarnings("deprecation")
 	public void handleItemSource(Player player, String attrib, ItemStack istack) {
 		ConcurrentHashMap<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
 		if (attribs.containsKey(attrib) && attribs.get(attrib) == 1) {

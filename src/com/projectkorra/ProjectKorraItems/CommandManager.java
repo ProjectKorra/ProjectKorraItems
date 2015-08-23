@@ -29,6 +29,7 @@ public class CommandManager {
 	 */
 	public void init() {
 		CommandExecutor exe = new CommandExecutor() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public boolean onCommand(CommandSender s, Command c, String label, String[] args) {
 				if (args.length >= 1 && aliasChecker(args[0], Messages.RELOAD_ALIAS)) {
