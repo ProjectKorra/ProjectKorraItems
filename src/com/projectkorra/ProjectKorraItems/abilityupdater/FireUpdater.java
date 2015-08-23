@@ -61,9 +61,12 @@ public class FireUpdater {
 			if (attribs.containsKey("FireBlastChargedRange"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("FireBlastChargedRange") / 100.0);
 			if (attribs.containsKey("FireBlastChargedExplosionRadius"))
-				abil.setExplosionradius(abil.getExplosionradius() + abil.getExplosionradius() * attribs.get("FireBlastChargedExplosionRadius") / 100.0);
-			if (attribs.containsKey("FireBlastChargedPower"))
-				abil.setPower(abil.getPower() + abil.getPower() * attribs.get("FireBlastChargedPower") / 100.0);
+				abil.setExplosionRadius(abil.getExplosionRadius() + abil.getExplosionRadius() * attribs.get("FireBlastChargedExplosionRadius") / 100.0);
+			/*
+			 * if (attribs.containsKey("FireBlastChargedPower"))
+			 * abil.setPower(abil.getPower() + abil.getPower() *
+			 * attribs.get("FireBlastChargedPower") / 100.0);
+			 */
 			if (attribs.containsKey("FireBlastChargedChargeTime"))
 				abil.setChargetime((long) (abil.getChargetime() + abil.getChargetime() * attribs.get("FireBlastChargedChargeTime") / 100.0));
 			return true;
