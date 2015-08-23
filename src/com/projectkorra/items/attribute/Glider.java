@@ -1,6 +1,6 @@
-package com.projectkorra.ProjectKorraItems.attribute;
+package com.projectkorra.items.attribute;
 
-import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
+import com.projectkorra.items.ProjectKorraItems;
 import com.projectkorra.projectkorra.BendingPlayer;
 import com.projectkorra.projectkorra.Element;
 import com.projectkorra.projectkorra.GeneralMethods;

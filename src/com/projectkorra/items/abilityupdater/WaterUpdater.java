@@ -1,4 +1,4 @@
-package com.projectkorra.ProjectKorraItems.abilityupdater;
+package com.projectkorra.items.abilityupdater;
 
 import com.projectkorra.projectkorra.waterbending.Bloodbending;
 import com.projectkorra.projectkorra.waterbending.IceBlast;

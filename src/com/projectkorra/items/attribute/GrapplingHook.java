@@ -1,7 +1,7 @@
-package com.projectkorra.ProjectKorraItems.attribute;
+package com.projectkorra.items.attribute;
 
-import com.projectkorra.ProjectKorraItems.ElementUtils;
-import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
+import com.projectkorra.items.ElementUtils;
+import com.projectkorra.items.ProjectKorraItems;
 import com.projectkorra.projectkorra.GeneralMethods;
 import com.projectkorra.projectkorra.util.ParticleEffect;
 

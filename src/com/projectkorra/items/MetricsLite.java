@@ -27,7 +27,7 @@
  * representing official policies, either expressed or implied, of anybody else.
  */
 
-package com.projectkorra.ProjectKorraItems;
+package com.projectkorra.items;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;

@@ -1,4 +1,4 @@
-package com.projectkorra.ProjectKorraItems.attribute;
+package com.projectkorra.items.attribute;
 
 import com.projectkorra.projectkorra.Element;
 

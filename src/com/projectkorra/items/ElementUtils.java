@@ -1,4 +1,4 @@
-package com.projectkorra.ProjectKorraItems;
+package com.projectkorra.items;
 
 import com.projectkorra.projectkorra.BendingPlayer;
 import com.projectkorra.projectkorra.GeneralMethods;

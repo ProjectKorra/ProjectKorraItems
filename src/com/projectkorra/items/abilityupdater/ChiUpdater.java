@@ -1,4 +1,4 @@
-package com.projectkorra.ProjectKorraItems.abilityupdater;
+package com.projectkorra.items.abilityupdater;
 
 import com.projectkorra.projectkorra.chiblocking.AcrobatStance;
 import com.projectkorra.projectkorra.chiblocking.RapidPunch;

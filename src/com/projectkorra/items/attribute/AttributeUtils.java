@@ -1,9 +1,9 @@
-package com.projectkorra.ProjectKorraItems.attribute;
+package com.projectkorra.items.attribute;
 
-import com.projectkorra.ProjectKorraItems.ElementUtils;
-import com.projectkorra.ProjectKorraItems.ItemUtils;
-import com.projectkorra.ProjectKorraItems.Messages;
-import com.projectkorra.ProjectKorraItems.items.CustomItem;
+import com.projectkorra.items.ElementUtils;
+import com.projectkorra.items.ItemUtils;
+import com.projectkorra.items.Messages;
+import com.projectkorra.items.customs.CustomItem;
 import com.projectkorra.projectkorra.Element;
 
 import org.bukkit.Material;

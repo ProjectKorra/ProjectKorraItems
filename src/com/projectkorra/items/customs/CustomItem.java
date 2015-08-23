@@ -1,10 +1,10 @@
-package com.projectkorra.ProjectKorraItems.items;
+package com.projectkorra.items.customs;
 
-import com.projectkorra.ProjectKorraItems.EnchantGlow;
-import com.projectkorra.ProjectKorraItems.Messages;
-import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
-import com.projectkorra.ProjectKorraItems.attribute.Attribute;
-import com.projectkorra.ProjectKorraItems.attribute.AttributeList;
+import com.projectkorra.items.EnchantGlow;
+import com.projectkorra.items.Messages;
+import com.projectkorra.items.ProjectKorraItems;
+import com.projectkorra.items.attribute.Attribute;
+import com.projectkorra.items.attribute.AttributeList;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Color;

@@ -1,12 +1,12 @@
-package com.projectkorra.ProjectKorraItems.abilityupdater;
+package com.projectkorra.items.abilityupdater;
 
-import com.projectkorra.ProjectKorraItems.ItemUtils;
-import com.projectkorra.ProjectKorraItems.Messages;
-import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
-import com.projectkorra.ProjectKorraItems.attribute.Action;
-import com.projectkorra.ProjectKorraItems.attribute.Attribute;
-import com.projectkorra.ProjectKorraItems.attribute.AttributeUtils;
-import com.projectkorra.ProjectKorraItems.items.CustomItem;
+import com.projectkorra.items.ItemUtils;
+import com.projectkorra.items.Messages;
+import com.projectkorra.items.ProjectKorraItems;
+import com.projectkorra.items.attribute.Action;
+import com.projectkorra.items.attribute.Attribute;
+import com.projectkorra.items.attribute.AttributeUtils;
+import com.projectkorra.items.customs.CustomItem;
 import com.projectkorra.projectkorra.ability.api.CoreAbility;
 import com.projectkorra.projectkorra.airbending.AirBlast;
 import com.projectkorra.projectkorra.airbending.AirBubble;

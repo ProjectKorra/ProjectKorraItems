@@ -1,9 +1,9 @@
-package com.projectkorra.ProjectKorraItems;
+package com.projectkorra.items;
 
-import com.projectkorra.ProjectKorraItems.abilityupdater.AbilityUpdater;
-import com.projectkorra.ProjectKorraItems.attribute.AttributeListener;
-import com.projectkorra.ProjectKorraItems.items.ItemDisplay;
-import com.projectkorra.ProjectKorraItems.items.ItemListener;
+import com.projectkorra.items.abilityupdater.AbilityUpdater;
+import com.projectkorra.items.attribute.AttributeListener;
+import com.projectkorra.items.customs.ItemDisplay;
+import com.projectkorra.items.customs.ItemListener;
 
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;

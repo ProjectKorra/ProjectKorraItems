@@ -1,4 +1,4 @@
-package com.projectkorra.ProjectKorraItems.abilityupdater;
+package com.projectkorra.items.abilityupdater;
 
 import com.projectkorra.projectkorra.earthbending.Catapult;
 import com.projectkorra.projectkorra.earthbending.EarthArmor;

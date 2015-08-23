@@ -1,9 +1,9 @@
-package com.projectkorra.ProjectKorraItems.attribute;
+package com.projectkorra.items.attribute;
 
-import com.projectkorra.ProjectKorraItems.ItemUtils;
-import com.projectkorra.ProjectKorraItems.ProjectKorraItems;
-import com.projectkorra.ProjectKorraItems.abilityupdater.AbilityUpdater;
-import com.projectkorra.ProjectKorraItems.items.CustomItem;
+import com.projectkorra.items.ItemUtils;
+import com.projectkorra.items.ProjectKorraItems;
+import com.projectkorra.items.abilityupdater.AbilityUpdater;
+import com.projectkorra.items.customs.CustomItem;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

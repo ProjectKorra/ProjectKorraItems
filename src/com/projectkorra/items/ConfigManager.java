@@ -1,7 +1,7 @@
-package com.projectkorra.ProjectKorraItems;
+package com.projectkorra.items;
 
-import com.projectkorra.ProjectKorraItems.attribute.Attribute;
-import com.projectkorra.ProjectKorraItems.items.CustomItem;
+import com.projectkorra.items.attribute.Attribute;
+import com.projectkorra.items.customs.CustomItem;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
