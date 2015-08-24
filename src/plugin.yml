@@ -1,7 +1,7 @@
 name: ProjectKorraItems
 author: ProjectKorraItems
-version: 1.1.1
-main: com.projectkorra.ProjectKorraItems.ProjectKorraItems
+version: 1.1.2
+main: com.projectkorra.items.ProjectKorraItems
 depend: [ProjectKorra]
 commands:
   projectkorraitems:
