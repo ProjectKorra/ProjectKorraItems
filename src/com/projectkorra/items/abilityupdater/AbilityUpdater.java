@@ -160,8 +160,8 @@ public class AbilityUpdater {
 					}
 				}
 
-				for (Integer id : Catapult.instances.keySet()) {
-					Catapult abil = Catapult.instances.get(id);
+				for (Integer id : CoreAbility.getInstances(Catapult.class).keySet()) {
+					Catapult abil = (Catapult) CoreAbility.getAbility(id);
 					if (!UPDATED_ABILITIES.containsKey(abil)) {
 						UPDATED_ABILITIES.put(abil, System.currentTimeMillis());
 						updateAbility(abil.getPlayer(), abil);
