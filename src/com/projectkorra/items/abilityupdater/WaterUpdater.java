@@ -63,7 +63,7 @@ public class WaterUpdater {
 		} else if (ability instanceof OctopusForm) {
 			OctopusForm abil = (OctopusForm) ability;
 			if (attribs.containsKey("OctopusFormRange"))
-				abil.setRange((int) (abil.getRange() + abil.getRange() * attribs.get("OctopusFormRange") / 100.0));
+				abil.setAttackRange((int) (abil.getAttackRange() + abil.getAttackRange() * attribs.get("OctopusFormRange") / 100.0));
 			if (attribs.containsKey("OctopusFormDamage"))
 				abil.setDamage((int) (abil.getDamage() + abil.getDamage() * attribs.get("OctopusFormDamage") / 100.0));
 			if (attribs.containsKey("OctopusFormInterval"))

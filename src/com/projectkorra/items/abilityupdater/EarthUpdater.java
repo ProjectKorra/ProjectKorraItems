@@ -28,7 +28,7 @@ public class EarthUpdater {
 			if (attribs.containsKey("EarthSmashDamage"))
 				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("EarthSmashDamage") / 100.0);
 			if (attribs.containsKey("EarthSmashGrabRange"))
-				abil.setGrabRange(abil.getGrabRange() + abil.getGrabRange() * attribs.get("EarthSmashGrabRange") / 100.0);
+				abil.setSelectRange((int) (abil.getSelectRange() + abil.getSelectRange() * attribs.get("EarthSmashGrabRange") / 100.0));
 			if (attribs.containsKey("EarthSmashShootRange"))
 				abil.setShootRange(abil.getShootRange() + abil.getShootRange() * attribs.get("EarthSmashShootRange") / 100.0);
 			if (attribs.containsKey("EarthSmashChargeTime"))
