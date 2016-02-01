@@ -1,9 +1,6 @@
 package com.projectkorra.items.attribute;
 
-import com.projectkorra.items.ProjectKorraItems;
-import com.projectkorra.projectkorra.BendingPlayer;
-import com.projectkorra.projectkorra.Element;
-import com.projectkorra.projectkorra.GeneralMethods;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,7 +9,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.concurrent.ConcurrentHashMap;
+import com.projectkorra.items.ProjectKorraItems;
+import com.projectkorra.projectkorra.BendingPlayer;
+import com.projectkorra.projectkorra.Element;
 
 public class Glider {
 
@@ -41,11 +40,11 @@ public class Glider {
 	 */
 	public Glider(Player p, final boolean auto) {
 		final Player player = p;
-		BendingPlayer bplayer = GeneralMethods.getBendingPlayer(player.getName());
+		BendingPlayer bplayer = BendingPlayer.getBendingPlayer(player.getName());
 		if (player == null || bplayer == null)
 			return;
 
-		if (!player.isSneaking() && player.getLocation().getBlock().getType() == Material.AIR && bplayer.hasElement(Element.Air)) {
+		if (!player.isSneaking() && player.getLocation().getBlock().getType() == Material.AIR && bplayer.hasElement(Element.AIR)) {
 
 			/*
 			 * The gliding action will be performed on a separate runnable that

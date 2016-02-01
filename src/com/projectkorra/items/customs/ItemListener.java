@@ -43,7 +43,7 @@ public class ItemListener implements Listener {
 			return;
 
 		new BukkitRunnable() {
-			@SuppressWarnings({ "unchecked", "deprecation" })
+			@SuppressWarnings("unchecked")
 			public void run() {
 				Player player = (Player) humEnt;
 				ItemStack[] tempInvItems = fevent.getInventory().getContents();
@@ -217,7 +217,6 @@ public class ItemListener implements Listener {
 		 * newly calculated changes to each ItemStack in the inventory.
 		 */
 		new BukkitRunnable() {
-			@SuppressWarnings("deprecation")
 			public void run() {
 				fevent.getInventory().setContents(finalItems);
 				fplayer.updateInventory();
