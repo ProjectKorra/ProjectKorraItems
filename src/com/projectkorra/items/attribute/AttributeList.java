@@ -49,178 +49,178 @@ public class AttributeList {
 			add(new Attribute("LeatherColor", "gives leather armor a specific color, specified as R,G,B. For example, LeatherColor:255,0,0 would be red armor"));
 
 			add(new Attribute("AirGlide", "(true/false) allows an Airbender to glide through the air by sneaking"));
-			add(new Attribute("AirGlideSpeed", "modifies the air gliding speed", Element.Air));
-			add(new Attribute("AirGlideFallSpeed", "modifies the air gliding fall speed", Element.Air, -1));
+			add(new Attribute("AirGlideSpeed", "modifies the air gliding speed", Element.AIR));
+			add(new Attribute("AirGlideFallSpeed", "modifies the air gliding fall speed", Element.AIR, -1));
 			add(new Attribute("AirGlideAutomatic", "(true/false) gliding will start the moment that the user switches to the slot, they don't have to sneak"));
 
 			// AIR
-			add(new Attribute("AirBlastRange", "range", Element.Air));
-			add(new Attribute("AirBlastForce", "force", Element.Air));
+			add(new Attribute("AirBlastRange", "range", Element.AIR));
+			add(new Attribute("AirBlastForce", "force", Element.AIR));
 
-			add(new Attribute("AirSwipeDamage", "damage", Element.Air));
-			add(new Attribute("AirSwipeForce", "knockback force", Element.Air));
-			add(new Attribute("AirSwipeSpeed", "travel speed", Element.Air));
-			add(new Attribute("AirSwipeRange", "range", Element.Air));
-			add(new Attribute("AirSwipeMaxCharge", "maximum possible charge damage", Element.Air));
-			add(new Attribute("AirSwipeRadius", "radius, Warning! hitting too many monsters at a time with airswipe can overload your server", Element.Air));
-			add(new Attribute("AirSwipeArc", "arc width, Warning! hitting too many monsters at a time with airswipe can overload your server", Element.Air));
-			add(new Attribute("AirSwipeChargeTime", "maximum charge time, lower is stronger", Element.Air, -1));
+			add(new Attribute("AirSwipeDamage", "damage", Element.AIR));
+			add(new Attribute("AirSwipeForce", "knockback force", Element.AIR));
+			add(new Attribute("AirSwipeSpeed", "travel speed", Element.AIR));
+			add(new Attribute("AirSwipeRange", "range", Element.AIR));
+			add(new Attribute("AirSwipeMaxCharge", "maximum possible charge damage", Element.AIR));
+			add(new Attribute("AirSwipeRadius", "radius, Warning! hitting too many monsters at a time with airswipe can overload your server", Element.AIR));
+			add(new Attribute("AirSwipeArc", "arc width, Warning! hitting too many monsters at a time with airswipe can overload your server", Element.AIR));
+			add(new Attribute("AirSwipeChargeTime", "maximum charge time, lower is stronger", Element.AIR, -1));
 
-			add(new Attribute("AirShieldRadius", "radius", Element.Air));
+			add(new Attribute("AirShieldRadius", "radius", Element.AIR));
 
-			add(new Attribute("AirBubbleRadius", "radius", Element.Air));
+			add(new Attribute("AirBubbleRadius", "radius", Element.AIR));
 
-			add(new Attribute("AirScooterSpeed", "speed", Element.Air));
+			add(new Attribute("AirScooterSpeed", "speed", Element.AIR));
 
-			add(new Attribute("TornadoMaxHeight", "height", Element.Air));
-			add(new Attribute("TornadoMaxRadius", "radius", Element.Air));
-			add(new Attribute("TornadoRange", "maximum targettable range", Element.Air));
-			add(new Attribute("TornadoPlayerPushFactor", "knockback force against players", Element.Air));
-			add(new Attribute("TornadoNPCPushFactor", "knockback force gainst mobs", Element.Air));
+			add(new Attribute("TornadoMaxHeight", "height", Element.AIR));
+			add(new Attribute("TornadoMaxRadius", "radius", Element.AIR));
+			add(new Attribute("TornadoRange", "maximum targettable range", Element.AIR));
+			add(new Attribute("TornadoPlayerPushFactor", "knockback force against players", Element.AIR));
+			add(new Attribute("TornadoNPCPushFactor", "knockback force gainst mobs", Element.AIR));
 
-			add(new Attribute("AirSpoutHeight", "height", Element.Air));
+			add(new Attribute("AirSpoutHeight", "height", Element.AIR));
 
-			add(new Attribute("AirSuctionSpeed", "travel speed", Element.Air));
-			add(new Attribute("AirSuctionRange", "range", Element.Air));
-			add(new Attribute("AirSuctionForce", "knockback force", Element.Air));
-			add(new Attribute("AirSuctionRadius", "affecting radius", Element.Air));
+			add(new Attribute("AirSuctionSpeed", "travel speed", Element.AIR));
+			add(new Attribute("AirSuctionRange", "range", Element.AIR));
+			add(new Attribute("AirSuctionForce", "knockback force", Element.AIR));
+			add(new Attribute("AirSuctionRadius", "affecting radius", Element.AIR));
 
 			// WATER
-			add(new Attribute("BloodbendingForce", "throwing force", Element.Water));
-			add(new Attribute("BloodbendingRange", "grabbing range", Element.Water));
-			add(new Attribute("BloodbendingHoldTime", "maximum hold time, only works if a base hold time is enabled in config", Element.Water));
-			add(new Attribute("BloodbendingCooldown", "cooldown, only works if a base cooldown is enabled in config", Element.Water, -1));
+			add(new Attribute("BloodbendingForce", "throwing force", Element.WATER));
+			add(new Attribute("BloodbendingRange", "grabbing range", Element.WATER));
+			add(new Attribute("BloodbendingHoldTime", "maximum hold time, only works if a base hold time is enabled in config", Element.WATER));
+			add(new Attribute("BloodbendingCooldown", "cooldown, only works if a base cooldown is enabled in config", Element.WATER, -1));
 
-			add(new Attribute("WaterBubbleRadius", "radius", Element.Water));
+			add(new Attribute("WaterBubbleRadius", "radius", Element.WATER));
 
-			add(new Attribute("IceBlastRange", "range", Element.Water));
-			add(new Attribute("IceBlastDamage", "damage", Element.Water));
+			add(new Attribute("IceBlastRange", "range", Element.WATER));
+			add(new Attribute("IceBlastDamage", "damage", Element.WATER));
 
-			add(new Attribute("IceSpikeDamage", "projectile damage", Element.Water));
-			add(new Attribute("IceSpikeRange", "projectile range", Element.Water));
+			add(new Attribute("IceSpikeDamage", "projectile damage", Element.WATER));
+			add(new Attribute("IceSpikeRange", "projectile range", Element.WATER));
 
-			add(new Attribute("IceSpikePillarDamage", "pillar damage", Element.Water));
-			add(new Attribute("IceSpikePillarRange", "maximum clickable range", Element.Water));
+			add(new Attribute("IceSpikePillarDamage", "pillar damage", Element.WATER));
+			add(new Attribute("IceSpikePillarRange", "maximum clickable range", Element.WATER));
 
-			add(new Attribute("OctopusFormRange", "hit range", Element.Water));
-			add(new Attribute("OctopusFormDamage", "damage", Element.Water));
-			add(new Attribute("OctopusFormInterval", "animation interval, a lower interval is faster", Element.Water, -1));
-			add(new Attribute("OctopusFormKnockback", "knockback force", Element.Water));
-			add(new Attribute("OctopusFormRadius", "radius", Element.Water));
+			add(new Attribute("OctopusFormRange", "hit range", Element.WATER));
+			add(new Attribute("OctopusFormDamage", "damage", Element.WATER));
+			add(new Attribute("OctopusFormInterval", "animation interval, a lower interval is faster", Element.WATER, -1));
+			add(new Attribute("OctopusFormKnockback", "knockback force", Element.WATER));
+			add(new Attribute("OctopusFormRadius", "radius", Element.WATER));
 
-			add(new Attribute("TorrentDamage", "Torrent Stream damage", Element.Water));
-			add(new Attribute("TorrentRange", "Torrent Stream range", Element.Water));
-			add(new Attribute("TorrentStreamingDamage", "damage caused by enemies hitting the torrent while it is being circled around the player", Element.Water));
+			add(new Attribute("TorrentDamage", "Torrent Stream damage", Element.WATER));
+			add(new Attribute("TorrentRange", "Torrent Stream range", Element.WATER));
+			add(new Attribute("TorrentStreamingDamage", "damage caused by enemies hitting the torrent while it is being circled around the player", Element.WATER));
 
-			add(new Attribute("TorrentWaveRadius", "radius", Element.Water));
-			add(new Attribute("TorrentWaveForce", "knockback force", Element.Water));
+			add(new Attribute("TorrentWaveRadius", "radius", Element.WATER));
+			add(new Attribute("TorrentWaveForce", "knockback force", Element.WATER));
 			//add(new Attribute("TorrentWaveHeight", "height"));
 
-			add(new Attribute("WaterManipulationRange", "range, you must click while the ability is in motion to extend the range", Element.Water));
-			add(new Attribute("WaterManipulationForce", "knockback force", Element.Water));
-			add(new Attribute("WaterManipulationDamage", "damage", Element.Water));
-			add(new Attribute("WaterManipulationCooldown", "cooldown", Element.Water, -1));
+			add(new Attribute("WaterManipulationRange", "range, you must click while the ability is in motion to extend the range", Element.WATER));
+			add(new Attribute("WaterManipulationForce", "knockback force", Element.WATER));
+			add(new Attribute("WaterManipulationDamage", "damage", Element.WATER));
+			add(new Attribute("WaterManipulationCooldown", "cooldown", Element.WATER, -1));
 
-			add(new Attribute("WaterSpoutHeight", "height", Element.Water));
+			add(new Attribute("WaterSpoutHeight", "height", Element.WATER));
 
-			add(new Attribute("WaterSpoutWaveRadius", "size of the rideable wave", Element.Water));
-			add(new Attribute("WaterSpoutWaveRange", "maximum travel range", Element.Water));
-			add(new Attribute("WaterSpoutWaveSpeed", "travel speed", Element.Water));
-			add(new Attribute("WaterSpoutWaveChargeTime", "initial chargetime", Element.Water, -1));
-			add(new Attribute("WaterSpoutWaveFlightTime", "total flight time", Element.Water));
-			add(new Attribute("IceWaveDamage", "damage", Element.Water));
+			add(new Attribute("WaterSpoutWaveRadius", "size of the rideable wave", Element.WATER));
+			add(new Attribute("WaterSpoutWaveRange", "maximum travel range", Element.WATER));
+			add(new Attribute("WaterSpoutWaveSpeed", "travel speed", Element.WATER));
+			add(new Attribute("WaterSpoutWaveChargeTime", "initial chargetime", Element.WATER, -1));
+			add(new Attribute("WaterSpoutWaveFlightTime", "total flight time", Element.WATER));
+			add(new Attribute("IceWaveDamage", "damage", Element.WATER));
 
-			add(new Attribute("SurgeWallRadius", "radius", Element.Water));
-			add(new Attribute("SurgeWallRange", "the distance that the wall is away from the player", Element.Water));
+			add(new Attribute("SurgeWallRadius", "radius", Element.WATER));
+			add(new Attribute("SurgeWallRange", "the distance that the wall is away from the player", Element.WATER));
 
-			add(new Attribute("SurgeWaveRadius", "size of the wave", Element.Water));
-			add(new Attribute("SurgeWaveKnockback", "knockback force", Element.Water));
-			add(new Attribute("SurgeWaveKnockup", "knockup force", Element.Water));
-			add(new Attribute("SurgeWaveFreezeSize", "the size of the iceberg that covers the enemy", Element.Water));
+			add(new Attribute("SurgeWaveRadius", "size of the wave", Element.WATER));
+			add(new Attribute("SurgeWaveKnockback", "knockback force", Element.WATER));
+			add(new Attribute("SurgeWaveKnockup", "knockup force", Element.WATER));
+			add(new Attribute("SurgeWaveFreezeSize", "the size of the iceberg that covers the enemy", Element.WATER));
 
 			// EARTH
 			//add(new Attribute("CatapultLength", "length of the catapult earth pillar"));
 			//add(new Attribute("CatapultPush", "initial push distance"));
 
-			add(new Attribute("EarthArmorStrength", "resistance potion potency", Element.Earth));
+			add(new Attribute("EarthArmorStrength", "resistance potion potency", Element.EARTH));
 
-			add(new Attribute("EarthBlastRange", "range", Element.Earth));
-			add(new Attribute("EarthBlastDamage", "damage", Element.Earth));
-			add(new Attribute("EarthBlastForce", "knockback force", Element.Earth));
+			add(new Attribute("EarthBlastRange", "range", Element.EARTH));
+			add(new Attribute("EarthBlastDamage", "damage", Element.EARTH));
+			add(new Attribute("EarthBlastForce", "knockback force", Element.EARTH));
 
-			add(new Attribute("EarthTunnelMaxRadius", "radius", Element.Earth));
-			add(new Attribute("EarthTunnelRange", "range", Element.Earth));
-			add(new Attribute("EarthTunnelInterval", "block remove speed, negative is better", Element.Earth, -1));
+			add(new Attribute("EarthTunnelMaxRadius", "radius", Element.EARTH));
+			add(new Attribute("EarthTunnelRange", "range", Element.EARTH));
+			add(new Attribute("EarthTunnelInterval", "block remove speed, negative is better", Element.EARTH, -1));
 
 			//add(new Attribute("ShockwaveRadius", "radius"));
-			add(new Attribute("ShockwaveDamage", "damage", Element.Earth));
-			add(new Attribute("ShockwaveKnockback", "knockback force", Element.Earth));
-			add(new Attribute("ShockwaveChargeTime", "initial charge up time, negative is better", Element.Earth, -1));
+			add(new Attribute("ShockwaveDamage", "damage", Element.EARTH));
+			add(new Attribute("ShockwaveKnockback", "knockback force", Element.EARTH));
+			add(new Attribute("ShockwaveChargeTime", "initial charge up time, negative is better", Element.EARTH, -1));
 
-			add(new Attribute("EarthSmashDamage", "shooting damage", Element.Earth));
-			add(new Attribute("EarthSmashGrabRange", "initial spawning distance", Element.Earth));
-			add(new Attribute("EarthSmashShootRange", "shooting range", Element.Earth));
-			add(new Attribute("EarthSmashChargeTime", "initial charge up time", Element.Earth, -1));
-			add(new Attribute("EarthSmashCooldown", "cooldown between uses, the config must have an initial cooldown set for this to work", Element.Earth, -1));
-			add(new Attribute("EarthSmashKnockback", "knockback force", Element.Earth));
-			add(new Attribute("EarthSmashKnockup", "knockup force", Element.Earth));
-			add(new Attribute("EarthSmashFlySpeed", "flying speed, if this is too high the ability will get buggy", Element.Earth));
-			add(new Attribute("EarthSmashFlyDuration", "flying duration", Element.Earth));
+			add(new Attribute("EarthSmashDamage", "shooting damage", Element.EARTH));
+			add(new Attribute("EarthSmashGrabRange", "initial spawning distance", Element.EARTH));
+			add(new Attribute("EarthSmashShootRange", "shooting range", Element.EARTH));
+			add(new Attribute("EarthSmashChargeTime", "initial charge up time", Element.EARTH, -1));
+			add(new Attribute("EarthSmashCooldown", "cooldown between uses, the config must have an initial cooldown set for this to work", Element.EARTH, -1));
+			add(new Attribute("EarthSmashKnockback", "knockback force", Element.EARTH));
+			add(new Attribute("EarthSmashKnockup", "knockup force", Element.EARTH));
+			add(new Attribute("EarthSmashFlySpeed", "flying speed, if this is too high the ability will get buggy", Element.EARTH));
+			add(new Attribute("EarthSmashFlyDuration", "flying duration", Element.EARTH));
 
 			// FIRE
 			add(new Attribute("HeatControlCookTime", "the time it takes to cook an item, negative is better"));
 
-			add(new Attribute("FireBlastChargedDamage", "damage", Element.Fire));
-			add(new Attribute("FireBlastChargedRange", "range", Element.Fire));
-			add(new Attribute("FireBlastChargedExplosionRadius", "explosion radius, (power is more important)", Element.Fire));
-			add(new Attribute("FireBlastChargedPower", "explosion power and size", Element.Fire));
-			add(new Attribute("FireBlastChargedChargeTime", "initial charge up time", Element.Fire, -1));
+			add(new Attribute("FireBlastChargedDamage", "damage", Element.FIRE));
+			add(new Attribute("FireBlastChargedRange", "range", Element.FIRE));
+			add(new Attribute("FireBlastChargedExplosionRadius", "explosion radius, (power is more important)", Element.FIRE));
+			add(new Attribute("FireBlastChargedPower", "explosion power and size", Element.FIRE));
+			add(new Attribute("FireBlastChargedChargeTime", "initial charge up time", Element.FIRE, -1));
 
-			add(new Attribute("FireBlastSpeed", "travel speed", Element.Fire));
-			add(new Attribute("FireBlastForce", "knockback force", Element.Fire));
-			add(new Attribute("FireBlastRange", "travel range", Element.Fire));
-			add(new Attribute("FireBlastDamage", "damage", Element.Fire));
+			add(new Attribute("FireBlastSpeed", "travel speed", Element.FIRE));
+			add(new Attribute("FireBlastForce", "knockback force", Element.FIRE));
+			add(new Attribute("FireBlastRange", "travel range", Element.FIRE));
+			add(new Attribute("FireBlastDamage", "damage", Element.FIRE));
 
-			add(new Attribute("FireJetDuration", "duration", Element.Fire));
-			add(new Attribute("FireJetSpeed", "speed", Element.Fire));
+			add(new Attribute("FireJetDuration", "duration", Element.FIRE));
+			add(new Attribute("FireJetSpeed", "speed", Element.FIRE));
 
-			add(new Attribute("FireShieldClickDuration", "duration of a click shield", Element.Fire));
-			add(new Attribute("FireShieldRadius", "radius of shift shield", Element.Fire));
-			add(new Attribute("FireShieldClickRadius", "radius of click shield", Element.Fire));
+			add(new Attribute("FireShieldClickDuration", "duration of a click shield", Element.FIRE));
+			add(new Attribute("FireShieldRadius", "radius of shift shield", Element.FIRE));
+			add(new Attribute("FireShieldClickRadius", "radius of click shield", Element.FIRE));
 
-			add(new Attribute("BlazeRange", "range", Element.Fire));
+			add(new Attribute("BlazeRange", "range", Element.FIRE));
 
 			//add(new Attribute("WallOfFireRange", "the distance from the player"));
 			//add(new Attribute("WallOfFireHeight", "height"));
 			//add(new Attribute("WallOfFireWidth", "width"));
-			add(new Attribute("WallOfFireDuration", "duration", Element.Fire));
-			add(new Attribute("WallOfFireDamage", "the damage per interval", Element.Fire));
-			add(new Attribute("WallOfFireDamageInterval", "the time between damages, negative is better", Element.Fire, -1));
-			add(new Attribute("WallOfFireCooldown", "cooldown", Element.Fire, -1));
+			add(new Attribute("WallOfFireDuration", "duration", Element.FIRE));
+			add(new Attribute("WallOfFireDamage", "the damage per interval", Element.FIRE));
+			add(new Attribute("WallOfFireDamageInterval", "the time between damages, negative is better", Element.FIRE, -1));
+			add(new Attribute("WallOfFireCooldown", "cooldown", Element.FIRE, -1));
 
-			add(new Attribute("LightningDamage", "damage", Element.Fire));
-			add(new Attribute("LightningRange", "range", Element.Fire));
-			add(new Attribute("LightningChargeTime", "initial charge up time", Element.Fire, -1));
-			add(new Attribute("LightningCooldown", "cooldown", Element.Fire, -1));
-			add(new Attribute("LightningSubArcChance", "chance for the arcs to split", Element.Fire));
-			add(new Attribute("LightningMaxChainArcs", "maximum amount of times an arc can chain to more enemies", Element.Fire));
-			add(new Attribute("LightningChainRange", "seeking range of chain arcs", Element.Fire));
-			add(new Attribute("LightningChainArcChance", "chance to chain to more enemies", Element.Fire));
-			add(new Attribute("LightningWaterRange", "range of water arcs", Element.Fire));
-			add(new Attribute("LightningStunChance", "chance for stun", Element.Fire));
-			add(new Attribute("LightningStunDuration", "duration of stun", Element.Fire));
+			add(new Attribute("LightningDamage", "damage", Element.FIRE));
+			add(new Attribute("LightningRange", "range", Element.FIRE));
+			add(new Attribute("LightningChargeTime", "initial charge up time", Element.FIRE, -1));
+			add(new Attribute("LightningCooldown", "cooldown", Element.FIRE, -1));
+			add(new Attribute("LightningSubArcChance", "chance for the arcs to split", Element.FIRE));
+			add(new Attribute("LightningMaxChainArcs", "maximum amount of times an arc can chain to more enemies", Element.FIRE));
+			add(new Attribute("LightningChainRange", "seeking range of chain arcs", Element.FIRE));
+			add(new Attribute("LightningChainArcChance", "chance to chain to more enemies", Element.FIRE));
+			add(new Attribute("LightningWaterRange", "range of water arcs", Element.FIRE));
+			add(new Attribute("LightningStunChance", "chance for stun", Element.FIRE));
+			add(new Attribute("LightningStunDuration", "duration of stun", Element.FIRE));
 
 			// CHI
-			add(new Attribute("AcrobatStanceJump", "jump potion potency, you may have to increase this a lot to see a difference", Element.Chi));
-			add(new Attribute("AcrobatStanceSpeed", "speed potion potency, you may have to increase this a lot to see a difference", Element.Chi));
+			add(new Attribute("AcrobatStanceJump", "jump potion potency, you may have to increase this a lot to see a difference", Element.CHI));
+			add(new Attribute("AcrobatStanceSpeed", "speed potion potency, you may have to increase this a lot to see a difference", Element.CHI));
 
-			add(new Attribute("RapidPunchDamage", "damage per hit", Element.Chi));
-			add(new Attribute("RapidPunchHits", "total amount of hits", Element.Chi));
-			add(new Attribute("RapidPunchDistance", "distance", Element.Chi));
-			add(new Attribute("RapidPunchCooldown", "cooldown, negative is better", Element.Chi, -1));
+			add(new Attribute("RapidPunchDamage", "damage per hit", Element.CHI));
+			add(new Attribute("RapidPunchHits", "total amount of hits", Element.CHI));
+			add(new Attribute("RapidPunchDistance", "distance", Element.CHI));
+			add(new Attribute("RapidPunchCooldown", "cooldown, negative is better", Element.CHI, -1));
 
-			add(new Attribute("WarriorStanceStrength", "strength potion potency, you may have to increase this a lot to see a difference", Element.Chi));
-			add(new Attribute("WarriorStanceResistance", "resistance potion potency, you may have to increase this a lot to see a difference", Element.Chi));
+			add(new Attribute("WarriorStanceStrength", "strength potion potency, you may have to increase this a lot to see a difference", Element.CHI));
+			add(new Attribute("WarriorStanceResistance", "resistance potion potency, you may have to increase this a lot to see a difference", Element.CHI));
 
 		}
 	};

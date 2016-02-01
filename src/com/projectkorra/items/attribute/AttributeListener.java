@@ -110,7 +110,6 @@ public class AttributeListener implements Listener {
 	 * @param attrib the name of the stat "WaterSource" or "MetalSource"
 	 * @param istack the ItemStack that will temporarily spawn
 	 */
-	@SuppressWarnings("deprecation")
 	public void handleItemSource(Player player, String attrib, ItemStack istack) {
 		ConcurrentHashMap<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
 		if (attribs.containsKey(attrib) && attribs.get(attrib) == 1) {

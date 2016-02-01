@@ -276,7 +276,7 @@ public class AttributeUtils {
 			return lst;
 		}
 
-		Element elem = Element.getType(name);
+		Element elem = Element.getElement(name);
 		if (elem != null) {
 			for (Attribute listAttr : AttributeList.ATTRIBUTES) {
 				if (listAttr.getElement() == elem) {

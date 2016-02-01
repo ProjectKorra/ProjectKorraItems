@@ -24,43 +24,43 @@ public class AirUpdater {
 	 * @return if the ability was updated correctly
 	 */
 	public static boolean updateAbility(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
-		if (ability instanceof AirBlast) {
+		if (ability instanceof AirBlast) { 
 			AirBlast abil = (AirBlast) ability;
 			if (attribs.containsKey("AirBlastRange"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("AirBlastRange") / 100.0);
 			if (attribs.containsKey("AirBlastForce"))
-				abil.setPushfactor(abil.getPushfactor() + abil.getPushfactor() * attribs.get("AirBlastForce") / 100.0);
+				abil.setPushFactor(abil.getPushFactor() + abil.getPushFactor() * attribs.get("AirBlastForce") / 100.0);
 			return true;
 		} else if (ability instanceof AirSwipe) {
 			AirSwipe abil = (AirSwipe) ability;
 			if (attribs.containsKey("AirSwipeDamage"))
 				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("AirSwipeDamage") / 100.0);
 			if (attribs.containsKey("AirSwipeForce"))
-				abil.setPushfactor(abil.getPushfactor() + abil.getPushfactor() * attribs.get("AirSwipeForce") / 100.0);
+				abil.setPushFactor(abil.getPushFactor() + abil.getPushFactor() * attribs.get("AirSwipeForce") / 100.0);
 			if (attribs.containsKey("AirSwipeSpeed"))
 				abil.setSpeed(abil.getSpeed() + abil.getSpeed() * attribs.get("AirSwipeSpeed") / 100.0);
 			if (attribs.containsKey("AirSwipeRange"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("AirSwipeRange") / 100.0);
 			if (attribs.containsKey("AirSwipeMaxCharge"))
-				abil.setMaxfactor(abil.getMaxfactor() + abil.getMaxfactor() * attribs.get("AirSwipeMaxCharge") / 100.0);
+				abil.setMaxChargeFactor(abil.getMaxChargeFactor() + abil.getMaxChargeFactor() * attribs.get("AirSwipeMaxCharge") / 100.0);
 			if (attribs.containsKey("AirSwipeRadius"))
-				abil.setAffectingradius(abil.getAffectingradius() + abil.getAffectingradius() * attribs.get("AirSwipeRadius") / 100.0);
+				abil.setRadius(abil.getRadius() + abil.getRadius() * attribs.get("AirSwipeRadius") / 100.0);
 			if (attribs.containsKey("AirSwipeArc"))
 				abil.setArc((int) (abil.getArc() + abil.getArc() * attribs.get("AirSwipeArc") / 100.0));
 			if (attribs.containsKey("AirSwipeChargeTime"))
-				abil.setMaxchargetime((long) (abil.getMaxchargetime() + abil.getMaxchargetime() * attribs.get("AirSwipeChargeTime") / 100.0));
+				abil.setMaxChargeTime((long) (abil.getMaxChargeTime() + abil.getMaxChargeTime() * attribs.get("AirSwipeChargeTime") / 100.0));
 			return true;
 		} else if (ability instanceof AirShield) {
 			AirShield abil = (AirShield) ability;
 			if (attribs.containsKey("AirShieldRadius"))
-				abil.setMaxradius(abil.getMaxradius() + abil.getMaxradius() * attribs.get("AirShieldRadius") / 100.0);
+				abil.setMaxRadius(abil.getMaxRadius() + abil.getMaxRadius() * attribs.get("AirShieldRadius") / 100.0);
 			return true;
 		} else if (ability instanceof AirBubble) {
 			AirBubble abil = (AirBubble) ability;
 			if (attribs.containsKey("AirBubbleRadius"))
-				abil.setDefaultAirRadius(abil.getDefaultAirRadius() + abil.getDefaultAirRadius() * attribs.get("AirBubbleRadius") / 100.0);
+				abil.setAirRadius(abil.getAirRadius() + abil.getAirRadius() * attribs.get("AirBubbleRadius") / 100.0);
 			if (attribs.containsKey("WaterBubbleRadius"))
-				abil.setDefaultWaterRadius(abil.getDefaultWaterRadius() + abil.getDefaultWaterRadius() * attribs.get("WaterBubbleRadius") / 100.0);
+				abil.setWaterRadius(abil.getWaterRadius() + abil.getWaterRadius() * attribs.get("WaterBubbleRadius") / 100.0);
 			return true;
 		} else if (ability instanceof AirScooter) {
 			AirScooter abil = (AirScooter) ability;
@@ -70,15 +70,15 @@ public class AirUpdater {
 		} else if (ability instanceof Tornado) {
 			Tornado abil = (Tornado) ability;
 			if (attribs.containsKey("TornadoMaxHeight"))
-				abil.setMaxheight(abil.getMaxheight() + abil.getMaxheight() * attribs.get("TornadoMaxHeight") / 100.0);
+				abil.setMaxHeight(abil.getMaxHeight() + abil.getMaxHeight() * attribs.get("TornadoMaxHeight") / 100.0);
 			if (attribs.containsKey("TornadoMaxRadius"))
-				abil.setMaxradius(abil.getMaxradius() + abil.getMaxradius() * attribs.get("TornadoMaxRadius") / 100.0);
+				abil.setRadius(abil.getRadius() + abil.getRadius() * attribs.get("TornadoMaxRadius") / 100.0);
 			if (attribs.containsKey("TornadoRange"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("TornadoRange") / 100.0);
 			if (attribs.containsKey("TornadoPlayerPushFactor"))
-				abil.setPCpushfactor(abil.getPCpushfactor() + abil.getPCpushfactor() * attribs.get("TornadoPlayerPushFactor") / 100.0);
+				abil.setPlayerPushFactor(abil.getPlayerPushFactor() + abil.getPlayerPushFactor() * attribs.get("TornadoPlayerPushFactor") / 100.0);
 			if (attribs.containsKey("TornadoNPCPushFactor"))
-				abil.setNPCpushfactor(abil.getNPCpushfactor() + abil.getNPCpushfactor() * attribs.get("TornadoNPCPushFactor") / 100.0);
+				abil.setNpcPushFactor(abil.getNpcPushFactor() + abil.getNpcPushFactor() * attribs.get("TornadoNPCPushFactor") / 100.0);
 			return true;
 		} else if (ability instanceof AirSpout) {
 			AirSpout abil = (AirSpout) ability;
@@ -92,9 +92,9 @@ public class AirUpdater {
 			if (attribs.containsKey("AirSuctionRange"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("AirSuctionRange") / 100.0);
 			if (attribs.containsKey("AirSuctionForce"))
-				abil.setPushfactor(abil.getPushfactor() + abil.getPushfactor() * attribs.get("AirSuctionForce") / 100.0);
+				abil.setPushFactor(abil.getPushFactor() + abil.getPushFactor() * attribs.get("AirSuctionForce") / 100.0);
 			if (attribs.containsKey("AirSuctionRadius"))
-				abil.setAffectingradius(abil.getAffectingradius() + abil.getAffectingradius() * attribs.get("AirSuctionRadius") / 100.0);
+				abil.setRadius(abil.getRadius() + abil.getRadius() * attribs.get("AirSuctionRadius") / 100.0);
 			return true;
 		}
 
