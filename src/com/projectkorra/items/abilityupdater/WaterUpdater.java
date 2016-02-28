@@ -27,6 +27,47 @@ public class WaterUpdater {
 	 * @param attribs the map of the players effects
 	 * @return if the ability was updated correctly
 	 */
+	
+	public static boolean updateAbilityDamage(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
+		if (ability instanceof IceBlast) {
+			IceBlast abil = (IceBlast) ability;
+			if (attribs.containsKey("IceBlastDamage"))
+				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("IceBlastDamage") / 100.0);
+			return true;
+		} else if (ability instanceof IceSpikeBlast) {
+			IceSpikeBlast abil = (IceSpikeBlast) ability;
+			if (attribs.containsKey("IceSpikeDamage"))
+				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("IceSpikeDamage") / 100.0);
+			return true;
+		} else if (ability instanceof IceSpikePillar) {
+			IceSpikePillar abil = (IceSpikePillar) ability;
+			if (attribs.containsKey("IceSpikePillarDamage"))
+				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("IceSpikePillarDamage") / 100.0);
+			return true;
+		} else if (ability instanceof OctopusForm) {
+			OctopusForm abil = (OctopusForm) ability;
+			if (attribs.containsKey("OctopusFormDamage"))
+				abil.setDamage((int) (abil.getDamage() + abil.getDamage() * attribs.get("OctopusFormDamage") / 100.0));
+			return true;
+		} else if (ability instanceof Torrent) {
+			Torrent abil = (Torrent) ability;
+			if (attribs.containsKey("TorrentDamage"))
+				abil.setDamage((int) (abil.getDamage() + abil.getDamage() * attribs.get("TorrentDamage") / 100.0));
+			return true;
+		} else if (ability instanceof WaterManipulation) {
+			WaterManipulation abil = (WaterManipulation) ability;
+			if (attribs.containsKey("WaterManipulationDamage"))
+				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("WaterManipulationDamage") / 100.0);
+			return true;
+		} else if (ability instanceof WaterSpoutWave) {
+			WaterSpoutWave abil = (WaterSpoutWave) ability;
+			if (attribs.containsKey("IceWaveDamage"))
+				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("IceWaveDamage") / 100.0);
+			return true;
+		}
+		return false;
+	}
+	
 	public static boolean updateAbility(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
 		if (ability instanceof Bloodbending) {
 			Bloodbending abil = (Bloodbending) ability;
@@ -43,20 +84,14 @@ public class WaterUpdater {
 			IceBlast abil = (IceBlast) ability;
 			if (attribs.containsKey("IceBlastRange"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("IceBlastRange") / 100.0);
-			if (attribs.containsKey("IceBlastDamage"))
-				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("IceBlastDamage") / 100.0);
 			return true;
 		} else if (ability instanceof IceSpikeBlast) {
 			IceSpikeBlast abil = (IceSpikeBlast) ability;
-			if (attribs.containsKey("IceSpikeDamage"))
-				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("IceSpikeDamage") / 100.0);
 			if (attribs.containsKey("IceSpikeRange"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("IceSpikeRange") / 100.0);
 			return true;
 		} else if (ability instanceof IceSpikePillar) {
 			IceSpikePillar abil = (IceSpikePillar) ability;
-			if (attribs.containsKey("IceSpikePillarDamage"))
-				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("IceSpikePillarDamage") / 100.0);
 			if (attribs.containsKey("IceSpikePillarRange"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("IceSpikePillarRange") / 100.0);
 			return true;
@@ -64,8 +99,6 @@ public class WaterUpdater {
 			OctopusForm abil = (OctopusForm) ability;
 			if (attribs.containsKey("OctopusFormRange"))
 				abil.setAttackRange((int) (abil.getAttackRange() + abil.getAttackRange() * attribs.get("OctopusFormRange") / 100.0));
-			if (attribs.containsKey("OctopusFormDamage"))
-				abil.setDamage((int) (abil.getDamage() + abil.getDamage() * attribs.get("OctopusFormDamage") / 100.0));
 			if (attribs.containsKey("OctopusFormInterval"))
 				abil.setInterval((long) (abil.getInterval() + abil.getInterval() * attribs.get("OctopusFormInterval") / 100.0));
 			if (attribs.containsKey("OctopusFormKnockback"))
@@ -75,8 +108,6 @@ public class WaterUpdater {
 			return true;
 		} else if (ability instanceof Torrent) {
 			Torrent abil = (Torrent) ability;
-			if (attribs.containsKey("TorrentDamage"))
-				abil.setDamage((int) (abil.getDamage() + abil.getDamage() * attribs.get("TorrentDamage") / 100.0));
 			if (attribs.containsKey("TorrentRange"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("TorrentRange") / 100.0);
 			if (attribs.containsKey("TorrentStreamingDamage"))
@@ -97,8 +128,6 @@ public class WaterUpdater {
 				abil.setDispelRange((int) (abil.getDispelRange() + abil.getDispelRange() * attribs.get("WaterManipulationDispelRange") / 100.0));
 			if (attribs.containsKey("WaterManipulationForce"))
 				abil.setPushFactor(abil.getPushFactor() + abil.getPushFactor() * attribs.get("WaterManipulationForce") / 100.0);
-			if (attribs.containsKey("WaterManipulationDamage"))
-				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("WaterManipulationDamage") / 100.0);
 			if (attribs.containsKey("WaterManipulationCooldown"))
 				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("WaterManipulationCooldown") / 100.0));
 			return true;
@@ -119,8 +148,6 @@ public class WaterUpdater {
 				abil.setChargeTime(abil.getChargeTime() + abil.getChargeTime() * attribs.get("WaterSpoutWaveChargeTime") / 100.0);
 			if (attribs.containsKey("WaterSpoutWaveFlightTime"))
 				abil.setFlightTime(abil.getFlightTime() + abil.getFlightTime() * attribs.get("WaterSpoutWaveFlightTime") / 100.0);
-			if (attribs.containsKey("IceWaveDamage"))
-				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("IceWaveDamage") / 100.0);
 			return true;
 		} else if (ability instanceof SurgeWall) {
 			SurgeWall abil = (SurgeWall) ability;

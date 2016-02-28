@@ -4,6 +4,7 @@ import com.projectkorra.items.ItemUtils;
 import com.projectkorra.items.ProjectKorraItems;
 import com.projectkorra.items.abilityupdater.AbilityUpdater;
 import com.projectkorra.items.customs.CustomItem;
+import com.projectkorra.items.items.Glider;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

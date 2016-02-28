@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -15,10 +17,11 @@ import com.projectkorra.items.attribute.Action;
 import com.projectkorra.items.attribute.Attribute;
 import com.projectkorra.items.attribute.AttributeUtils;
 import com.projectkorra.items.customs.CustomItem;
-import com.projectkorra.projectkorra.ability.CoreAbility;
+import com.projectkorra.projectkorra.event.AbilityDamageEntityEvent;
+import com.projectkorra.projectkorra.event.AbilityStartEvent;
 import com.projectkorra.projectkorra.util.ParticleEffect;
 
-public class AbilityUpdater {
+public class AbilityUpdater implements Listener {
 	/**
 	 * Confirming an ability instance causes the charges on an item to decrease.
 	 * To avoid causing unnecessary charge decreases we use a confirmation
@@ -30,9 +33,9 @@ public class AbilityUpdater {
 
 	public static final long CLEANUP_TIME = 300000;
 	private static final ConcurrentHashMap<Object, Long> UPDATED_ABILITIES = new ConcurrentHashMap<Object, Long>();
-	private static BukkitRunnable updater, cleaner;
+	private static BukkitRunnable cleaner;
 
-	private AbilityUpdater() {
+	public AbilityUpdater() {
 	}
 
 	/**
@@ -40,24 +43,28 @@ public class AbilityUpdater {
 	 * for any new instances of abilities. When a new ability is found it is put
 	 * into UPDATED_ABILITIES.
 	 */
-	public static void startUpdater() {
-		updater = new BukkitRunnable() {
-			public void run() {
-				for (CoreAbility a : CoreAbility.getAbilities()) {
-					if (!UPDATED_ABILITIES.containsKey(a)) {
-						UPDATED_ABILITIES.put(a, System.currentTimeMillis());
-						updateAbility(a.getPlayer(), a);
-					}
-				}
-			}
-		};
-		updater.runTaskTimer(ProjectKorraItems.plugin, 0, 1);
+	
+	@EventHandler
+	public static void onDamage(AbilityDamageEntityEvent event) {
+		if (!UPDATED_ABILITIES.containsKey(event.getAbility())) {
+			UPDATED_ABILITIES.put(event.getAbility(), System.currentTimeMillis());
+			updateAbilityDamage(event.getAbility().getPlayer(), event.getAbility());
+		}
+	}
+	
+	@EventHandler
+	public static void onStart(AbilityStartEvent event) {
+		if (!UPDATED_ABILITIES.containsKey(event.getAbility())) {
+			UPDATED_ABILITIES.put(event.getAbility(), System.currentTimeMillis());
+			updateAbility(event.getAbility().getPlayer(), event.getAbility());
+		}
 	}
 
 	/**
 	 * The cleaner scans through each ability instance inside of
 	 * UPDATED_ABILITIES and removes the oldest ones.
 	 */
+	
 	public static void startCleanup() {
 		cleaner = new BukkitRunnable() {
 			public void run() {
@@ -90,6 +97,29 @@ public class AbilityUpdater {
 		} else if (AirUpdater.updateAbility(player, ability, attribs)) {
 		} else if (EarthUpdater.updateAbility(player, ability, attribs)) {
 		} else if (ChiUpdater.updateAbility(player, ability, attribs)) {
+		} else {
+			abilityAdded = false;
+		}
+
+		if (abilityAdded) {
+			updatePlayerParticles(player);
+		}
+
+		confirmAbility(player, CONFIRM_CLICK, Action.LEFTCLICK);
+		confirmAbility(player, CONFIRM_SHIFT, Action.SHIFT);
+	}
+	
+	public static void updateAbilityDamage(Player player, Object ability) {
+		if (player == null)
+			return;
+
+		boolean abilityAdded = true;
+		ConcurrentHashMap<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
+		if (FireUpdater.updateAbilityDamage(player, ability, attribs)) {
+		} else if (WaterUpdater.updateAbilityDamage(player, ability, attribs)) {
+		} else if (AirUpdater.updateAbilityDamage(player, ability, attribs)) {
+		} else if (EarthUpdater.updateAbilityDamage(player, ability, attribs)) {
+		} else if (ChiUpdater.updateAbilityDamage(player, ability, attribs)) {
 		} else {
 			abilityAdded = false;
 		}

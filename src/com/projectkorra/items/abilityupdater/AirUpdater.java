@@ -23,6 +23,17 @@ public class AirUpdater {
 	 * @param attribs the map of the players effects
 	 * @return if the ability was updated correctly
 	 */
+	
+	public static boolean updateAbilityDamage(Player player, Object ability, ConcurrentHashMap<String, Double>attribs) {
+		if (ability instanceof AirSwipe) {
+			AirSwipe abil = (AirSwipe) ability;
+			if (attribs.containsKey("AirSwipeDamage"))
+				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("AirSwipeDamage") / 100.0);
+			return true;
+		}
+		return false;
+	}
+	
 	public static boolean updateAbility(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
 		if (ability instanceof AirBlast) { 
 			AirBlast abil = (AirBlast) ability;
