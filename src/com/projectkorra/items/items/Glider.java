@@ -1,4 +1,4 @@
-package com.projectkorra.items.attribute;
+package com.projectkorra.items.items;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -10,6 +10,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import com.projectkorra.items.ProjectKorraItems;
+import com.projectkorra.items.attribute.Action;
+import com.projectkorra.items.attribute.AttributeList;
+import com.projectkorra.items.attribute.AttributeUtils;
 import com.projectkorra.projectkorra.BendingPlayer;
 import com.projectkorra.projectkorra.Element;
 

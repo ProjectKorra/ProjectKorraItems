@@ -1,5 +1,9 @@
 package com.projectkorra.items.abilityupdater;
 
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.bukkit.entity.Player;
+
 import com.projectkorra.projectkorra.earthbending.Catapult;
 import com.projectkorra.projectkorra.earthbending.EarthArmor;
 import com.projectkorra.projectkorra.earthbending.EarthBlast;
@@ -7,10 +11,6 @@ import com.projectkorra.projectkorra.earthbending.EarthSmash;
 import com.projectkorra.projectkorra.earthbending.EarthTunnel;
 import com.projectkorra.projectkorra.earthbending.Ripple;
 import com.projectkorra.projectkorra.earthbending.Shockwave;
-
-import org.bukkit.entity.Player;
-
-import java.util.concurrent.ConcurrentHashMap;
 
 public class EarthUpdater {
 
@@ -22,11 +22,30 @@ public class EarthUpdater {
 	 * @param attribs the map of the players effects
 	 * @return if the ability was updated correctly
 	 */
-	public static boolean updateAbility(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
+	
+	public static boolean updateAbilityDamage(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
 		if (ability instanceof EarthSmash) {
 			EarthSmash abil = (EarthSmash) ability;
 			if (attribs.containsKey("EarthSmashDamage"))
 				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("EarthSmashDamage") / 100.0);
+			return true;
+		} else if (ability instanceof EarthBlast) {
+			EarthBlast abil = (EarthBlast) ability;
+			if (attribs.containsKey("EarthBlastDamage"))
+				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("EarthBlastDamage") / 100.0);
+			return true;
+		} else if (ability instanceof Ripple) {
+			Ripple abil = (Ripple) ability;
+			if (attribs.containsKey("ShockwaveDamage"))
+				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("ShockwaveDamage") / 100.0);
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean updateAbility(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
+		if (ability instanceof EarthSmash) {
+			EarthSmash abil = (EarthSmash) ability;
 			if (attribs.containsKey("EarthSmashGrabRange"))
 				abil.setSelectRange((int) (abil.getSelectRange() + abil.getSelectRange() * attribs.get("EarthSmashGrabRange") / 100.0));
 			if (attribs.containsKey("EarthSmashShootRange"))
@@ -60,8 +79,6 @@ public class EarthUpdater {
 			EarthBlast abil = (EarthBlast) ability;
 			if (attribs.containsKey("EarthBlastRange"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("EarthBlastRange") / 100.0);
-			if (attribs.containsKey("EarthBlastDamage"))
-				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("EarthBlastDamage") / 100.0);
 			if (attribs.containsKey("EarthBlastForce"))
 				abil.setPushFactor(abil.getPushFactor() + abil.getPushFactor() * attribs.get("EarthBlastForce") / 100.0);
 			return true;
@@ -80,8 +97,6 @@ public class EarthUpdater {
 			Ripple abil = (Ripple) ability;
 			if (attribs.containsKey("ShockwaveRadius"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("ShockwaveRadius") / 100.0);
-			if (attribs.containsKey("ShockwaveDamage"))
-				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("ShockwaveDamage") / 100.0);
 			if (attribs.containsKey("ShockwaveKnockback"))
 				abil.setKnockback(abil.getKnockback() + abil.getKnockback() * attribs.get("ShockwaveKnockback") / 100.0);
 			return true;

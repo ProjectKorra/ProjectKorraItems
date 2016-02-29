@@ -1,15 +1,16 @@
 package com.projectkorra.items;
 
+import java.io.IOException;
+import java.util.logging.Logger;
+
+import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import com.projectkorra.items.abilityupdater.AbilityUpdater;
 import com.projectkorra.items.attribute.AttributeListener;
 import com.projectkorra.items.customs.ItemDisplay;
 import com.projectkorra.items.customs.ItemListener;
-
-import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.IOException;
-import java.util.logging.Logger;
 
 public class ProjectKorraItems extends JavaPlugin {
 	public static ProjectKorraItems plugin;
@@ -23,9 +24,11 @@ public class ProjectKorraItems extends JavaPlugin {
 		log.info(pdfFile.getName() + " Version " + pdfFile.getVersion() + " Has Been Enabled!");
 		new CommandManager();
 		new ConfigManager();
-		this.getServer().getPluginManager().registerEvents(new ItemListener(), this);
-		this.getServer().getPluginManager().registerEvents(new AttributeListener(), this);
-		AbilityUpdater.startUpdater();
+		
+		PluginManager pm = this.getServer().getPluginManager();
+		pm.registerEvents(new ItemListener(), this);
+		pm.registerEvents(new AttributeListener(), this);
+		pm.registerEvents(new AbilityUpdater(), this);
 		AbilityUpdater.startCleanup();
 
 		try {

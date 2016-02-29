@@ -18,6 +18,17 @@ public class ChiUpdater {
 	 * @param attribs the map of the players effects
 	 * @return if the ability was updated correctly
 	 */
+	
+	public static boolean updateAbilityDamage(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
+		if (ability instanceof RapidPunch) {
+			RapidPunch abil = (RapidPunch) ability;
+			if (attribs.containsKey("RapidPunchDamage"))
+				abil.setDamage((int) (abil.getDamage() + abil.getDamage() * attribs.get("RapidPunchDamage") / 100.0));
+			return true;
+		}
+		return false;
+	}
+	
 	public static boolean updateAbility(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
 		if (ability instanceof AcrobatStance) {
 			AcrobatStance abil = (AcrobatStance) ability;
@@ -28,8 +39,6 @@ public class ChiUpdater {
 			return true;
 		} else if (ability instanceof RapidPunch) {
 			RapidPunch abil = (RapidPunch) ability;
-			if (attribs.containsKey("RapidPunchDamage"))
-				abil.setDamage((int) (abil.getDamage() + abil.getDamage() * attribs.get("RapidPunchDamage") / 100.0));
 			if (attribs.containsKey("RapidPunchHits"))
 				abil.setNumPunches((int) (abil.getNumPunches() + abil.getNumPunches() * attribs.get("RapidPunchHits") / 100.0));
 			if (attribs.containsKey("RapidPunchDistance"))

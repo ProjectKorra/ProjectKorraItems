@@ -21,11 +21,30 @@ public class FireUpdater {
 	 * @param attribs the map of the players effects
 	 * @return if the ability was updated correctly
 	 */
-	public static boolean updateAbility(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
+	
+	public static boolean updateAbilityDamage(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
 		if (ability instanceof Lightning) {
 			Lightning abil = (Lightning) ability;
 			if (attribs.containsKey("LightningDamage"))
 				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("LightningDamage") / 100.0);
+			return true;
+		} else if (ability instanceof FireBlast) {
+			FireBlast abil = (FireBlast) ability;
+			if (attribs.containsKey("FireBlastDamage"))
+				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("FireBlastDamage") / 100.0);
+			return true;
+		} else if (ability instanceof WallOfFire) {
+			WallOfFire abil = (WallOfFire) ability;
+			if (attribs.containsKey("WallOfFireDamage"))
+				abil.setDamage((int) (abil.getDamage() + abil.getDamage() * attribs.get("WallOfFireDamage") / 100.0));
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean updateAbility(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
+		if (ability instanceof Lightning) {
+			Lightning abil = (Lightning) ability;
 			if (attribs.containsKey("LightningRange"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("LightningRange") / 100.0);
 			if (attribs.containsKey("LightningChargeTime"))
@@ -58,8 +77,6 @@ public class FireUpdater {
 				abil.setSpeed(abil.getSpeed() + abil.getSpeed() * attribs.get("FireBlastSpeed") / 100.0);
 			if (attribs.containsKey("FireBlastForce"))
 				abil.setPushFactor(abil.getPushFactor() + abil.getPushFactor() * attribs.get("FireBlastForce") / 100.0);
-			if (attribs.containsKey("FireBlastDamage"))
-				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("FireBlastDamage") / 100.0);
 			if (attribs.containsKey("FireBlastRange"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("FireBlastRange") / 100.0);
 			return true;
@@ -87,8 +104,6 @@ public class FireUpdater {
 				abil.setWidth((int) (abil.getWidth() + abil.getWidth() * attribs.get("WallOfFireWidth") / 100.0));
 			if (attribs.containsKey("WallOfFireDuration"))
 				abil.setDuration((long) (abil.getDuration() + abil.getDuration() * attribs.get("WallOfFireDuration") / 100.0));
-			if (attribs.containsKey("WallOfFireDamage"))
-				abil.setDamage((int) (abil.getDamage() + abil.getDamage() * attribs.get("WallOfFireDamage") / 100.0));
 			if (attribs.containsKey("WallOfFireDamageInterval"))
 				abil.setDamageInterval((long) (abil.getDamageInterval() + abil.getDamageInterval() * attribs.get("WallOfFireDamageInterval") / 100.0));
 			if (attribs.containsKey("WallOfFireCooldown"))
