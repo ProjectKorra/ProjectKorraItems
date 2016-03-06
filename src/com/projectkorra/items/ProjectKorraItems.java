@@ -9,6 +9,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.projectkorra.items.abilityupdater.AbilityUpdater;
 import com.projectkorra.items.attribute.AttributeListener;
+import com.projectkorra.items.command.GiveCommand;
+import com.projectkorra.items.command.ReloadCommand;
 import com.projectkorra.items.customs.ItemDisplay;
 import com.projectkorra.items.customs.ItemListener;
 
@@ -22,7 +24,8 @@ public class ProjectKorraItems extends JavaPlugin {
 		plugin = this;
 		PluginDescriptionFile pdfFile = this.getDescription();
 		log.info(pdfFile.getName() + " Version " + pdfFile.getVersion() + " Has Been Enabled!");
-		new CommandManager();
+		new ReloadCommand();
+		new GiveCommand();
 		new ConfigManager();
 		
 		PluginManager pm = this.getServer().getPluginManager();
