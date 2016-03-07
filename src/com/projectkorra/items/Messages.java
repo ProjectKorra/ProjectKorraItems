@@ -21,7 +21,7 @@ public class Messages {
 	public static final long LOG_DELAY = 30000;
 
 	public static final String[] RELOAD_ALIAS = { "reload", "r", "reloadconfig", "restart" };
-	public static final String[] ITEMS_ALIAS = { "items", "i", "item" };
+	public static final String[] ITEMS_ALIAS = { "items", "item", "i", "bi", "ki", "pki", "projectkorraitems", "bendingitems", "korraitems" };
 	public static final String[] DISPLAY_ALIAS = { "display", "d", "disp", "show" };
 	public static final String[] STATS_ALIAS = { "stats", "s", "stat", "attr", "attri", "attribute" };
 	public static final String[] RECIPE_ALIAS = { "recipe", "rec", "formula" };
