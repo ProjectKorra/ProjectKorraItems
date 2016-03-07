@@ -8,10 +8,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.projectkorra.items.Messages;
+import com.projectkorra.items.ProjectKorraItems;
 import com.projectkorra.items.customs.CustomItem;
-import com.projectkorra.projectkorra.command.PKCommand;
 
-public class GiveCommand extends PKCommand {
+public class GiveCommand extends PKICommand {
 
 	public GiveCommand() {
 		super("give", "/bending give [item] <amount> <player>", "This command gives you or another player a bending item", Messages.GIVE_ALIAS);
@@ -32,21 +32,46 @@ public class GiveCommand extends PKCommand {
 					
 					CustomItem ci = null;
 					ItemStack i = null;
+					int q = 1;
 					
 					if (args.size() >= 1) {
-						player.sendMessage("..");
 						try {
-							player.sendMessage("...");
-							ci = CustomItem.getCustomItem(args.get(1).toString());
+							ci = CustomItem.getCustomItem(args.get(0));
 						} catch (Exception e) {
+							sender.sendMessage(Messages.ITEM_NOT_FOUND);
 							e.printStackTrace();
 							return;
 						}
 						i = ci.generateItem();
+						
+						if (args.size() >= 2) {
+							try {
+								q = Integer.parseInt(args.get(1));
+							} catch (Exception e) {
+								e.printStackTrace();
+								return;
+							}
+							i.setAmount(q);
+							
+							if (args.size() == 3) {
+								Player target = (Player)ProjectKorraItems.plugin.getServer().getPlayer(args.get(2));
+								if (target != null) {
+									target.getInventory().addItem(i);
+									return;
+								}
+								sender.sendMessage(Messages.INVALID_PLAYER);
+								return;
+							}
+						}
 					}
 					player.getInventory().addItem(i);
+					return;
 				}
+				sender.sendMessage(Messages.PLAYER_ONLY);
+				return;
 			}
+			sender.sendMessage(Messages.NO_PERM);
+			return;
 		}
 	}
 

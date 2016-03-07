@@ -6,9 +6,8 @@ import org.bukkit.command.CommandSender;
 
 import com.projectkorra.items.ConfigManager;
 import com.projectkorra.items.Messages;
-import com.projectkorra.projectkorra.command.PKCommand;
 
-public class ReloadCommand extends PKCommand {
+public class ReloadCommand extends PKICommand {
 
 	public ReloadCommand() {
 		super("reload", "/b reload", "This command reloads items configuration.", Messages.RELOAD_ALIAS);
@@ -22,6 +21,7 @@ public class ReloadCommand extends PKCommand {
 				sender.sendMessage(Messages.CONFIG_RELOADED);
 			}
 			sender.sendMessage(Messages.NO_PERM);
+			return;
 		}
 	}
 
