@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.projectkorra.items.Messages;
-import com.projectkorra.items.customs.ItemEquip;
+import com.projectkorra.items.customs.PKIEquip;
 
 public class EquipCommand extends PKICommand {
 
@@ -27,7 +27,7 @@ public class EquipCommand extends PKICommand {
 			}
 
 			Player player = (Player)sender;
-			new ItemEquip(player);
+			new PKIEquip(player);
 			return;
 		}
 		

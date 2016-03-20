@@ -1,10 +1,8 @@
-package com.projectkorra.items.attribute;
+package com.projectkorra.items.utils;
 
-import com.projectkorra.items.ElementUtils;
-import com.projectkorra.items.ItemUtils;
-import com.projectkorra.items.Messages;
-import com.projectkorra.items.customs.CustomItem;
-import com.projectkorra.projectkorra.Element;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -13,9 +11,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
+import com.projectkorra.items.Messages;
+import com.projectkorra.items.attribute.Action;
+import com.projectkorra.items.attribute.Attribute;
+import com.projectkorra.items.attribute.AttributeList;
+import com.projectkorra.items.attribute.AttributeListener;
+import com.projectkorra.items.customs.PKItem;
+import com.projectkorra.projectkorra.Element;
 
 public class AttributeUtils {
 
@@ -28,7 +30,7 @@ public class AttributeUtils {
 	 * @return a map containing attribute effects
 	 */
 	public static ConcurrentHashMap<String, Double> getSimplePlayerAttributeMap(Player player) {
-		ArrayList<ItemStack> equipment = ItemUtils.getPlayerValidEquipment(player);
+		ArrayList<ItemStack> equipment = PKIUtils.getPlayerValidEquipment(player);
 		ConcurrentHashMap<String, Double> attribMap = new ConcurrentHashMap<String, Double>();
 		ArrayList<Attribute> totalAttribs = new ArrayList<Attribute>();
 
@@ -44,7 +46,7 @@ public class AttributeUtils {
 
 		/* Handle any armor bending effects */
 		for (ItemStack istack : equipment) {
-			CustomItem citem = CustomItem.getCustomItem(istack);
+			PKItem citem = PKItem.getCustomItem(istack);
 			if (citem == null)
 				continue;
 			for (Attribute attr : citem.getAttributes())
@@ -153,9 +155,9 @@ public class AttributeUtils {
 		if (player == null)
 			return;
 
-		ArrayList<ItemStack> istacks = ItemUtils.getPlayerValidEquipment(player);
+		ArrayList<ItemStack> istacks = PKIUtils.getPlayerValidEquipment(player);
 		for (ItemStack istack : istacks) {
-			CustomItem citem = CustomItem.getCustomItem(istack);
+			PKItem citem = PKItem.getCustomItem(istack);
 			if (citem == null)
 				continue;
 
@@ -226,7 +228,7 @@ public class AttributeUtils {
 					if (istack.getAmount() > 1) {
 						istack.setAmount(istack.getAmount() - 1);
 						ItemStack newStack = citem.generateItem();
-						ItemUtils.setLore(istack, newStack.getItemMeta().getLore());
+						PKIUtils.setLore(istack, newStack.getItemMeta().getLore());
 					} else
 						player.getInventory().remove(istack);
 				} else {
@@ -236,7 +238,7 @@ public class AttributeUtils {
 							if (istack.getAmount() > 1) {
 								armor[i].setAmount(armor[i].getAmount() - 1);
 								ItemStack newStack = citem.generateItem();
-								ItemUtils.setLore(armor[i], newStack.getItemMeta().getLore());
+								PKIUtils.setLore(armor[i], newStack.getItemMeta().getLore());
 							} else
 								armor[i] = new ItemStack(Material.AIR);
 							break;
@@ -298,7 +300,7 @@ public class AttributeUtils {
 	 * @param citem a custom item in the player's inventory
 	 * @return true if the player can use this custom item
 	 */
-	public static boolean hasRequiredElement(Player player, CustomItem citem) {
+	public static boolean hasRequiredElement(Player player, PKItem citem) {
 		if (player == null || citem == null) {
 			return false;
 		}
@@ -332,7 +334,7 @@ public class AttributeUtils {
 	 * @param citem a custom item in the player's inventory
 	 * @return true if the player can use this custom item
 	 */
-	public static boolean hasRequiredWorld(Player player, CustomItem citem) {
+	public static boolean hasRequiredWorld(Player player, PKItem citem) {
 		if (player == null || citem == null) {
 			return false;
 		}
@@ -353,7 +355,7 @@ public class AttributeUtils {
 	 * @param citem a custom item in the player's inventory
 	 * @return true if the player can use this custom item
 	 */
-	public static boolean hasRequiredPermission(Player player, CustomItem citem) {
+	public static boolean hasRequiredPermission(Player player, PKItem citem) {
 		if (player == null || citem == null) {
 			return false;
 		}

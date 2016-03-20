@@ -1,4 +1,4 @@
-package com.projectkorra.items;
+package com.projectkorra.items.customs;
 
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;

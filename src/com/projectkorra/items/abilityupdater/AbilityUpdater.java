@@ -1,7 +1,6 @@
 package com.projectkorra.items.abilityupdater;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.entity.Player;
@@ -10,72 +9,26 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.projectkorra.items.ItemUtils;
 import com.projectkorra.items.Messages;
 import com.projectkorra.items.ProjectKorraItems;
-import com.projectkorra.items.attribute.Action;
 import com.projectkorra.items.attribute.Attribute;
-import com.projectkorra.items.attribute.AttributeUtils;
-import com.projectkorra.items.customs.CustomItem;
+import com.projectkorra.items.customs.PKItem;
+import com.projectkorra.items.utils.AttributeUtils;
+import com.projectkorra.items.utils.PKIUtils;
 import com.projectkorra.projectkorra.event.AbilityDamageEntityEvent;
 import com.projectkorra.projectkorra.event.AbilityStartEvent;
 import com.projectkorra.projectkorra.util.ParticleEffect;
 
 public class AbilityUpdater implements Listener {
-	/**
-	 * Confirming an ability instance causes the charges on an item to decrease.
-	 * To avoid causing unnecessary charge decreases we use a confirmation
-	 * system to double check that the ability actually got executed once the
-	 * player clicks or shifts.
-	 */
-	public static final ConcurrentHashMap<Player, BukkitRunnable> CONFIRM_CLICK = new ConcurrentHashMap<Player, BukkitRunnable>();
-	public static final ConcurrentHashMap<Player, BukkitRunnable> CONFIRM_SHIFT = new ConcurrentHashMap<Player, BukkitRunnable>();
-
-	public static final long CLEANUP_TIME = 300000;
-	private static final ConcurrentHashMap<Object, Long> UPDATED_ABILITIES = new ConcurrentHashMap<Object, Long>();
-	private static BukkitRunnable cleaner;
-
-	public AbilityUpdater() {
-	}
-
-	/**
-	 * Hooks into the instance maps of all the ProjectKorra abilities, searching
-	 * for any new instances of abilities. When a new ability is found it is put
-	 * into UPDATED_ABILITIES.
-	 */
 	
 	@EventHandler
-	public static void onDamage(AbilityDamageEntityEvent event) {
-		if (!UPDATED_ABILITIES.containsKey(event.getAbility())) {
-			UPDATED_ABILITIES.put(event.getAbility(), System.currentTimeMillis());
-			updateAbilityDamage(event.getAbility().getPlayer(), event.getAbility());
-		}
+	public void onDamage(AbilityDamageEntityEvent event) {
+		updateAbilityDamage(event.getAbility().getPlayer(), event.getAbility());
 	}
 	
 	@EventHandler
-	public static void onStart(AbilityStartEvent event) {
-		if (!UPDATED_ABILITIES.containsKey(event.getAbility())) {
-			UPDATED_ABILITIES.put(event.getAbility(), System.currentTimeMillis());
-			updateAbility(event.getAbility().getPlayer(), event.getAbility());
-		}
-	}
-
-	/**
-	 * The cleaner scans through each ability instance inside of
-	 * UPDATED_ABILITIES and removes the oldest ones.
-	 */
-	
-	public static void startCleanup() {
-		cleaner = new BukkitRunnable() {
-			public void run() {
-				for (Object key : new HashSet<Object>(UPDATED_ABILITIES.keySet())) {
-					long val = UPDATED_ABILITIES.get(key);
-					if (System.currentTimeMillis() - val >= CLEANUP_TIME)
-						UPDATED_ABILITIES.remove(key);
-				}
-			}
-		};
-		cleaner.runTaskTimer(ProjectKorraItems.plugin, 0, 600);
+	public void onStart(AbilityStartEvent event) {
+		updateAbility(event.getAbility().getPlayer(), event.getAbility());
 	}
 
 	/**
@@ -87,16 +40,24 @@ public class AbilityUpdater implements Listener {
 	 * @param ability the instance of a ProjectKorra ability
 	 */
 	public static void updateAbility(Player player, Object ability) {
-		if (player == null)
+		if (player == null) {
 			return;
+		}
 
 		boolean abilityAdded = true;
+		
 		ConcurrentHashMap<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
+		
 		if (FireUpdater.updateAbility(player, ability, attribs)) {
+			
 		} else if (WaterUpdater.updateAbility(player, ability, attribs)) {
+			
 		} else if (AirUpdater.updateAbility(player, ability, attribs)) {
+			
 		} else if (EarthUpdater.updateAbility(player, ability, attribs)) {
+			
 		} else if (ChiUpdater.updateAbility(player, ability, attribs)) {
+			
 		} else {
 			abilityAdded = false;
 		}
@@ -104,22 +65,27 @@ public class AbilityUpdater implements Listener {
 		if (abilityAdded) {
 			updatePlayerParticles(player);
 		}
-
-		confirmAbility(player, CONFIRM_CLICK, Action.LEFTCLICK);
-		confirmAbility(player, CONFIRM_SHIFT, Action.SHIFT);
 	}
 	
 	public static void updateAbilityDamage(Player player, Object ability) {
-		if (player == null)
+		if (player == null) {
 			return;
+		}
 
 		boolean abilityAdded = true;
+		
 		ConcurrentHashMap<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
+		
 		if (FireUpdater.updateAbilityDamage(player, ability, attribs)) {
+			
 		} else if (WaterUpdater.updateAbilityDamage(player, ability, attribs)) {
+			
 		} else if (AirUpdater.updateAbilityDamage(player, ability, attribs)) {
+			
 		} else if (EarthUpdater.updateAbilityDamage(player, ability, attribs)) {
+			
 		} else if (ChiUpdater.updateAbilityDamage(player, ability, attribs)) {
+			
 		} else {
 			abilityAdded = false;
 		}
@@ -127,9 +93,6 @@ public class AbilityUpdater implements Listener {
 		if (abilityAdded) {
 			updatePlayerParticles(player);
 		}
-
-		confirmAbility(player, CONFIRM_CLICK, Action.LEFTCLICK);
-		confirmAbility(player, CONFIRM_SHIFT, Action.SHIFT);
 	}
 
 	/**
@@ -139,9 +102,9 @@ public class AbilityUpdater implements Listener {
 	 * @param player
 	 */
 	private static void updatePlayerParticles(Player player) {
-		ArrayList<ItemStack> equipment = ItemUtils.getPlayerValidEquipment(player);
+		ArrayList<ItemStack> equipment = PKIUtils.getPlayerValidEquipment(player);
 		for (ItemStack istack : equipment) {
-			CustomItem citem = CustomItem.getCustomItem(istack);
+			PKItem citem = PKItem.getCustomItem(istack);
 			if (citem == null)
 				continue;
 
@@ -194,40 +157,6 @@ public class AbilityUpdater implements Listener {
 					}.runTaskLater(ProjectKorraItems.plugin, i);
 				}
 			}
-		}
-	}
-
-	/**
-	 * When a player left clicks we can't be completely sure that the ability
-	 * actually executed. If it didn't execute we can't take away a charge or
-	 * click charge.
-	 * 
-	 * To determine if the click executed we will store the players name
-	 * temporarily and then wait for the AbilityUpdater to let us know if it
-	 * went through.
-	 */
-	public static void tryToConfirmClick(Player player, ConcurrentHashMap<Player, BukkitRunnable> map) {
-		if (map.containsKey(player)) {
-			map.get(player).cancel();
-			CONFIRM_CLICK.remove(player);
-		}
-
-		final Player fplayer = player;
-		final ConcurrentHashMap<Player, BukkitRunnable> fmap = map;
-		BukkitRunnable br = new BukkitRunnable() {
-			public void run() {
-				fmap.remove(fplayer);
-			}
-		};
-		br.runTaskLater(ProjectKorraItems.plugin, 3);
-		map.put(player, br);
-	}
-
-	public static void confirmAbility(Player player, ConcurrentHashMap<Player, BukkitRunnable> map, Action type) {
-		if (map.containsKey(player)) {
-			map.get(player).cancel();
-			map.remove(player);
-			AttributeUtils.decreaseCharges(player, type);
 		}
 	}
 }

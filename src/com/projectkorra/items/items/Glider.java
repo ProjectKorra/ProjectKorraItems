@@ -12,7 +12,7 @@ import org.bukkit.util.Vector;
 import com.projectkorra.items.ProjectKorraItems;
 import com.projectkorra.items.attribute.Action;
 import com.projectkorra.items.attribute.AttributeList;
-import com.projectkorra.items.attribute.AttributeUtils;
+import com.projectkorra.items.utils.AttributeUtils;
 import com.projectkorra.projectkorra.BendingPlayer;
 import com.projectkorra.projectkorra.Element;
 

@@ -1,7 +1,7 @@
 package com.projectkorra.items;
 
 import com.projectkorra.items.attribute.Attribute;
-import com.projectkorra.items.customs.CustomItem;
+import com.projectkorra.items.customs.PKItem;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -28,8 +28,8 @@ public class ConfigManager {
 	public static final String[] PREFIXES = { ITEM_PREF, DNAME_PREF, NAME_PREF, LORE_PREF, SHAPED_RECIPE_PREF, UNSHAPED_RECIPE_PREF, MATERIAL_PREF, DURA_PREF, AMT_PREF, ATTR_PREF, GLOW_PREF };
 
 	public ConfigManager() {
-		CustomItem.items.clear();
-		CustomItem.itemList.clear();
+		PKItem.items.clear();
+		PKItem.itemList.clear();
 		ProjectKorraItems.plugin.saveDefaultConfig();
 		String str = readConfig();
 		Set<String> customItemNames = getConfigItemNames(str);
@@ -86,7 +86,7 @@ public class ConfigManager {
 	 */
 	public void analyzeConfig(String configStr, Set<String> customItemNames) {
 		String[] configLines = configStr.split("\n");
-		CustomItem newItem = null;
+		PKItem newItem = null;
 		boolean invalid = false;
 
 		for (String line : configLines) {
@@ -98,7 +98,7 @@ public class ConfigManager {
 					newItem.build();
 				}
 				invalid = false;
-				newItem = new CustomItem();
+				newItem = new PKItem();
 			} else {
 				boolean prefFound = false;
 				for (String prefix : PREFIXES) {

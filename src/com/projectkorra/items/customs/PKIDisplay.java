@@ -19,8 +19,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * when the player uses the "/bi items" command. If the total number of
  * CustomItems becomes too large then the display must use multiple pages.
  */
-public class ItemDisplay {
-	public static final ConcurrentHashMap<Player, ItemDisplay> displays = new ConcurrentHashMap<Player, ItemDisplay>();
+public class PKIDisplay {
+	public static ConcurrentHashMap<Player, PKIDisplay> displays;
 	public static final ItemStack PREV_BUTTON = new ItemStack(Material.WOOL, 1, (short) 14);
 	public static final ItemStack NEXT_BUTTON = new ItemStack(Material.WOOL, 1, (short) 5);
 	public static final int INV_SIZE = 27;
@@ -39,7 +39,7 @@ public class ItemDisplay {
 	 * @param showStats if the items should have their attributes shown as lore
 	 * @param page the page number for the inventory (almost always 0)
 	 */
-	public ItemDisplay(Player player, boolean showStats, int page) {
+	public PKIDisplay(Player player, boolean showStats, int page) {
 		this.player = player;
 		this.showStats = showStats;
 		this.page = page;
@@ -60,7 +60,7 @@ public class ItemDisplay {
 	 * @param player the player that this inventory will display for
 	 * @param showStats if the items should have their attributes shown as lore
 	 */
-	public ItemDisplay(Player player, boolean showStats) {
+	public PKIDisplay(Player player, boolean showStats) {
 		this(player, showStats, 0);
 	}
 
@@ -71,7 +71,7 @@ public class ItemDisplay {
 	 * 
 	 * @param player the player that this inventory will display for
 	 */
-	public ItemDisplay(Player player) {
+	public PKIDisplay(Player player) {
 		this(player, false, 0);
 	}
 
@@ -93,7 +93,7 @@ public class ItemDisplay {
 
 		Inventory inv = Bukkit.createInventory(null, INV_SIZE, "Bending Items");
 		ArrayList<ItemStack> cistacks = new ArrayList<ItemStack>();
-		for (CustomItem citem : CustomItem.itemList) {
+		for (PKItem citem : PKItem.itemList) {
 			ItemStack istack = citem.generateItem();
 			ItemMeta meta = istack.getItemMeta();
 			if (showStats) {
@@ -189,9 +189,9 @@ public class ItemDisplay {
 	}
 
 	public static void cleanup() {
-		for (ItemDisplay disp : displays.values()) {
-			if (disp.player != null)
-				disp.player.closeInventory();
+		for (PKIDisplay d : displays.values()) {
+			d.getPlayer().closeInventory();
+			displays.remove(d);
 		}
 	}
 

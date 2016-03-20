@@ -19,10 +19,10 @@ import java.util.concurrent.ConcurrentHashMap;
  * If a player uses the equip command a second time then the previous item will
  * stop being followed.
  */
-public class ItemEquip {
-	public static final ConcurrentHashMap<String, ItemEquip> INSTANCES = new ConcurrentHashMap<String, ItemEquip>();
+public class PKIEquip {
+	public static final ConcurrentHashMap<String, PKIEquip> INSTANCES = new ConcurrentHashMap<String, PKIEquip>();
 
-	private CustomItem customItem;
+	private PKItem customItem;
 	private ItemStack item;
 	private Player player;
 
@@ -32,18 +32,18 @@ public class ItemEquip {
 	 * 
 	 * @param player the player to add or remove an ItemEquip
 	 */
-	public ItemEquip(Player player) {
+	public PKIEquip(Player player) {
 		String name = player.getName();
 
 		if (INSTANCES.containsKey(name)) {
-			ItemEquip itemEq = INSTANCES.get(name);
+			PKIEquip itemEq = INSTANCES.get(name);
 			INSTANCES.remove(name);
 			player.sendMessage(Messages.EQUIP_OFF + " " + itemEq.customItem.getDisplayName());
 			return;
 		}
 
 		ItemStack inhand = player.getItemInHand();
-		CustomItem citem = CustomItem.getCustomItem(inhand);
+		PKItem citem = PKItem.getCustomItem(inhand);
 		if (citem == null) {
 			player.sendMessage(Messages.CANT_EQUIP);
 			return;
@@ -72,7 +72,7 @@ public class ItemEquip {
 		}
 
 		final PlayerInventory inv = player.getInventory();
-		ItemEquip itemEq = INSTANCES.get(name);
+		PKIEquip itemEq = INSTANCES.get(name);
 
 		ItemStack newSlotItem = inv.getItem(newSlot);
 		ItemStack prevSlotItem = inv.getItem(prevSlot);
@@ -87,7 +87,7 @@ public class ItemEquip {
 		if (inv.contains(itemEq.item)) {
 			int foundSlot = inv.first(itemEq.item);
 			final ItemStack foundItem = inv.getItem(foundSlot);
-			final ItemEquip fitemEq = itemEq;
+			final PKIEquip fitemEq = itemEq;
 
 			new BukkitRunnable() {
 				public void run() {
@@ -102,7 +102,7 @@ public class ItemEquip {
 		} else if (prevSlotItem != null && prevSlotItem.hasItemMeta() && prevSlotItem.getItemMeta().hasDisplayName() && prevSlotItem.getItemMeta().getDisplayName().equals(itemEq.customItem.getDisplayName())) {
 
 			final ItemStack prevItem = inv.getItem(prevSlot);
-			final ItemEquip fitemEq = itemEq;
+			final PKIEquip fitemEq = itemEq;
 			new BukkitRunnable() {
 				public void run() {
 					fitemEq.item = prevItem;
@@ -116,11 +116,11 @@ public class ItemEquip {
 		return false;
 	}
 
-	public CustomItem getCustomItem() {
+	public PKItem getCustomItem() {
 		return customItem;
 	}
 
-	public void setCustomItem(CustomItem customItem) {
+	public void setCustomItem(PKItem customItem) {
 		this.customItem = customItem;
 	}
 

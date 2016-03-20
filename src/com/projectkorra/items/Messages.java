@@ -21,6 +21,7 @@ public class Messages {
 	public static final long LOG_DELAY = 30000;
 
 	public static final String[] RELOAD_ALIAS = { "reload", "r", "reloadconfig", "restart" };
+	public static final String[] LIST_ALIAS = { "list", "l" };
 	public static final String[] ITEMS_ALIAS = { "items", "item", "i", "bi", "ki", "pki", "projectkorraitems", "bendingitems", "korraitems" };
 	public static final String[] DISPLAY_ALIAS = { "display", "d", "disp", "show" };
 	public static final String[] STATS_ALIAS = { "stats", "s", "stat", "attr", "attri", "attribute" };
@@ -58,6 +59,7 @@ public class Messages {
 	public static final String EQUIP_OFF = ChatColor.YELLOW + "You have unequipped";
 	public static final String EQUIP_ON = ChatColor.GREEN + "You have equipped";
 	public static final String CANT_EQUIP = ChatColor.RED + "You cannot equip this item.";
+	public static final String NOT_INT = ChatColor.RED + "Not an integer!";
 
 	public static final String USAGE = ChatColor.RED + "/bi items " + ChatColor.YELLOW + "Display all items, click to see their recipes.\n" + ChatColor.RED + "/bi items stats " + ChatColor.YELLOW + "Display all items and their stats.\n" + ChatColor.RED + "/bi stats <page> " + ChatColor.YELLOW + "Displays each stat and it's description.\n" + ChatColor.RED + "/bi stats [phrase] <page> " + ChatColor.YELLOW + "Displays only the stats that contain the phrase.\n" + ChatColor.RED + "/bi equip " + ChatColor.YELLOW + "Equips the current item so that when you change slots the item will follow.\n" + ChatColor.RED + "/bi give " + ChatColor.YELLOW + "(OP) send players custom items.";
 

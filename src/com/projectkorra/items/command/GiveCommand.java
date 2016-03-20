@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.projectkorra.items.Messages;
 import com.projectkorra.items.ProjectKorraItems;
-import com.projectkorra.items.customs.CustomItem;
+import com.projectkorra.items.customs.PKItem;
 
 public class GiveCommand extends PKICommand {
 
@@ -23,23 +23,22 @@ public class GiveCommand extends PKICommand {
 			if (hasPermission(sender)) {
 				if (args.size() == 0) {
 					sender.sendMessage(ChatColor.YELLOW + " ---- " + ChatColor.GOLD + "Item Names " + ChatColor.YELLOW + "----");
-					for (CustomItem citem : CustomItem.itemList)
+					for (PKItem citem : PKItem.itemList)
 						sender.sendMessage(ChatColor.YELLOW + citem.getName());
 					return;
 				}
 				if (isPlayer(sender)) {
 					Player player = (Player)sender;
 					
-					CustomItem ci = null;
+					PKItem ci = null;
 					ItemStack i = null;
 					int q = 1;
 					
 					if (args.size() >= 1) {
-						try {
-							ci = CustomItem.getCustomItem(args.get(0));
-						} catch (Exception e) {
+						ci = PKItem.getCustomItem(args.get(0));
+						
+						if (ci == null) {
 							sender.sendMessage(Messages.ITEM_NOT_FOUND);
-							e.printStackTrace();
 							return;
 						}
 						i = ci.generateItem();
@@ -48,18 +47,20 @@ public class GiveCommand extends PKICommand {
 							try {
 								q = Integer.parseInt(args.get(1));
 							} catch (Exception e) {
-								e.printStackTrace();
+								sender.sendMessage(Messages.NOT_INT);
 								return;
 							}
 							i.setAmount(q);
 							
 							if (args.size() == 3) {
 								Player target = (Player)ProjectKorraItems.plugin.getServer().getPlayer(args.get(2));
-								if (target != null) {
-									target.getInventory().addItem(i);
+								
+								if (target == null) {
+									sender.sendMessage(Messages.INVALID_PLAYER);
 									return;
 								}
-								sender.sendMessage(Messages.INVALID_PLAYER);
+								
+								target.getInventory().addItem(i);
 								return;
 							}
 						}

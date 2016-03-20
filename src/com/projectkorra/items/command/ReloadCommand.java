@@ -16,12 +16,12 @@ public class ReloadCommand extends PKICommand {
 	@Override
 	public void execute(CommandSender sender, List<String> args) {
 		if (correctLength(sender, args.size(), 0, 0)) {
-			if (hasPermission(sender)) {
-				new ConfigManager();
-				sender.sendMessage(Messages.CONFIG_RELOADED);
+			if (!hasPermission(sender)) {
+				sender.sendMessage(Messages.NO_PERM);
+				return;
 			}
-			sender.sendMessage(Messages.NO_PERM);
-			return;
+			new ConfigManager();
+			sender.sendMessage(Messages.CONFIG_RELOADED);
 		}
 	}
 

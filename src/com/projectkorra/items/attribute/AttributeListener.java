@@ -1,10 +1,7 @@
 package com.projectkorra.items.attribute;
 
-import com.projectkorra.items.ItemUtils;
-import com.projectkorra.items.ProjectKorraItems;
-import com.projectkorra.items.abilityupdater.AbilityUpdater;
-import com.projectkorra.items.customs.CustomItem;
-import com.projectkorra.items.items.Glider;
+import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,8 +17,11 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.concurrent.ConcurrentHashMap;
+import com.projectkorra.items.ProjectKorraItems;
+import com.projectkorra.items.customs.PKItem;
+import com.projectkorra.items.items.Glider;
+import com.projectkorra.items.utils.AttributeUtils;
+import com.projectkorra.items.utils.PKIUtils;
 
 public class AttributeListener implements Listener {
 	/**
@@ -47,7 +47,6 @@ public class AttributeListener implements Listener {
 
 		// Handles the Charges, and ShiftCharges attribute
 		if (!player.isSneaking()) {
-			AbilityUpdater.tryToConfirmClick(player, AbilityUpdater.CONFIRM_SHIFT);
 			updateOnActionEffects(player, Action.SHIFT);
 			handleItemSource(player, "WaterSource", new ItemStack(Material.POTION));
 		}
@@ -64,7 +63,6 @@ public class AttributeListener implements Listener {
 		if (event.isCancelled())
 			return;
 		Player player = event.getPlayer();
-		AbilityUpdater.tryToConfirmClick(player, AbilityUpdater.CONFIRM_CLICK);
 		updateOnActionEffects(player, Action.LEFTCLICK);
 		handleItemSource(player, "WaterSource", new ItemStack(Material.POTION));
 
@@ -150,7 +148,7 @@ public class AttributeListener implements Listener {
 		if (player == null)
 			return;
 
-		ArrayList<ItemStack> istacks = ItemUtils.getPlayerValidEquipment(player);
+		ArrayList<ItemStack> istacks = PKIUtils.getPlayerValidEquipment(player);
 		String[] validAttribs = null;
 		if (type == Action.LEFTCLICK)
 			validAttribs = new String[] { "Effects", "ClickEffects" };
@@ -163,7 +161,7 @@ public class AttributeListener implements Listener {
 
 		boolean effectAdded = false;
 		for (ItemStack istack : istacks) {
-			CustomItem citem = CustomItem.getCustomItem(istack);
+			PKItem citem = PKItem.getCustomItem(istack);
 			if (citem == null)
 				continue;
 
