@@ -10,7 +10,7 @@ import com.projectkorra.items.Messages;
 public class ReloadCommand extends PKICommand {
 
 	public ReloadCommand() {
-		super("reload", "/b reload", "This command reloads items configuration.", Messages.RELOAD_ALIAS);
+		super("reload", "/item reload", "This command reloads items configuration.", Messages.RELOAD_ALIAS);
 	}
 
 	@Override

@@ -1,9 +1,7 @@
 package com.projectkorra.items.command;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -13,24 +11,18 @@ import org.bukkit.command.PluginCommand;
 
 import com.projectkorra.items.Messages;
 import com.projectkorra.items.ProjectKorraItems;
-import com.projectkorra.projectkorra.ProjectKorra;
 
 public class Commands {
 
 	private ProjectKorraItems plugin;
-
-	public static Set<String> invincible = new HashSet<String>();
-	public static boolean debugEnabled = false;
-	public static boolean isToggledForAll = false;
-
+	
 	public Commands(ProjectKorraItems plugin) {
 		this.plugin = plugin;
-		debugEnabled = ProjectKorra.plugin.getConfig().getBoolean("debug");
 		init();
 	}
 
 	private void init() {
-		PluginCommand projectkorraitems = plugin.getCommand("items");
+		PluginCommand projectkorraitems = plugin.getCommand("item");
 		new EquipCommand();
 		new GiveCommand();
 		new ListCommand();
@@ -51,9 +43,9 @@ public class Commands {
 				}
 
 				if (args.length == 0 && Arrays.asList(Messages.ITEMS_ALIAS).contains(label.toLowerCase())) {
-					s.sendMessage(ChatColor.RED + "/items equip " + ChatColor.YELLOW + "Equip a bending item");
-					s.sendMessage(ChatColor.RED + "/items give [item] <amount> <player> " + ChatColor.YELLOW + "Give bending items");
-					s.sendMessage(ChatColor.RED + "/items stats <specific> " + ChatColor.YELLOW + "Shows all item stats");
+					s.sendMessage(ChatColor.RED + "/item equip " + ChatColor.YELLOW + "Equip an item");
+					s.sendMessage(ChatColor.RED + "/item list " + ChatColor.YELLOW + "Lists all bending items");
+					s.sendMessage(ChatColor.RED + "/item stats <specific> " + ChatColor.YELLOW + "Displays stats of items");
 					return true;
 				}
 

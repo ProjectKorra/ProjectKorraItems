@@ -177,7 +177,7 @@ public abstract class PKICommand implements SubCommand {
 				page = 1;
 			}
 		}
-		strings.add(ChatColor.GOLD + "ProjectKorra " + ChatColor.DARK_GRAY + "- [" + ChatColor.GRAY + page + "/" + (int) Math.ceil((entries.size()+.0)/(8+.0)) + ChatColor.DARK_GRAY + "]");
+		strings.add(ChatColor.GOLD + "Items " + ChatColor.DARK_GRAY + "- [" + ChatColor.GRAY + page + "/" + (int) Math.ceil((entries.size()+.0)/(8+.0)) + ChatColor.DARK_GRAY + "]");
 		strings.add(title);
 		if (entries.size() > ((page * 8) - 8)) {
 			for (int i = ((page * 8) - 8); i < entries.size(); i++) {
