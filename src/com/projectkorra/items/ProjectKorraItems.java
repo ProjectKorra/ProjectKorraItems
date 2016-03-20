@@ -1,8 +1,10 @@
 package com.projectkorra.items;
 
 import java.io.IOException;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -10,8 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.projectkorra.items.abilityupdater.AbilityUpdater;
 import com.projectkorra.items.attribute.AttributeListener;
 import com.projectkorra.items.command.Commands;
-import com.projectkorra.items.customs.ItemDisplay;
-import com.projectkorra.items.customs.ItemListener;
+import com.projectkorra.items.customs.PKIDisplay;
 
 public class ProjectKorraItems extends JavaPlugin {
 	public static ProjectKorraItems plugin;
@@ -21,18 +22,24 @@ public class ProjectKorraItems extends JavaPlugin {
 	public void onEnable() {
 		ProjectKorraItems.log = this.getLogger();
 		plugin = this;
+		
 		PluginDescriptionFile pdfFile = this.getDescription();
 		log.info(pdfFile.getName() + " Version " + pdfFile.getVersion() + " Has Been Enabled!");
 		
 		new Commands(this);
-		
 		new ConfigManager();
 		
+		PKIDisplay.displays = new ConcurrentHashMap<Player, PKIDisplay>();
+		
 		PluginManager pm = this.getServer().getPluginManager();
-		pm.registerEvents(new ItemListener(), this);
+		
+		//
+		
+		pm.registerEvents(new PKIListener(), this);
 		pm.registerEvents(new AttributeListener(), this);
 		pm.registerEvents(new AbilityUpdater(), this);
-		AbilityUpdater.startCleanup();
+		
+		//
 
 		try {
 			MetricsLite metrics = new MetricsLite(this);
@@ -47,6 +54,9 @@ public class ProjectKorraItems extends JavaPlugin {
 	public void onDisable() {
 		PluginDescriptionFile pdfFile = this.getDescription();
 		log.info(pdfFile.getName() + " Has Been Disabled!");
-		ItemDisplay.cleanup();
+		
+		if (PKIDisplay.displays != null && !PKIDisplay.displays.isEmpty()) {
+			PKIDisplay.cleanup();
+		}
 	}
 }

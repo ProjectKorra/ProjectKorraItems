@@ -79,7 +79,7 @@ public class RecipeIngredient {
 
 	public ItemStack getItemStack() {
 		if (isCustomItem) {
-			CustomItem citem = CustomItem.getCustomItem(customItemName);
+			PKItem citem = PKItem.getCustomItem(customItemName);
 			if (citem != null) {
 				ItemStack istack = citem.generateItem();
 				istack.setAmount(quantity);

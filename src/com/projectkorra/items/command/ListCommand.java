@@ -6,39 +6,39 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.projectkorra.items.Messages;
-import com.projectkorra.items.customs.ItemDisplay;
+import com.projectkorra.items.customs.PKIDisplay;
 
 public class ListCommand extends PKICommand {
 
 	public ListCommand() {
-		super("list", "/item list", "This command lists bending items.", Messages.ITEMS_ALIAS);
+		super("list", "/item list", "This command lists bending items.", Messages.LIST_ALIAS);
 	}
 
 	@Override
 	public void execute(CommandSender sender, List<String> args) {
 		if (this.correctLength(sender, args.size(), 0, 1)) {
-			if (args.size() == 0) {
-				if (!hasPermission(sender)) {
-					sender.sendMessage(Messages.NO_PERM);
-					return;
-				} else if (!isPlayer(sender)) {
-					sender.sendMessage(Messages.PLAYER_ONLY);
-					return;
-				}
-
-				Player player = (Player) sender;
-				boolean showStats = false;
-
+			if (!hasPermission(sender)) {
+				sender.sendMessage(Messages.NO_PERM);
+				return;
+			}
+			if (!isPlayer(sender)) {
+				sender.sendMessage(Messages.PLAYER_ONLY);
+				return;
+			}
+			Player player = (Player) sender;
+			
+			boolean show = false;
+			
+			if (args.size() >= 0) {
 				if (args.size() == 1) {
 					for (String s : Messages.STATS_ALIAS) {
-						if (args.get(0).equalsIgnoreCase(s)) {
-							showStats = true;
+						if (args.get(0) == s) {
+							show = true;
 						}
-
-						new ItemDisplay(player, showStats);
-						return;
 					}
 				}
+				PKIDisplay d = new PKIDisplay(player, show);
+				d.createInventory();
 			}
 		}
 	}

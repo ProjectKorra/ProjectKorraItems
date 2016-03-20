@@ -1,6 +1,5 @@
 package com.projectkorra.items.customs;
 
-import com.projectkorra.items.EnchantGlow;
 import com.projectkorra.items.Messages;
 import com.projectkorra.items.ProjectKorraItems;
 import com.projectkorra.items.attribute.Attribute;
@@ -18,9 +17,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class CustomItem {
-	public static ConcurrentHashMap<String, CustomItem> items = new ConcurrentHashMap<String, CustomItem>();
-	public static ArrayList<CustomItem> itemList = new ArrayList<CustomItem>();
+public class PKItem {
+	public static ConcurrentHashMap<String, PKItem> items = new ConcurrentHashMap<String, PKItem>();
+	public static ArrayList<PKItem> itemList = new ArrayList<PKItem>();
 
 	private String name;
 	private String displayName;
@@ -35,7 +34,7 @@ public class CustomItem {
 	private boolean glow;
 	private ArrayList<Attribute> attributes;
 
-	public CustomItem() {
+	public PKItem() {
 		name = "";
 		displayName = "";
 		lore = new ArrayList<String>();
@@ -256,12 +255,12 @@ public class CustomItem {
 		return false;
 	}
 
-	public static ConcurrentHashMap<String, CustomItem> getItems() {
+	public static ConcurrentHashMap<String, PKItem> getItems() {
 		return items;
 	}
 
-	public static void setItems(ConcurrentHashMap<String, CustomItem> items) {
-		CustomItem.items = items;
+	public static void setItems(ConcurrentHashMap<String, PKItem> items) {
+		PKItem.items = items;
 	}
 
 	public String getName() {
@@ -376,18 +375,18 @@ public class CustomItem {
 		return s;
 	}
 
-	public static CustomItem getCustomItem(ItemStack istack) {
+	public static PKItem getCustomItem(ItemStack istack) {
 		ItemMeta meta = istack.getItemMeta();
 		if (meta == null || meta.getDisplayName() == null)
 			return null;
-		for (CustomItem citem : items.values()) {
+		for (PKItem citem : items.values()) {
 			if (meta.getDisplayName().equals(citem.getDisplayName()))
 				return citem;
 		}
 		return null;
 	}
 
-	public static CustomItem getCustomItem(String itemName) {
+	public static PKItem getCustomItem(String itemName) {
 		if (items.containsKey(itemName.toLowerCase()))
 			return items.get(itemName.toLowerCase());
 		return null;
