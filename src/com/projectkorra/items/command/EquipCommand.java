@@ -11,7 +11,7 @@ import com.projectkorra.items.customs.ItemEquip;
 public class EquipCommand extends PKICommand {
 
 	public EquipCommand() {
-		super("equip", "/bending equip", "This command will equip a bending item", Messages.EQUIP_ALIAS);
+		super("equip", "/item equip", "This command will equip a bending item", Messages.EQUIP_ALIAS);
 	}
 
 	@Override
