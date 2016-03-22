@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class PKIUtils {
+public class ItemUtils {
 	
 	/**
 	 * A map of player names that holds their current bending potion effects.
@@ -157,9 +157,11 @@ public class PKIUtils {
 		if (player == null)
 			return;
 
-		ArrayList<ItemStack> istacks = PKIUtils.getPlayerValidEquipment(player);
+		ArrayList<ItemStack> istacks = ItemUtils.getPlayerValidEquipment(player);
 		String[] validAttribs = null;
-		if (type == Action.LEFTCLICK)
+		if (type == Action.LEFT_CLICK)
+			validAttribs = new String[] { "Effects", "ClickEffects" };
+		else if (type == Action.RIGHT_CLICK)
 			validAttribs = new String[] { "Effects", "ClickEffects" };
 		else if (type == Action.SHIFT)
 			validAttribs = new String[] { "Effects", "SneakEffects" };

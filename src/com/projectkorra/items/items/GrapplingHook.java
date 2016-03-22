@@ -57,8 +57,10 @@ public class GrapplingHook {
 		if (INSTANCES.containsKey(player.getName())) {
 			GrapplingHook hook = INSTANCES.get(player.getName());
 			if (hook.state == State.HOOKED) {
-				if (action == Action.LEFTCLICK) {
-
+				if (action == Action.LEFT_CLICK) {
+					
+				} else if (action == Action.RIGHT_CLICK) {
+					
 				} else if (action == Action.SHIFT) {
 
 				}

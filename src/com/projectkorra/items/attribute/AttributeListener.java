@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.projectkorra.items.items.Glider;
 import com.projectkorra.items.utils.AttributeUtils;
-import com.projectkorra.items.utils.PKIUtils;
+import com.projectkorra.items.utils.ItemUtils;
 
 public class AttributeListener implements Listener {
 	/**
@@ -41,8 +41,8 @@ public class AttributeListener implements Listener {
 
 		// Handles the Charges, and ShiftCharges attribute
 		if (!player.isSneaking()) {
-			PKIUtils.updateOnActionEffects(player, Action.SHIFT);
-			PKIUtils.handleItemSource(player, "WaterSource", new ItemStack(Material.POTION));
+			ItemUtils.updateOnActionEffects(player, Action.SHIFT);
+			ItemUtils.handleItemSource(player, "WaterSource", new ItemStack(Material.POTION));
 		}
 	}
 
@@ -57,8 +57,8 @@ public class AttributeListener implements Listener {
 		if (event.isCancelled())
 			return;
 		Player player = event.getPlayer();
-		PKIUtils.updateOnActionEffects(player, Action.LEFTCLICK);
-		PKIUtils.handleItemSource(player, "WaterSource", new ItemStack(Material.POTION));
+		ItemUtils.updateOnActionEffects(player, Action.LEFT_CLICK);
+		ItemUtils.handleItemSource(player, "WaterSource", new ItemStack(Material.POTION));
 
 		// new GrapplingHook(player, Action.LEFTCLICK);
 	}
@@ -73,7 +73,7 @@ public class AttributeListener implements Listener {
 	public void onPlayerConsume(PlayerItemConsumeEvent event) {
 		if (event.isCancelled())
 			return;
-		PKIUtils.updateOnActionEffects(event.getPlayer(), Action.CONSUME);
+		ItemUtils.updateOnActionEffects(event.getPlayer(), Action.CONSUME);
 	}
 
 	/**

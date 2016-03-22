@@ -15,7 +15,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.InventoryType.SlotType;
-import org.bukkit.event.player.PlayerAnimationEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
@@ -31,7 +31,7 @@ import com.projectkorra.items.customs.PKItem;
 import com.projectkorra.items.customs.RecipeIngredient;
 import com.projectkorra.items.items.Glider;
 import com.projectkorra.items.utils.AttributeUtils;
-import com.projectkorra.items.utils.PKIUtils;
+import com.projectkorra.items.utils.ItemUtils;
 
 public class PKIListener implements Listener {
 
@@ -410,8 +410,8 @@ public class PKIListener implements Listener {
 
 		// Handles the Charges, and ShiftCharges attribute
 		if (!player.isSneaking()) {
-			PKIUtils.updateOnActionEffects(player, Action.SHIFT);
-			PKIUtils.handleItemSource(player, "WaterSource", new ItemStack(Material.POTION));
+			ItemUtils.updateOnActionEffects(player, Action.SHIFT);
+			ItemUtils.handleItemSource(player, "WaterSource", new ItemStack(Material.POTION));
 		}
 	}
 
@@ -422,14 +422,20 @@ public class PKIListener implements Listener {
 	 * @param event a player animation event
 	 */
 	@EventHandler(priority = EventPriority.NORMAL)
-	public void onPlayerSwing(PlayerAnimationEvent event) {
+	public void onPlayerInteract(PlayerInteractEvent event) {
 		if (event.isCancelled())
 			return;
 		Player player = event.getPlayer();
-		PKIUtils.updateOnActionEffects(player, Action.LEFTCLICK);
-		PKIUtils.handleItemSource(player, "WaterSource", new ItemStack(Material.POTION));
+		org.bukkit.event.block.Action a = event.getAction();
+		
+		if (a == org.bukkit.event.block.Action.LEFT_CLICK_AIR || a == org.bukkit.event.block.Action.LEFT_CLICK_BLOCK) {
+			ItemUtils.updateOnActionEffects(player, Action.LEFT_CLICK);
+			ItemUtils.handleItemSource(player, "WaterSource", new ItemStack(Material.POTION));
+		} else if (a == org.bukkit.event.block.Action.RIGHT_CLICK_AIR || a == org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK) {
+			
+		}
 
-		// new GrapplingHook(player, Action.LEFTCLICK);
+		// new GrapplingHook(player, Action.LEFT_CLICK);
 	}
 
 	/**
@@ -441,7 +447,7 @@ public class PKIListener implements Listener {
 	public void onPlayerConsume(PlayerItemConsumeEvent event) {
 		if (event.isCancelled())
 			return;
-		PKIUtils.updateOnActionEffects(event.getPlayer(), Action.CONSUME);
+		ItemUtils.updateOnActionEffects(event.getPlayer(), Action.CONSUME);
 	}
 
 	/**
