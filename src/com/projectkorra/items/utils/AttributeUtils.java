@@ -151,6 +151,7 @@ public class AttributeUtils {
 	 * @param player the player to decrease charges
 	 * @param type the action that caused the charge decrease
 	 */
+	
 	public static void decreaseCharges(Player player, Action type) {
 		if (player == null)
 			return;
@@ -171,7 +172,7 @@ public class AttributeUtils {
 			for (String line : lore) {
 				String newLine = line;
 				try {
-					if (line.startsWith(AttributeList.CHARGES_STR) || (line.startsWith(AttributeList.CLICK_CHARGES_STR) && type == Action.LEFTCLICK) || (line.startsWith(AttributeList.SNEAK_CHARGES_STR) && type == Action.SHIFT)) {
+					if (line.startsWith(AttributeList.CHARGES_STR) || (line.startsWith(AttributeList.CLICK_CHARGES_STR) && type == Action.LEFTCLICK || type == null) || (line.startsWith(AttributeList.SNEAK_CHARGES_STR) && type == Action.SHIFT || type == null)) {
 						String start = line.substring(0, line.indexOf(": "));
 						String end = line.substring(line.indexOf(": ") + 1, line.length());
 						end = end.trim();
