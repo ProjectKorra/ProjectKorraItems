@@ -1,6 +1,5 @@
 package com.projectkorra.items.attribute;
 
-import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Material;
@@ -13,15 +12,10 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import com.projectkorra.items.ProjectKorraItems;
-import com.projectkorra.items.customs.PKItem;
 import com.projectkorra.items.items.Glider;
 import com.projectkorra.items.utils.AttributeUtils;
-import com.projectkorra.items.utils.PKIUtils;
+import com.projectkorra.items.utils.ItemUtils;
 
 public class AttributeListener implements Listener {
 	/**
@@ -47,8 +41,8 @@ public class AttributeListener implements Listener {
 
 		// Handles the Charges, and ShiftCharges attribute
 		if (!player.isSneaking()) {
-			updateOnActionEffects(player, Action.SHIFT);
-			handleItemSource(player, "WaterSource", new ItemStack(Material.POTION));
+			ItemUtils.updateOnActionEffects(player, Action.SHIFT);
+			ItemUtils.handleItemSource(player, "WaterSource", new ItemStack(Material.POTION));
 		}
 	}
 
@@ -63,8 +57,8 @@ public class AttributeListener implements Listener {
 		if (event.isCancelled())
 			return;
 		Player player = event.getPlayer();
-		updateOnActionEffects(player, Action.LEFTCLICK);
-		handleItemSource(player, "WaterSource", new ItemStack(Material.POTION));
+		ItemUtils.updateOnActionEffects(player, Action.LEFT_CLICK);
+		ItemUtils.handleItemSource(player, "WaterSource", new ItemStack(Material.POTION));
 
 		// new GrapplingHook(player, Action.LEFTCLICK);
 	}
@@ -79,7 +73,7 @@ public class AttributeListener implements Listener {
 	public void onPlayerConsume(PlayerItemConsumeEvent event) {
 		if (event.isCancelled())
 			return;
-		updateOnActionEffects(event.getPlayer(), Action.CONSUME);
+		ItemUtils.updateOnActionEffects(event.getPlayer(), Action.CONSUME);
 	}
 
 	/**
@@ -99,93 +93,4 @@ public class AttributeListener implements Listener {
 		if (auto)
 			new Glider(player, true);
 	}
-
-	/**
-	 * Handles the specific stat "WaterSource" and in the future "MetalSource".
-	 * These stats cause specific temporary items to spawn inside of the players
-	 * inventory.
-	 * 
-	 * @param player the player with the WaterSource stat
-	 * @param attrib the name of the stat "WaterSource" or "MetalSource"
-	 * @param istack the ItemStack that will temporarily spawn
-	 */
-	public void handleItemSource(Player player, String attrib, ItemStack istack) {
-		ConcurrentHashMap<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
-		if (attribs.containsKey(attrib) && attribs.get(attrib) == 1) {
-			final PlayerInventory inv = player.getInventory();
-			int slot = -1;
-			for (int i = 9; i < inv.getSize(); i++) {
-				if (inv.getItem(i) == null || inv.getItem(i).getType() == Material.AIR) {
-					slot = i;
-					break;
-				}
-			}
-			if (slot < 0)
-				slot = inv.first(Material.AIR);
-			if (slot >= 0) {
-				inv.setItem(slot, istack);
-				player.updateInventory();
-			} else
-				return;
-
-			final int fslot = slot;
-			new BukkitRunnable() {
-				public void run() {
-					inv.setItem(fslot, new ItemStack(Material.AIR));
-				}
-			}.runTaskLater(ProjectKorraItems.plugin, 10);
-		}
-	}
-
-	/**
-	 * OnActionEffects are PotionEffects and BendingAffects that get added to
-	 * the players Attribute map for a limited amount of time.
-	 * 
-	 * @param player the player receiving the stat modifications
-	 * @param type the type of action that caused this to trigger
-	 */
-	public static void updateOnActionEffects(Player player, Action type) {
-		if (player == null)
-			return;
-
-		ArrayList<ItemStack> istacks = PKIUtils.getPlayerValidEquipment(player);
-		String[] validAttribs = null;
-		if (type == Action.LEFTCLICK)
-			validAttribs = new String[] { "Effects", "ClickEffects" };
-		else if (type == Action.SHIFT)
-			validAttribs = new String[] { "Effects", "SneakEffects" };
-		else if (type == Action.CONSUME)
-			validAttribs = new String[] { "Effects", "ConsumeEffects" };
-		else
-			validAttribs = new String[] { "Effects" };
-
-		boolean effectAdded = false;
-		for (ItemStack istack : istacks) {
-			PKItem citem = PKItem.getCustomItem(istack);
-			if (citem == null)
-				continue;
-
-			for (Attribute att : citem.getAttributes())
-				for (String allowedEff : validAttribs)
-					if (att.getName().equalsIgnoreCase(allowedEff)) {
-						ArrayList<PotionEffect> potEffects = AttributeUtils.parsePotionEffects(att);
-						ArrayList<Attribute> bendEffects = AttributeUtils.parseBendingEffects(att);
-
-						for (PotionEffect pot : potEffects)
-							player.addPotionEffect(pot, true);
-						effectAdded = true;
-
-						for (Attribute effect : bendEffects) {
-							if (!currentBendingEffects.containsKey(player.getName()))
-								currentBendingEffects.put(player.getName(), new ConcurrentHashMap<String, Attribute>());
-							effect.setTime(System.currentTimeMillis());
-							ConcurrentHashMap<String, Attribute> playerEffList = currentBendingEffects.get(player.getName());
-							playerEffList.put(effect.getName(), effect);
-						}
-					}
-		}
-		if (effectAdded)
-			AttributeUtils.decreaseCharges(player, type);
-	}
-
 }

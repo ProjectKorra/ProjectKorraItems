@@ -14,7 +14,7 @@ import com.projectkorra.items.ProjectKorraItems;
 import com.projectkorra.items.attribute.Attribute;
 import com.projectkorra.items.customs.PKItem;
 import com.projectkorra.items.utils.AttributeUtils;
-import com.projectkorra.items.utils.PKIUtils;
+import com.projectkorra.items.utils.ItemUtils;
 import com.projectkorra.projectkorra.event.AbilityDamageEntityEvent;
 import com.projectkorra.projectkorra.event.AbilityStartEvent;
 import com.projectkorra.projectkorra.util.ParticleEffect;
@@ -49,15 +49,15 @@ public class AbilityUpdater implements Listener {
 		ConcurrentHashMap<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
 		
 		if (FireUpdater.updateAbility(player, ability, attribs)) {
-			
+			AttributeUtils.decreaseCharges(player, null);
 		} else if (WaterUpdater.updateAbility(player, ability, attribs)) {
-			
+			AttributeUtils.decreaseCharges(player, null);
 		} else if (AirUpdater.updateAbility(player, ability, attribs)) {
-			
+			AttributeUtils.decreaseCharges(player, null);
 		} else if (EarthUpdater.updateAbility(player, ability, attribs)) {
-			
+			AttributeUtils.decreaseCharges(player, null);
 		} else if (ChiUpdater.updateAbility(player, ability, attribs)) {
-			
+			AttributeUtils.decreaseCharges(player, null);
 		} else {
 			abilityAdded = false;
 		}
@@ -77,15 +77,15 @@ public class AbilityUpdater implements Listener {
 		ConcurrentHashMap<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
 		
 		if (FireUpdater.updateAbilityDamage(player, ability, attribs)) {
-			
+			AttributeUtils.decreaseCharges(player, null);
 		} else if (WaterUpdater.updateAbilityDamage(player, ability, attribs)) {
-			
+			AttributeUtils.decreaseCharges(player, null);
 		} else if (AirUpdater.updateAbilityDamage(player, ability, attribs)) {
-			
+			AttributeUtils.decreaseCharges(player, null);
 		} else if (EarthUpdater.updateAbilityDamage(player, ability, attribs)) {
-			
+			AttributeUtils.decreaseCharges(player, null);
 		} else if (ChiUpdater.updateAbilityDamage(player, ability, attribs)) {
-			
+			AttributeUtils.decreaseCharges(player, null);
 		} else {
 			abilityAdded = false;
 		}
@@ -102,7 +102,7 @@ public class AbilityUpdater implements Listener {
 	 * @param player
 	 */
 	private static void updatePlayerParticles(Player player) {
-		ArrayList<ItemStack> equipment = PKIUtils.getPlayerValidEquipment(player);
+		ArrayList<ItemStack> equipment = ItemUtils.getPlayerValidEquipment(player);
 		for (ItemStack istack : equipment) {
 			PKItem citem = PKItem.getCustomItem(istack);
 			if (citem == null)

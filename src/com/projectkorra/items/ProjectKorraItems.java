@@ -11,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.projectkorra.items.abilityupdater.AbilityUpdater;
 import com.projectkorra.items.attribute.AttributeListener;
-import com.projectkorra.items.command.Commands;
+import com.projectkorra.items.command.BaseCommand;
 import com.projectkorra.items.customs.PKIDisplay;
 
 public class ProjectKorraItems extends JavaPlugin {
@@ -20,15 +20,16 @@ public class ProjectKorraItems extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		ProjectKorraItems.log = this.getLogger();
 		plugin = this;
+		ProjectKorraItems.log = this.getLogger();
 		
 		PluginDescriptionFile pdfFile = this.getDescription();
 		log.info(pdfFile.getName() + " Version " + pdfFile.getVersion() + " Has Been Enabled!");
 		
-		new Commands(this);
-		new ConfigManager();
+		BaseCommand command = new BaseCommand();
+		command.init();
 		
+		new ConfigManager();
 		PKIDisplay.displays = new ConcurrentHashMap<Player, PKIDisplay>();
 		
 		PluginManager pm = this.getServer().getPluginManager();

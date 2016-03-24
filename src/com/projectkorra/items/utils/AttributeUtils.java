@@ -30,7 +30,7 @@ public class AttributeUtils {
 	 * @return a map containing attribute effects
 	 */
 	public static ConcurrentHashMap<String, Double> getSimplePlayerAttributeMap(Player player) {
-		ArrayList<ItemStack> equipment = PKIUtils.getPlayerValidEquipment(player);
+		ArrayList<ItemStack> equipment = ItemUtils.getPlayerValidEquipment(player);
 		ConcurrentHashMap<String, Double> attribMap = new ConcurrentHashMap<String, Double>();
 		ArrayList<Attribute> totalAttribs = new ArrayList<Attribute>();
 
@@ -151,11 +151,12 @@ public class AttributeUtils {
 	 * @param player the player to decrease charges
 	 * @param type the action that caused the charge decrease
 	 */
+	
 	public static void decreaseCharges(Player player, Action type) {
 		if (player == null)
 			return;
 
-		ArrayList<ItemStack> istacks = PKIUtils.getPlayerValidEquipment(player);
+		ArrayList<ItemStack> istacks = ItemUtils.getPlayerValidEquipment(player);
 		for (ItemStack istack : istacks) {
 			PKItem citem = PKItem.getCustomItem(istack);
 			if (citem == null)
@@ -171,7 +172,7 @@ public class AttributeUtils {
 			for (String line : lore) {
 				String newLine = line;
 				try {
-					if (line.startsWith(AttributeList.CHARGES_STR) || (line.startsWith(AttributeList.CLICK_CHARGES_STR) && type == Action.LEFTCLICK) || (line.startsWith(AttributeList.SNEAK_CHARGES_STR) && type == Action.SHIFT)) {
+					if (line.startsWith(AttributeList.CHARGES_STR) || (line.startsWith(AttributeList.CLICK_CHARGES_STR) && type == Action.LEFT_CLICK || type == Action.RIGHT_CLICK || type == null) || (line.startsWith(AttributeList.SNEAK_CHARGES_STR) && type == Action.SHIFT || type == null)) {
 						String start = line.substring(0, line.indexOf(": "));
 						String end = line.substring(line.indexOf(": ") + 1, line.length());
 						end = end.trim();
@@ -228,7 +229,7 @@ public class AttributeUtils {
 					if (istack.getAmount() > 1) {
 						istack.setAmount(istack.getAmount() - 1);
 						ItemStack newStack = citem.generateItem();
-						PKIUtils.setLore(istack, newStack.getItemMeta().getLore());
+						ItemUtils.setLore(istack, newStack.getItemMeta().getLore());
 					} else
 						player.getInventory().remove(istack);
 				} else {
@@ -238,7 +239,7 @@ public class AttributeUtils {
 							if (istack.getAmount() > 1) {
 								armor[i].setAmount(armor[i].getAmount() - 1);
 								ItemStack newStack = citem.generateItem();
-								PKIUtils.setLore(armor[i], newStack.getItemMeta().getLore());
+								ItemUtils.setLore(armor[i], newStack.getItemMeta().getLore());
 							} else
 								armor[i] = new ItemStack(Material.AIR);
 							break;

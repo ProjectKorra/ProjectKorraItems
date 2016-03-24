@@ -12,6 +12,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.projectkorra.projectkorra.command.SubCommand;
+
 /**
  * Abstract representation of a command executor. Implements
  * {@link SubCommand}.
