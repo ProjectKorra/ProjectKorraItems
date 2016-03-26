@@ -14,7 +14,7 @@ import com.projectkorra.items.customs.PKItem;
 public class GiveCommand extends PKICommand {
 
 	public GiveCommand() {
-		super("give", "/item give [item] <amount> <player>", "This command gives you or another player a bending item", Messages.GIVE_ALIAS);
+		super("give", "/bending items give <Item> [Amount] [Player]", "This command gives you or another player a bending item.", Messages.GIVE_ALIAS);
 	}
 
 	@Override
