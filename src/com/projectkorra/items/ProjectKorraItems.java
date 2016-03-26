@@ -12,6 +12,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.projectkorra.items.abilityupdater.AbilityUpdater;
 import com.projectkorra.items.attribute.AttributeListener;
 import com.projectkorra.items.command.BaseCommand;
+import com.projectkorra.items.command.EquipCommand;
+import com.projectkorra.items.command.GiveCommand;
+import com.projectkorra.items.command.ListCommand;
+import com.projectkorra.items.command.ReloadCommand;
+import com.projectkorra.items.command.StatsCommand;
 import com.projectkorra.items.customs.PKIDisplay;
 
 public class ProjectKorraItems extends JavaPlugin {
@@ -26,8 +31,12 @@ public class ProjectKorraItems extends JavaPlugin {
 		PluginDescriptionFile pdfFile = this.getDescription();
 		log.info(pdfFile.getName() + " Version " + pdfFile.getVersion() + " Has Been Enabled!");
 		
-		BaseCommand command = new BaseCommand();
-		command.init();
+		new BaseCommand();
+		new EquipCommand();
+		new GiveCommand();
+		new ListCommand();
+		new ReloadCommand();
+		new StatsCommand();
 		
 		new ConfigManager();
 		PKIDisplay.displays = new ConcurrentHashMap<Player, PKIDisplay>();

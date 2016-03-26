@@ -11,7 +11,7 @@ import com.projectkorra.items.customs.PKIDisplay;
 public class ListCommand extends PKICommand {
 
 	public ListCommand() {
-		super("list", "/item list", "This command lists bending items.", Messages.LIST_ALIAS);
+		super("list", "/bending items list", "This command lists all bending items and their recipies.", Messages.LIST_ALIAS);
 	}
 
 	@Override

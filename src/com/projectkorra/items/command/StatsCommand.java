@@ -13,7 +13,7 @@ import com.projectkorra.items.attribute.AttributeList;
 public class StatsCommand extends PKICommand {
 
 	public StatsCommand() {
-		super("stats", "/item stats", "This command checks the stats of a bending item", Messages.STATS_ALIAS);
+		super("stats", "/bending items stats", "This command lists all stats which can be applied to a bending item", Messages.STATS_ALIAS);
 	}
 
 	@Override
