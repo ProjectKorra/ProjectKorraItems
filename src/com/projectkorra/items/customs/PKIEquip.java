@@ -32,6 +32,7 @@ public class PKIEquip {
 	 * 
 	 * @param player the player to add or remove an ItemEquip
 	 */
+	@SuppressWarnings("deprecation")
 	public PKIEquip(Player player) {
 		String name = player.getName();
 

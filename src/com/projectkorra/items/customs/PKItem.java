@@ -376,9 +376,15 @@ public class PKItem {
 	}
 
 	public static PKItem getCustomItem(ItemStack istack) {
+		
+		if (istack == null)
+			return null;
+		
 		ItemMeta meta = istack.getItemMeta();
+		
 		if (meta == null || meta.getDisplayName() == null)
 			return null;
+		
 		for (PKItem citem : items.values()) {
 			if (meta.getDisplayName().equals(citem.getDisplayName()))
 				return citem;
