@@ -32,7 +32,6 @@ public class ItemUtils {
 	 * @param player the player with the items
 	 * @return a list of items
 	 */
-	@SuppressWarnings("deprecation")
 	public static ArrayList<ItemStack> getPlayerEquipment(Player player) {
 		ArrayList<ItemStack> istacks = new ArrayList<ItemStack>();
 		for (ItemStack istack : player.getInventory().getArmorContents())
@@ -50,7 +49,6 @@ public class ItemUtils {
 	 * @param player the player that has equipment
 	 * @return a list of the equipment
 	 */
-	@SuppressWarnings("deprecation")
 	public static ArrayList<ItemStack> getPlayerValidEquipment(Player player) {
 		if (player == null) {
 			return new ArrayList<ItemStack>();
