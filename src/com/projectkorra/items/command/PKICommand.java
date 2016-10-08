@@ -61,7 +61,7 @@ public abstract class PKICommand implements SubCommand {
 		if (sender.hasPermission("bendingitems.command." + name)) {
 			return true;
 		} else {
-			sender.sendMessage(ChatColor.RED + "You don't have permission to do that.");
+			//sender.sendMessage(ChatColor.RED + "You don't have permission to do that.");
 			return false;
 		}
 	}
@@ -79,7 +79,7 @@ public abstract class PKICommand implements SubCommand {
 		if (sender.hasPermission("bendingitems.command." + name + "." + extra)) {
 			return true;
 		} else {
-			sender.sendMessage(ChatColor.RED + "You don't have permission to do that.");
+			//sender.sendMessage(ChatColor.RED + "You don't have permission to do that.");
 			return false;
 		}
 	}
