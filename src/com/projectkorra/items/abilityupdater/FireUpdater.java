@@ -7,8 +7,8 @@ import org.bukkit.entity.Player;
 import com.projectkorra.projectkorra.firebending.FireBlast;
 import com.projectkorra.projectkorra.firebending.FireJet;
 import com.projectkorra.projectkorra.firebending.FireShield;
-import com.projectkorra.projectkorra.firebending.HeatControlCook;
-import com.projectkorra.projectkorra.firebending.Lightning;
+import com.projectkorra.projectkorra.firebending.HeatControl;
+import com.projectkorra.projectkorra.firebending.lightning.Lightning;
 import com.projectkorra.projectkorra.firebending.WallOfFire;
 
 public class FireUpdater {
@@ -66,10 +66,10 @@ public class FireUpdater {
 			if (attribs.containsKey("LightningStunDuration"))
 				abil.setStunDuration(abil.getStunDuration() + abil.getStunDuration() * attribs.get("LightningStunDuration") / 100.0);
 			return true;
-		} else if (ability instanceof HeatControlCook) {
-			HeatControlCook abil = (HeatControlCook) ability;
+		} else if (ability instanceof HeatControl) {
+			HeatControl abil = (HeatControl) ability;
 			if (attribs.containsKey("HeatControlCookTime"))
-				abil.setCookTime((long) (abil.getCookTime() + abil.getCookTime() * attribs.get("HeatControlCookTime") / 100.0));
+				//abil.setCookTime((long) (abil.getCookTime() + abil.getCookTime() * attribs.get("HeatControlCookTime") / 100.0));
 			return true;
 		} else if (ability instanceof FireBlast) {
 			FireBlast abil = (FireBlast) ability;

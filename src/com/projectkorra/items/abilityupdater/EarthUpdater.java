@@ -66,14 +66,14 @@ public class EarthUpdater {
 		} else if (ability instanceof Catapult) {
 			Catapult abil = (Catapult) ability;
 			if (attribs.containsKey("CatapultLength"))
-				abil.setLength((int) (abil.getLength() + abil.getLength() * attribs.get("CatapultLength") / 100.0));
+				//abil.setLength((int) (abil.getLength() + abil.getLength() * attribs.get("CatapultLength") / 100.0));
 			if (attribs.containsKey("CatapultPush"))
-				abil.setPush(abil.getPush() + abil.getPush() * attribs.get("CatapultPush") / 100.0);
+				//abil.setPush(abil.getPush() + abil.getPush() * attribs.get("CatapultPush") / 100.0);
 			return true;
 		} else if (ability instanceof EarthArmor) {
 			EarthArmor abil = (EarthArmor) ability;
 			if (attribs.containsKey("EarthArmorStrength"))
-				abil.setStrength((int) (abil.getStrength() + abil.getStrength() * attribs.get("EarthArmorStrength") / 100.0));
+				//abil.setStrength((int) (abil.getStrength() + abil.getStrength() * attribs.get("EarthArmorStrength") / 100.0));
 			return true;
 		} else if (ability instanceof EarthBlast) {
 			EarthBlast abil = (EarthBlast) ability;

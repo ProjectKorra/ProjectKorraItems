@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import com.projectkorra.projectkorra.BendingPlayer;
 import com.projectkorra.projectkorra.Element;
 import com.projectkorra.projectkorra.Element.SubElement;
-import com.projectkorra.projectkorra.ability.EarthAbility;
+import com.projectkorra.projectkorra.ability.ElementalAbility;
 
 public class ElementUtils {
 
@@ -43,8 +43,8 @@ public class ElementUtils {
 	 */
 	@SuppressWarnings("deprecation")
 	public static boolean isTransparent(Material mat) {
-		for (int m : EarthAbility.getTransparentMaterial()) {
-			if (mat.getId() == m)
+		for (Material m : ElementalAbility.getTransparentMaterialSet()) {
+			if (mat.getId() == m.getId())
 				return true;
 		}
 		return false;

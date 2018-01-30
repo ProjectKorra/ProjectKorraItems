@@ -4,10 +4,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.entity.Player;
 
-import com.projectkorra.projectkorra.waterbending.Bloodbending;
-import com.projectkorra.projectkorra.waterbending.IceBlast;
-import com.projectkorra.projectkorra.waterbending.IceSpikeBlast;
-import com.projectkorra.projectkorra.waterbending.IceSpikePillar;
+import com.projectkorra.projectkorra.waterbending.blood.Bloodbending;
+import com.projectkorra.projectkorra.waterbending.ice.IceBlast;
+import com.projectkorra.projectkorra.waterbending.ice.IceSpikeBlast;
+import com.projectkorra.projectkorra.waterbending.ice.IceSpikePillar;
 import com.projectkorra.projectkorra.waterbending.OctopusForm;
 import com.projectkorra.projectkorra.waterbending.SurgeWall;
 import com.projectkorra.projectkorra.waterbending.SurgeWave;

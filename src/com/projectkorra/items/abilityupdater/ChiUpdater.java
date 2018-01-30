@@ -42,7 +42,7 @@ public class ChiUpdater {
 			if (attribs.containsKey("RapidPunchHits"))
 				abil.setNumPunches((int) (abil.getNumPunches() + abil.getNumPunches() * attribs.get("RapidPunchHits") / 100.0));
 			if (attribs.containsKey("RapidPunchDistance"))
-				abil.setDistance((int) (abil.getDistance() + abil.getDistance() * attribs.get("RapidPunchDistance") / 100.0));
+				//abil.setDistance((int) (abil.getDistance() + abil.getDistance() * attribs.get("RapidPunchDistance") / 100.0));
 			if (attribs.containsKey("RapidPunchCooldown"))
 				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("RapidPunchCooldown") / 100.0));
 			return true;

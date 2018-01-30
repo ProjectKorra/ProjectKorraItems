@@ -1,7 +1,6 @@
 package com.projectkorra.items.abilityupdater;
 
 import com.projectkorra.projectkorra.airbending.AirBlast;
-import com.projectkorra.projectkorra.airbending.AirBubble;
 import com.projectkorra.projectkorra.airbending.AirScooter;
 import com.projectkorra.projectkorra.airbending.AirShield;
 import com.projectkorra.projectkorra.airbending.AirSpout;
@@ -65,13 +64,6 @@ public class AirUpdater {
 			AirShield abil = (AirShield) ability;
 			if (attribs.containsKey("AirShieldRadius"))
 				abil.setMaxRadius(abil.getMaxRadius() + abil.getMaxRadius() * attribs.get("AirShieldRadius") / 100.0);
-			return true;
-		} else if (ability instanceof AirBubble) {
-			AirBubble abil = (AirBubble) ability;
-			if (attribs.containsKey("AirBubbleRadius"))
-				abil.setAirRadius(abil.getAirRadius() + abil.getAirRadius() * attribs.get("AirBubbleRadius") / 100.0);
-			if (attribs.containsKey("WaterBubbleRadius"))
-				abil.setWaterRadius(abil.getWaterRadius() + abil.getWaterRadius() * attribs.get("WaterBubbleRadius") / 100.0);
 			return true;
 		} else if (ability instanceof AirScooter) {
 			AirScooter abil = (AirScooter) ability;
