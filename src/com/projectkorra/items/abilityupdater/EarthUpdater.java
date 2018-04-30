@@ -72,7 +72,7 @@ public class EarthUpdater {
 		if (ability instanceof Catapult) {
 			Catapult abil = (Catapult) ability;
 			
-			if (attribs.containsKey("CatapultLength"))
+			if (attribs.containsKey("CatapultCooldown"))
 				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("CatapultCooldown") / 100.0));
 			
 			//if (attribs.containsKey("CatapultLength")) // Removed

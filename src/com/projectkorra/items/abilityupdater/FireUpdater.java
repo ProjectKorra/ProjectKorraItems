@@ -45,14 +45,6 @@ public class FireUpdater {
 			
 			return true;
 		}
-		else if (ability instanceof FireBlastCharged) {
-			FireBlastCharged abil = (FireBlastCharged) ability;
-			
-			if (attribs.containsKey("FireBlastChargedMaxDamage"))
-				abil.setMaxDamage((int) (abil.getMaxDamage() + abil.getMaxDamage() * attribs.get("FireBlastChargedMaxDamage") / 100.0));
-			
-			return true;
-		}
 		else if (ability instanceof FireBurst) {
 			FireBurst abil = (FireBurst) ability;
 			
@@ -178,6 +170,9 @@ public class FireUpdater {
 			if (attribs.containsKey("FireBlastChargedInterval"))
 				abil.setInterval((long)(abil.getInterval() + abil.getInterval() * attribs.get("FireBlastChargedInterval") / 100.0));
 			
+			if (attribs.containsKey("FireBlastChargedMaxDamage"))
+				abil.setMaxDamage((int) (abil.getMaxDamage() + abil.getMaxDamage() * attribs.get("FireBlastChargedMaxDamage") / 100.0));
+			
 			if (attribs.containsKey("FireBlastChargedRange"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("FireBlastChargedRange") / 100.0);
 			
@@ -235,13 +230,13 @@ public class FireUpdater {
 			FireShield abil = (FireShield) ability;
 			
 			if (attribs.containsKey("FireShieldDiscCooldown"))
-				abil.setDiscCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("FireShieldDiscCooldown") / 100.0));
+				abil.setDiscCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("FireShieldDiscCooldown") / 100.0)); // Shift
 			
 			if (attribs.containsKey("FireShieldDiscDuration"))
-				abil.setDiscDuration((long) (abil.getDuration() + abil.getDuration() * attribs.get("FireShieldDiscDuration") / 100.0));
+				abil.setDiscDuration((long) (abil.getDuration() + abil.getDuration() * attribs.get("FireShieldDiscDuration") / 100.0)); // Shift
 			
 			if (attribs.containsKey("FireShieldDiscRadius"))
-				abil.setDiscRadius(abil.getDiscRadius() + abil.getDiscRadius() * attribs.get("FireShieldDiscRadius") / 100.0);
+				abil.setDiscRadius(abil.getDiscRadius() + abil.getDiscRadius() * attribs.get("FireShieldDiscRadius") / 100.0); // Shift
 			
 			if (attribs.containsKey("FireShieldFireTicks"))
 				abil.setFireTicks(abil.getFireTicks() + abil.getFireTicks() * attribs.get("FireShieldFireTicks") / 100.0);
@@ -253,10 +248,10 @@ public class FireUpdater {
 				abil.setRadius(abil.getRadius() + abil.getRadius() * attribs.get("FireShieldRadius") / 100.0);
 			
 			if (attribs.containsKey("FireShieldShieldCooldown"))
-				abil.setShieldCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("FireShieldShieldCooldown") / 100.0));
+				abil.setShieldCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("FireShieldShieldCooldown") / 100.0)); // Click
 			
-			if (attribs.containsKey("FireShieldClickDuration"))
-				abil.setShieldDuration((long) (abil.getDuration() + abil.getDuration() * attribs.get("FireShieldClickDuration") / 100.0));
+			if (attribs.containsKey("FireShieldShieldDuration"))
+				abil.setShieldDuration((long) (abil.getDuration() + abil.getDuration() * attribs.get("FireShieldShieldDuration") / 100.0)); // Click
 			
 			return true;
 		}
