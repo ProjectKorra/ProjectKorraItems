@@ -1,8 +1,14 @@
 package com.projectkorra.items.abilityupdater;
 
 import com.projectkorra.projectkorra.chiblocking.AcrobatStance;
+import com.projectkorra.projectkorra.chiblocking.HighJump;
+import com.projectkorra.projectkorra.chiblocking.Paralyze;
+import com.projectkorra.projectkorra.chiblocking.QuickStrike;
 import com.projectkorra.projectkorra.chiblocking.RapidPunch;
+import com.projectkorra.projectkorra.chiblocking.Smokescreen;
+import com.projectkorra.projectkorra.chiblocking.SwiftKick;
 import com.projectkorra.projectkorra.chiblocking.WarriorStance;
+import com.projectkorra.projectkorra.chiblocking.combo.Immobilize;
 
 import org.bukkit.entity.Player;
 
@@ -20,11 +26,27 @@ public class ChiUpdater {
 	 */
 	
 	public static boolean updateAbilityDamage(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
-		if (ability instanceof RapidPunch) {
+		if (ability instanceof QuickStrike) {
+			QuickStrike abil = (QuickStrike) ability;
+			
+			if (attribs.containsKey("QuickStrikeDamage"))
+				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("QuickStrikeDamage") / 100.0);
+			
+			return true;
+		}
+		else if (ability instanceof RapidPunch) {
 			RapidPunch abil = (RapidPunch) ability;
 			
 			if (attribs.containsKey("RapidPunchDamage"))
-				abil.setDamage((int) (abil.getDamage() + abil.getDamage() * attribs.get("RapidPunchDamage") / 100.0));
+				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("RapidPunchDamage") / 100.0);
+			
+			return true;
+		}
+		else if (ability instanceof SwiftKick) {
+			SwiftKick abil = (SwiftKick) ability;
+			
+			if (attribs.containsKey("SwiftKickDamage"))
+				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("SwiftKickDamage") / 100.0);
 			
 			return true;
 		}
@@ -44,6 +66,30 @@ public class ChiUpdater {
 			
 			return true;
 		}
+		else if (ability instanceof HighJump) {
+			HighJump abil = (HighJump) ability;
+			
+			if (attribs.containsKey("HighJumpCooldown"))
+				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("HighJumpCooldown") / 100.0));
+			
+			if (attribs.containsKey("HighJumpHeight"))
+				abil.setHeight((int) (abil.getHeight() + abil.getHeight() * attribs.get("HighJumpHeight") / 100.0));
+			
+			return true;
+		}
+		else if (ability instanceof Paralyze) {
+			//Paralyze abil = (Paralyze) ability;
+			
+			return true;
+		}
+		else if (ability instanceof QuickStrike) {
+			QuickStrike abil = (QuickStrike) ability;
+			
+			if (attribs.containsKey("QuickStrikeBlockChance"))
+				abil.setBlockChance((int) (abil.getBlockChance() + abil.getBlockChance() * attribs.get("QuickStrikeBlockChance") / 100.0));
+			
+			return true;
+		}
 		else if (ability instanceof RapidPunch) {
 			RapidPunch abil = (RapidPunch) ability;
 			
@@ -58,6 +104,31 @@ public class ChiUpdater {
 			
 			return true;
 		}
+		else if (ability instanceof Smokescreen) {
+			Smokescreen abil = (Smokescreen) ability;
+			
+			if (attribs.containsKey("SmokescreenCooldown"))
+				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("SmokescreenCooldown") / 100.0));
+			
+			if (attribs.containsKey("SmokescreenDuration"))
+				abil.setDuration((int) (abil.getDuration() + abil.getDuration() * attribs.get("SmokescreenDuration") / 100.0));
+			
+			if (attribs.containsKey("SmokescreenRadius"))
+				abil.setRadius(abil.getRadius() + abil.getRadius() * attribs.get("SmokescreenRadius") / 100.0);
+			
+			return true;
+		}
+		else if (ability instanceof SwiftKick) {
+			SwiftKick abil = (SwiftKick) ability;
+			
+			if (attribs.containsKey("SwiftKickBlockChance"))
+				abil.setBlockChance((int) (abil.getBlockChance() + abil.getBlockChance() * attribs.get("SwiftKickBlockChance") / 100.0));
+			
+			if (attribs.containsKey("SwiftKickCooldown"))
+				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("SwiftKickCooldown") / 100.0));
+			
+			return true;
+		}
 		else if (ability instanceof WarriorStance) {
 			WarriorStance abil = (WarriorStance) ability;
 			
@@ -66,6 +137,17 @@ public class ChiUpdater {
 			
 			if (attribs.containsKey("WarriorStanceResistance"))
 				abil.setResistance((int) (abil.getResistance() + abil.getResistance() * attribs.get("WarriorStanceResistance") / 100.0));
+			
+			return true;
+		}
+		else if (ability instanceof Immobilize) {
+			Immobilize abil = (Immobilize) ability;
+			
+			if (attribs.containsKey("ImmobilizeCooldown"))
+				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("ImmobilizeCooldown") / 100.0));
+			
+			if (attribs.containsKey("ImmobilizeDuration"))
+				abil.setDuration((long) (abil.getDuration() + abil.getDuration() * attribs.get("ImmobilizeDuration") / 100.0));
 			
 			return true;
 		}

@@ -46,6 +46,14 @@ public class AirUpdater {
 			
 			return true;
 		}
+		else if (ability instanceof AirSweep) {
+			AirSweep abil = (AirSweep) ability;
+			
+			if (attribs.containsKey("AirSweepDamage"))
+				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("AirSweepDamage") / 100.0);
+			
+			return true;
+		}
 		else if (ability instanceof AirSwipe) {
 			AirSwipe abil = (AirSwipe) ability;
 			
@@ -59,14 +67,6 @@ public class AirUpdater {
 			
 			if (attribs.containsKey("SuffocateDamage"))
 				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("SuffocateDamage") / 100.0);
-			
-			return true;
-		}
-		else if (ability instanceof AirSweep) {
-			AirSweep abil = (AirSweep) ability;
-			
-			if (attribs.containsKey("AirSweepDamage"))
-				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("AirSweepDamage") / 100.0);
 			
 			return true;
 		}
@@ -102,8 +102,8 @@ public class AirUpdater {
 			if (attribs.containsKey("AirBlastSpeedFactor"))
 				abil.setSpeedFactor(abil.getSpeedFactor() + abil.getSpeedFactor() * attribs.get("AirBlastSpeedFactor") / 100.0);
 			
-			if (attribs.containsKey("AirBlastTicks"))
-				abil.setTicks((int) (abil.getTicks() + abil.getTicks() * attribs.get("AirBlastTicks") / 100.0));
+			//if (attribs.containsKey("AirBlastTicks"))
+			//	abil.setTicks((int) (abil.getTicks() + abil.getTicks() * attribs.get("AirBlastTicks") / 100.0));
 			
 			return true;
 		}
@@ -193,8 +193,8 @@ public class AirUpdater {
 			if (attribs.containsKey("AirSuctionCooldown"))
 				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("AirSuctionCooldown") / 100.0));
 			
-			if (attribs.containsKey("AirSuctionParticleCount"))
-				abil.setParticleCount((int) (abil.getParticleCount() + abil.getParticleCount() * attribs.get("AirSuctionParticleCount") / 100.0));
+			//if (attribs.containsKey("AirSuctionParticleCount"))
+			//	abil.setParticleCount((int) (abil.getParticleCount() + abil.getParticleCount() * attribs.get("AirSuctionParticleCount") / 100.0));
 			
 			if (attribs.containsKey("AirSuctionPushFactor"))
 				abil.setPushFactor(abil.getPushFactor() + abil.getPushFactor() * attribs.get("AirSuctionPushFactor") / 100.0);
@@ -208,8 +208,8 @@ public class AirUpdater {
 			if (attribs.containsKey("AirSuctionSpeed"))
 				abil.setSpeed(abil.getSpeed() + abil.getSpeed() * attribs.get("AirSuctionSpeed") / 100.0);
 			
-			if (attribs.containsKey("AirSuctionTicks"))
-				abil.setTicks((int) (abil.getTicks() + abil.getTicks() * attribs.get("AirSuctionTicks") / 100.0));
+			//if (attribs.containsKey("AirSuctionTicks"))
+			//	abil.setTicks((int) (abil.getTicks() + abil.getTicks() * attribs.get("AirSuctionTicks") / 100.0));
 			
 			return true;
 		}
@@ -278,8 +278,8 @@ public class AirUpdater {
 			if (attribs.containsKey("SuffocateDamageRepeat"))
 				abil.setDamageRepeat(abil.getDamageRepeat() + abil.getDamageRepeat() * attribs.get("SuffocateDamageRepeat") / 100.0);
 			
-			if (attribs.containsKey("SuffocateParticleCount"))
-				abil.setParticleCount((int) (abil.getParticleCount() + abil.getParticleCount() * attribs.get("SuffocateParticleCount") / 100.0));
+			//if (attribs.containsKey("SuffocateParticleCount"))
+			//	abil.setParticleCount((int) (abil.getParticleCount() + abil.getParticleCount() * attribs.get("SuffocateParticleCount") / 100.0));
 			
 			if (attribs.containsKey("SuffocateRadius"))
 				abil.setRadius(abil.getRadius() + abil.getRadius() * attribs.get("SuffocateRadius") / 100.0);
@@ -301,11 +301,11 @@ public class AirUpdater {
 		else if (ability instanceof Tornado) {
 			Tornado abil = (Tornado) ability;
 			
-			if (attribs.containsKey("TornadoCurrentHeight"))
-				abil.setCurrentHeight(abil.getCurrentHeight() + abil.getCurrentHeight() * attribs.get("TornadoCurrentHeight") / 100.0);
+			//if (attribs.containsKey("TornadoCurrentHeight"))
+			//	abil.setCurrentHeight(abil.getCurrentHeight() + abil.getCurrentHeight() * attribs.get("TornadoCurrentHeight") / 100.0);
 			
-			if (attribs.containsKey("TornadoCurrentRadius"))
-				abil.setCurrentRadius(abil.getCurrentRadius() + abil.getCurrentRadius() * attribs.get("TornadoCurrentRadius") / 100.0);
+			//if (attribs.containsKey("TornadoCurrentRadius"))
+			//	abil.setCurrentRadius(abil.getCurrentRadius() + abil.getCurrentRadius() * attribs.get("TornadoCurrentRadius") / 100.0);
 			
 			if (attribs.containsKey("TornadoMaxHeight"))
 				abil.setMaxHeight(abil.getMaxHeight() + abil.getMaxHeight() * attribs.get("TornadoMaxHeight") / 100.0);
@@ -316,8 +316,8 @@ public class AirUpdater {
 			if (attribs.containsKey("TornadoNumberOfStreams"))
 				abil.setNumberOfStreams((int) (abil.getNumberOfStreams() + abil.getNumberOfStreams() * attribs.get("TornadoNumberOfStreams") / 100.0));
 			
-			if (attribs.containsKey("TornadoParticleCount"))
-				abil.setParticleCount((int) (abil.getParticleCount() + abil.getParticleCount() * attribs.get("TornadoParticleCount") / 100.0));
+			//if (attribs.containsKey("TornadoParticleCount"))
+			//	abil.setParticleCount((int) (abil.getParticleCount() + abil.getParticleCount() * attribs.get("TornadoParticleCount") / 100.0));
 			
 			if (attribs.containsKey("TornadoPlayerPushFactor"))
 				abil.setPlayerPushFactor(abil.getPlayerPushFactor() + abil.getPlayerPushFactor() * attribs.get("TornadoPlayerPushFactor") / 100.0);
@@ -331,11 +331,13 @@ public class AirUpdater {
 			if (attribs.containsKey("TornadoSpeed"))
 				abil.setSpeed(abil.getSpeed() + abil.getSpeed() * attribs.get("TornadoSpeed") / 100.0);
 			
-			
 			return true;
 		}
 		else if (ability instanceof AirStream) { 
 			AirStream abil = (AirStream) ability;
+			
+			if (attribs.containsKey("AirStreamCooldown"))
+				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("AirStreamCooldown") / 100.0));
 			
 			if (attribs.containsKey("AirStreamEntityCarryDuration"))
 				abil.setAirStreamEntityCarryDuration(abil.getAirStreamEntityCarryDuration() + abil.getAirStreamEntityCarryDuration() * attribs.get("AirStreamEntityCarryDuration") / 100.0);
@@ -343,17 +345,14 @@ public class AirUpdater {
 			if (attribs.containsKey("AirStreamMaxEntityHeight"))
 				abil.setAirStreamMaxEntityHeight(abil.getAirStreamMaxEntityHeight() + abil.getAirStreamMaxEntityHeight() * attribs.get("AirStreamMaxEntityHeight") / 100.0);
 			
-			if (attribs.containsKey("AirStreamCooldown"))
-				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("AirStreamCooldown") / 100.0));
-			
 			if (attribs.containsKey("AirStreamRange"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("AirStreamRange") / 100.0);
 			
 			if (attribs.containsKey("AirStreamSpeed"))
 				abil.setSpeed(abil.getSpeed() + abil.getSpeed() * attribs.get("AirStreamSpeed") / 100.0);
 			
-			if (attribs.containsKey("AirStreamTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("AirStreamTime") / 100.0));
+			//if (attribs.containsKey("AirStreamTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("AirStreamTime") / 100.0));
 			
 			return true;
 		}
@@ -363,8 +362,8 @@ public class AirUpdater {
 			if (attribs.containsKey("AirSweepKnockback"))
 				abil.setKnockback(abil.getKnockback() + abil.getKnockback() * attribs.get("AirSweepKnockback") / 100.0);
 			
-			if (attribs.containsKey("AirSweepProgressCounter"))
-				abil.setProgressCounter((int) (abil.getProgressCounter() + abil.getProgressCounter() * attribs.get("AirSweepTime") / 100.0));
+			//if (attribs.containsKey("AirSweepProgressCounter"))
+			//	abil.setProgressCounter((int) (abil.getProgressCounter() + abil.getProgressCounter() * attribs.get("AirSweepTime") / 100.0));
 			
 			if (attribs.containsKey("AirSweepRange"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("AirSweepRange") / 100.0);

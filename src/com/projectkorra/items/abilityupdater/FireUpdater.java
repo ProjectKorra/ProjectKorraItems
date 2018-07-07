@@ -101,8 +101,8 @@ public class FireUpdater {
 			if (attribs.containsKey("BlazeArcSpeed"))
 				abil.setSpeed(abil.getSpeed() + abil.getSpeed() * attribs.get("BlazeArcSpeed") / 100.0);
 			
-			if (attribs.containsKey("BlazeArcTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("BlazeArcTime") / 100.0));
+			//if (attribs.containsKey("BlazeArcTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("BlazeArcTime") / 100.0));
 			
 			return true;
 		}
@@ -149,7 +149,7 @@ public class FireUpdater {
 		else if (ability instanceof FireBlastCharged) {
 			FireBlastCharged abil = (FireBlastCharged) ability;
 			
-			if (attribs.containsKey("FireBlastChargedCooldown"))
+			if (attribs.containsKey("FireBlastChargedChargeTime"))
 				abil.setChargeTime((long) (abil.getChargeTime() + abil.getChargeTime() * attribs.get("FireBlastChargedChargeTime") / 100.0));
 			
 			if (attribs.containsKey("FireBlastChargedCollisionRadius"))
@@ -176,8 +176,8 @@ public class FireUpdater {
 			if (attribs.containsKey("FireBlastChargedRange"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("FireBlastChargedRange") / 100.0);
 			
-			if (attribs.containsKey("FireBlastChargedTime"))
-				abil.setTime((long)(abil.getTime() + abil.getTime() * attribs.get("FireBlastChargedTime") / 100.0));
+			//if (attribs.containsKey("FireBlastChargedTime"))
+			//	abil.setTime((long)(abil.getTime() + abil.getTime() * attribs.get("FireBlastChargedTime") / 100.0));
 			
 			return true;
 		}
@@ -216,8 +216,8 @@ public class FireUpdater {
 			if (attribs.containsKey("FireJetSpeed"))
 				abil.setSpeed(abil.getSpeed() + abil.getSpeed() * attribs.get("FireJetSpeed") / 100.0);
 			
-			if (attribs.containsKey("FireJetTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("FireJetTime") / 100.0));
+			//if (attribs.containsKey("FireJetTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("FireJetTime") / 100.0));
 			
 			return true;
 		}
@@ -237,9 +237,6 @@ public class FireUpdater {
 			
 			if (attribs.containsKey("FireShieldDiscRadius"))
 				abil.setDiscRadius(abil.getDiscRadius() + abil.getDiscRadius() * attribs.get("FireShieldDiscRadius") / 100.0); // Shift
-			
-			if (attribs.containsKey("FireShieldFireTicks"))
-				abil.setFireTicks(abil.getFireTicks() + abil.getFireTicks() * attribs.get("FireShieldFireTicks") / 100.0);
 			
 			if (attribs.containsKey("FireShieldInterval"))
 				abil.setInterval((long) (abil.getInterval() + abil.getInterval() * attribs.get("FireShieldInterval") / 100.0));
@@ -305,43 +302,11 @@ public class FireUpdater {
 			if (attribs.containsKey("WallOfFireRange"))
 				abil.setRange((int) (abil.getRange() + abil.getRange() * attribs.get("WallOfFireRange") / 100.0));
 			
-			if (attribs.containsKey("WallOfFireTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("WallOfFireTime") / 100.0));
+			//if (attribs.containsKey("WallOfFireTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("WallOfFireTime") / 100.0));
 			
 			if (attribs.containsKey("WallOfFireWidth"))
 				abil.setWidth((int) (abil.getWidth() + abil.getWidth() * attribs.get("WallOfFireWidth") / 100.0));
-			
-			return true;
-		}
-		else if (ability instanceof FireComboStream) {
-			//FireComboStream abil = (FireComboStream) ability;
-			
-			// Has no getters
-			
-			return true;
-		}
-		else if (ability instanceof FireKick) {
-			//FireKick abil = (FireKick) ability;
-			
-			return true;
-		}
-		else if (ability instanceof FireSpin) {
-			//FireSpin abil = (FireSpin) ability;
-			
-			return true;
-		}
-		else if (ability instanceof FireWheel) {
-			//FireWheel abil = (FireWheel) ability;
-			
-			return true;
-		}
-		else if (ability instanceof JetBlast) {
-			//JetBlast abil = (JetBlast) ability;
-			
-			return true;
-		}
-		else if (ability instanceof JetBlaze) {
-			//JetBlaze abil = (JetBlaze) ability;
 			
 			return true;
 		}
@@ -392,8 +357,8 @@ public class FireUpdater {
 			if (attribs.containsKey("LightningMaxChainArcs"))
 				abil.setMaxChainArcs(abil.getMaxChainArcs() + abil.getMaxChainArcs() * attribs.get("LightningMaxChainArcs") / 100.0);
 			
-			if (attribs.containsKey("LightningParticleRotation"))
-				abil.setParticleRotation(abil.getParticleRotation() + abil.getParticleRotation() * attribs.get("LightningParticleRotation") / 100.0);
+			//if (attribs.containsKey("LightningParticleRotation"))
+			//	abil.setParticleRotation(abil.getParticleRotation() + abil.getParticleRotation() * attribs.get("LightningParticleRotation") / 100.0);
 			
 			if (attribs.containsKey("LightningRange"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("LightningRange") / 100.0);
@@ -407,14 +372,46 @@ public class FireUpdater {
 			if (attribs.containsKey("LightningSubArcChance"))
 				abil.setSubArcChance(abil.getSubArcChance() + abil.getSubArcChance() * attribs.get("LightningSubArcChance") / 100.0);
 			
-			if (attribs.containsKey("LightningTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("LightningTime") / 100.0));
+			//if (attribs.containsKey("LightningTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("LightningTime") / 100.0));
 			
 			if (attribs.containsKey("LightningWaterArcRange"))
 				abil.setWaterArcRange(abil.getWaterArcRange() + abil.getWaterArcRange() * attribs.get("LightningWaterArcRange") / 100.0);
 			
 			if (attribs.containsKey("LightningWaterArcs"))
 				abil.setWaterArcs((int) (abil.getWaterArcs() + abil.getWaterArcs() * attribs.get("LightningWaterArcs") / 100.0));
+			
+			return true;
+		}
+		else if (ability instanceof FireComboStream) {
+			//FireComboStream abil = (FireComboStream) ability;
+			
+			// Has no getters
+			
+			return true;
+		}
+		else if (ability instanceof FireKick) {
+			//FireKick abil = (FireKick) ability;
+			
+			return true;
+		}
+		else if (ability instanceof FireSpin) {
+			//FireSpin abil = (FireSpin) ability;
+			
+			return true;
+		}
+		else if (ability instanceof FireWheel) {
+			//FireWheel abil = (FireWheel) ability;
+			
+			return true;
+		}
+		else if (ability instanceof JetBlast) {
+			//JetBlast abil = (JetBlast) ability;
+			
+			return true;
+		}
+		else if (ability instanceof JetBlaze) {
+			//JetBlaze abil = (JetBlaze) ability;
 			
 			return true;
 		}

@@ -101,8 +101,8 @@ public class EarthUpdater {
 			if (attribs.containsKey("CollapseSpeed"))
 				abil.setSpeed(abil.getSpeed() + abil.getSpeed() * attribs.get("CollapseSpeed") / 100.0);
 			
-			if (attribs.containsKey("CollapseTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("CollapseTime") / 100.0));
+			//if (attribs.containsKey("CollapseTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("CollapseTime") / 100.0));
 			
 			return true;
 		}
@@ -129,8 +129,8 @@ public class EarthUpdater {
 			if (attribs.containsKey("EarthArmorCooldown"))
 				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("EarthArmorCooldown") / 100.0));
 			
-			if (attribs.containsKey("EarthArmorGoldHearts"))
-				abil.setGoldHearts((float) (abil.getGoldHearts() + abil.getGoldHearts() * attribs.get("EarthArmorGoldHearts") / 100.0));
+			//if (attribs.containsKey("EarthArmorGoldHearts"))
+			//	abil.setGoldHearts((float) (abil.getGoldHearts() + abil.getGoldHearts() * attribs.get("EarthArmorGoldHearts") / 100.0));
 			
 			if (attribs.containsKey("EarthArmorInterval"))
 				abil.setInterval((long) (abil.getInterval() + abil.getInterval() * attribs.get("EarthArmorInterval") / 100.0));
@@ -173,8 +173,8 @@ public class EarthUpdater {
 			if (attribs.containsKey("EarthBlastSpeed"))
 				abil.setSpeed(abil.getSpeed() + abil.getSpeed() * attribs.get("EarthBlastSpeed") / 100.0);
 			
-			if (attribs.containsKey("EarthBlastTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("EarthBlastTime") / 100.0));
+			//if (attribs.containsKey("EarthBlastTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("EarthBlastTime") / 100.0));
 			
 			return true;
 		}
@@ -226,8 +226,8 @@ public class EarthUpdater {
 			if (attribs.containsKey("EarthSmashFlightDetectionRadius"))
 				abil.setFlightDetectionRadius(abil.getFlightDetectionRadius() + abil.getFlightDetectionRadius() * attribs.get("EarthSmashFlightDetectionRadius") / 100.0);
 			
-			if (attribs.containsKey("EarthSmashFlightRemoveTimer"))
-				abil.setFlightRemoveTimer((long) (abil.getFlightRemoveTimer() + abil.getFlightRemoveTimer() * attribs.get("EarthSmashFlightRemoveTimer") / 100.0));
+			//if (attribs.containsKey("EarthSmashFlightRemoveTimer"))
+			//	abil.setFlightRemoveTimer((long) (abil.getFlightRemoveTimer() + abil.getFlightRemoveTimer() * attribs.get("EarthSmashFlightRemoveTimer") / 100.0));
 			
 			if (attribs.containsKey("EarthSmashFlightSpeed"))
 				abil.setFlightSpeed(abil.getFlightSpeed() + abil.getFlightSpeed() * attribs.get("EarthSmashFlightSpeed") / 100.0);
@@ -235,8 +235,8 @@ public class EarthUpdater {
 			//if (attribs.containsKey("EarthSmashFlightStartTime"))
 			//	abil.setFlightStartTime((long) (abil.getFlightStartTime() + abil.getFlightStartTime() * attribs.get("EarthSmashFlightStartTime") / 100.0));
 			
-			if (attribs.containsKey("EarthSmashGrabbedDistance"))
-				abil.setGrabbedDistance(abil.getGrabbedDistance() + abil.getGrabbedDistance() * attribs.get("EarthSmashGrabbedDistance") / 100.0);
+			//if (attribs.containsKey("EarthSmashGrabbedDistance"))
+			//	abil.setGrabbedDistance(abil.getGrabbedDistance() + abil.getGrabbedDistance() * attribs.get("EarthSmashGrabbedDistance") / 100.0);
 			
 			if (attribs.containsKey("EarthSmashGrabDetectionRadius"))
 				abil.setGrabDetectionRadius(abil.getGrabDetectionRadius() + abil.getGrabDetectionRadius() * attribs.get("EarthSmashGrabDetectionRadius") / 100.0);
@@ -259,11 +259,11 @@ public class EarthUpdater {
 			//if (attribs.containsKey("EarthSmashProgressCounter"))
 			//	abil.setProgressCounter((int) (abil.getProgressCounter() + abil.getProgressCounter() * attribs.get("EarthSmashProgressCounter") / 100.0));
 			
-			if (attribs.containsKey("EarthSmashRemoveTimer"))
-				abil.setRemoveTimer((long) (abil.getRemoveTimer() + abil.getRemoveTimer() * attribs.get("EarthSmashRemoveTimer") / 100.0));
+			//if (attribs.containsKey("EarthSmashRemoveTimer"))
+			//	abil.setRemoveTimer((long) (abil.getRemoveTimer() + abil.getRemoveTimer() * attribs.get("EarthSmashRemoveTimer") / 100.0));
 			
-			if (attribs.containsKey("EarthSmashRequiredBendableBlocks"))
-				abil.setRequiredBendableBlocks((int) (abil.getRequiredBendableBlocks() + abil.getRequiredBendableBlocks() * attribs.get("EarthSmashRequiredBendableBlocks") / 100.0));
+			//if (attribs.containsKey("EarthSmashRequiredBendableBlocks"))
+			//	abil.setRequiredBendableBlocks((int) (abil.getRequiredBendableBlocks() + abil.getRequiredBendableBlocks() * attribs.get("EarthSmashRequiredBendableBlocks") / 100.0));
 			
 			if (attribs.containsKey("EarthSmashSelectRange"))
 				abil.setSelectRange((int) (abil.getSelectRange() + abil.getSelectRange() * attribs.get("EarthSmashSelectRange") / 100.0));
@@ -291,8 +291,8 @@ public class EarthUpdater {
 			if (attribs.containsKey("EarthTunnelMaxRadius"))
 				abil.setMaxRadius(abil.getMaxRadius() + abil.getMaxRadius() * attribs.get("EarthTunnelMaxRadius") / 100.0);
 			
-			if (attribs.containsKey("EarthTunnelRadius"))
-				abil.setRadius(abil.getRadius() + abil.getRadius() * attribs.get("EarthTunnelRadius") / 100.0);
+			//if (attribs.containsKey("EarthTunnelRadius"))
+			//	abil.setRadius(abil.getRadius() + abil.getRadius() * attribs.get("EarthTunnelRadius") / 100.0);
 			
 			if (attribs.containsKey("EarthTunnelRadiusIncrement"))
 				abil.setRadiusIncrement(abil.getRadiusIncrement() + abil.getRadiusIncrement() * attribs.get("EarthTunnelRadiusIncrement") / 100.0);
@@ -300,8 +300,8 @@ public class EarthUpdater {
 			if (attribs.containsKey("EarthTunnelRange"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("EarthTunnelRange") / 100.0);
 			
-			if (attribs.containsKey("EarthTunnelTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("EarthTunnelTime") / 100.0));
+			//if (attribs.containsKey("EarthTunnelTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("EarthTunnelTime") / 100.0));
 			
 			return true;
 		}
@@ -326,8 +326,8 @@ public class EarthUpdater {
 			if (attribs.containsKey("RaiseEarthSpeed"))
 				abil.setSpeed(abil.getSpeed() + abil.getSpeed() * attribs.get("RaiseEarthSpeed") / 100.0);
 			
-			if (attribs.containsKey("RaiseEarthTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("RaiseEarthTime") / 100.0));
+			//if (attribs.containsKey("RaiseEarthTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("RaiseEarthTime") / 100.0));
 			
 			return true;
 		}
@@ -363,8 +363,8 @@ public class EarthUpdater {
 			if (attribs.containsKey("RippleRange"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("RippleRange") / 100.0);
 			
-			if (attribs.containsKey("RippleStep"))
-				abil.setStep((int) (abil.getStep() + abil.getStep() * attribs.get("RippleStep") / 100.0));
+			//if (attribs.containsKey("RippleStep"))
+			//	abil.setStep((int) (abil.getStep() + abil.getStep() * attribs.get("RippleStep") / 100.0));
 			
 			return true;
 		}

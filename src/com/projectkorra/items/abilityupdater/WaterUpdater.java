@@ -60,14 +60,8 @@ public class WaterUpdater {
 		}
 		else if (ability instanceof WaterSpoutWave) {
 			WaterSpoutWave abil = (WaterSpoutWave) ability;
-			if (attribs.containsKey("IceWaveDamage"))
-				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("IceWaveDamage") / 100.0);
-			return true;
-		}
-		else if (ability instanceof IceBullet) {
-			IceBullet abil = (IceBullet) ability;
-			if (attribs.containsKey("IceBulletDamage"))
-				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("IceBulletDamage") / 100.0);
+			if (attribs.containsKey("WaterSpoutWaveDamage"))
+				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("WaterSpoutWaveDamage") / 100.0);
 			return true;
 		}
 		else if (ability instanceof IceBlast) {
@@ -96,6 +90,12 @@ public class WaterUpdater {
 				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("IceSpikePillarFieldDamage") / 100.0);
 			return true;
 		}
+		else if (ability instanceof IceBullet) {
+			IceBullet abil = (IceBullet) ability;
+			if (attribs.containsKey("IceBulletDamage"))
+				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("IceBulletDamage") / 100.0);
+			return true;
+		}
 		
 		return false;
 	}
@@ -104,11 +104,11 @@ public class WaterUpdater {
 		if (ability instanceof OctopusForm) {
 			OctopusForm abil = (OctopusForm) ability;
 			
-			if (attribs.containsKey("OctopusFormAngle"))
-				abil.setAngle(abil.getAngle() + abil.getAngle() * attribs.get("OctopusFormAngle") / 100.0);
+			//if (attribs.containsKey("OctopusFormAngle"))
+			//	abil.setAngle(abil.getAngle() + abil.getAngle() * attribs.get("OctopusFormAngle") / 100.0);
 			
-			if (attribs.containsKey("OctopusFormAngleIncrement"))
-				abil.setAngleIncrement(abil.getAngleIncrement() + abil.getAngleIncrement() * attribs.get("OctopusFormAngleIncrement") / 100.0);
+			//if (attribs.containsKey("OctopusFormAngleIncrement"))
+			//	abil.setAngleIncrement(abil.getAngleIncrement() + abil.getAngleIncrement() * attribs.get("OctopusFormAngleIncrement") / 100.0);
 			
 			if (attribs.containsKey("OctopusFormAttackRange"))
 				abil.setAttackRange(abil.getAttackRange() + abil.getAttackRange() * attribs.get("OctopusFormAttackRange") / 100.0);
@@ -116,11 +116,11 @@ public class WaterUpdater {
 			if (attribs.containsKey("OctopusFormCooldown"))
 				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("OctopusFormCooldown") / 100.0));
 			
-			if (attribs.containsKey("OctopusFormCurrentAnimationStep"))
-				abil.setCurrentAnimationStep((int) (abil.getCurrentAnimationStep() + abil.getCurrentAnimationStep() * attribs.get("OctopusFormCurrentAnimationStep") / 100.0));
+			//if (attribs.containsKey("OctopusFormCurrentAnimationStep"))
+			//	abil.setCurrentAnimationStep((int) (abil.getCurrentAnimationStep() + abil.getCurrentAnimationStep() * attribs.get("OctopusFormCurrentAnimationStep") / 100.0));
 			
-			if (attribs.containsKey("OctopusFormCurrentFormHeight"))
-				abil.setCurrentFormHeight(abil.getCurrentFormHeight() + abil.getCurrentFormHeight() * attribs.get("OctopusFormCurrentFormHeight") / 100.0);
+			//if (attribs.containsKey("OctopusFormCurrentFormHeight"))
+			//	abil.setCurrentFormHeight(abil.getCurrentFormHeight() + abil.getCurrentFormHeight() * attribs.get("OctopusFormCurrentFormHeight") / 100.0);
 			
 			if (attribs.containsKey("OctopusFormInterval"))
 				abil.setInterval((long) (abil.getInterval() + abil.getInterval() * attribs.get("OctopusFormInterval") / 100.0));
@@ -134,17 +134,17 @@ public class WaterUpdater {
 			if (attribs.containsKey("OctopusFormRange"))
 				abil.setRange((int) (abil.getRange() + abil.getRange() * attribs.get("OctopusFormRange") / 100.0));
 			
-			if (attribs.containsKey("OctopusFormStartAngle"))
-				abil.setStartAngle(abil.getStartAngle() + abil.getStartAngle() * attribs.get("OctopusFormStartAngle") / 100.0);
+			//if (attribs.containsKey("OctopusFormStartAngle"))
+			//	abil.setStartAngle(abil.getStartAngle() + abil.getStartAngle() * attribs.get("OctopusFormStartAngle") / 100.0);
 			
-			if (attribs.containsKey("OctopusFormStepCounter"))
-				abil.setStepCounter((int) (abil.getStepCounter() + abil.getStepCounter() * attribs.get("OctopusFormStepCounter") / 100.0));
+			//if (attribs.containsKey("OctopusFormStepCounter"))
+			//	abil.setStepCounter((int) (abil.getStepCounter() + abil.getStepCounter() * attribs.get("OctopusFormStepCounter") / 100.0));
 			
-			if (attribs.containsKey("OctopusFormTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("OctopusFormTime") / 100.0));
+			//if (attribs.containsKey("OctopusFormTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("OctopusFormTime") / 100.0));
 			
-			if (attribs.containsKey("OctopusFormTotalStepCount"))
-				abil.setTotalStepCount((int) (abil.getTotalStepCount() + abil.getTotalStepCount() * attribs.get("OctopusFormTotalStepCount") / 100.0));
+			//if (attribs.containsKey("OctopusFormTotalStepCount"))
+			//	abil.setTotalStepCount((int) (abil.getTotalStepCount() + abil.getTotalStepCount() * attribs.get("OctopusFormTotalStepCount") / 100.0));
 			
 			return true;
 		}
@@ -163,8 +163,8 @@ public class WaterUpdater {
 			if (attribs.containsKey("SurgeWallRange"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("SurgeWallRange") / 100.0);
 			
-			if (attribs.containsKey("SurgeWallTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("SurgeWallTime") / 100.0));
+			//if (attribs.containsKey("SurgeWallTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("SurgeWallTime") / 100.0));
 			
 			return true;
 		}
@@ -174,8 +174,8 @@ public class WaterUpdater {
 			if (attribs.containsKey("SurgeWaveCooldown"))
 				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("SurgeWaveCooldown") / 100.0));
 			
-			if (attribs.containsKey("SurgeWaveCurrentRadius"))
-				abil.setCurrentRadius(abil.getCurrentRadius() + abil.getCurrentRadius() * attribs.get("SurgeWaveCurrentRadius") / 100.0);
+			//if (attribs.containsKey("SurgeWaveCurrentRadius"))
+			//	abil.setCurrentRadius(abil.getCurrentRadius() + abil.getCurrentRadius() * attribs.get("SurgeWaveCurrentRadius") / 100.0);
 			
 			if (attribs.containsKey("SurgeWaveInterval"))
 				abil.setInterval((long) (abil.getInterval() + abil.getInterval() * attribs.get("SurgeWaveInterval") / 100.0));
@@ -192,8 +192,8 @@ public class WaterUpdater {
 			if (attribs.containsKey("SurgeWaveRange"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("SurgeWaveRange") / 100.0);
 			
-			if (attribs.containsKey("SurgeWaveTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("SurgeWaveTime") / 100.0));
+			//if (attribs.containsKey("SurgeWaveTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("SurgeWaveTime") / 100.0));
 			
 			if (attribs.containsKey("SurgeWaveVerticalFactor"))
 				abil.setVerticalFactor(abil.getVerticalFactor() + abil.getVerticalFactor() * attribs.get("SurgeWaveVerticalFactor") / 100.0);
@@ -203,8 +203,8 @@ public class WaterUpdater {
 		else if (ability instanceof Torrent) {
 			Torrent abil = (Torrent) ability;
 			
-			if (attribs.containsKey("TorrentAngle"))
-				abil.setAngle(abil.getAngle() + abil.getAngle() * attribs.get("TorrentAngle") / 100.0);
+			//if (attribs.containsKey("TorrentAngle"))
+			//	abil.setAngle(abil.getAngle() + abil.getAngle() * attribs.get("TorrentAngle") / 100.0);
 			
 			if (attribs.containsKey("TorrentCooldown"))
 				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("TorrentCooldown") / 100.0));
@@ -215,8 +215,8 @@ public class WaterUpdater {
 			if (attribs.containsKey("TorrentInterval"))
 				abil.setInterval((long) (abil.getInterval() + abil.getInterval() * attribs.get("TorrentInterval") / 100.0));
 			
-			if (attribs.containsKey("TorrentLayer"))
-				abil.setLayer((int) (abil.getLayer() + abil.getLayer() * attribs.get("TorrentLayer") / 100.0));
+			//if (attribs.containsKey("TorrentLayer"))
+			//	abil.setLayer((int) (abil.getLayer() + abil.getLayer() * attribs.get("TorrentLayer") / 100.0));
 			
 			if (attribs.containsKey("TorrentMaxLayer"))
 				abil.setMaxLayer((int) (abil.getMaxLayer() + abil.getMaxLayer() * attribs.get("TorrentMaxLayer") / 100.0));
@@ -236,11 +236,11 @@ public class WaterUpdater {
 			if (attribs.containsKey("TorrentSelectRange"))
 				abil.setSelectRange(abil.getSelectRange() + abil.getSelectRange() * attribs.get("TorrentSelectRange") / 100.0);
 			
-			if (attribs.containsKey("TorrentStartAngle"))
-				abil.setStartAngle(abil.getStartAngle() + abil.getStartAngle() * attribs.get("TorrentStartAngle") / 100.0);
+			//if (attribs.containsKey("TorrentStartAngle"))
+			//	abil.setStartAngle(abil.getStartAngle() + abil.getStartAngle() * attribs.get("TorrentStartAngle") / 100.0);
 			
-			if (attribs.containsKey("TorrentTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("TorrentTime") / 100.0));
+			//if (attribs.containsKey("TorrentTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("TorrentTime") / 100.0));
 			
 			return true;
 		}
@@ -265,11 +265,11 @@ public class WaterUpdater {
 			if (attribs.containsKey("TorrentWaveMaxRadius"))
 				abil.setMaxRadius(abil.getMaxRadius() + abil.getMaxRadius() * attribs.get("TorrentWaveMaxRadius") / 100.0);
 			
-			if (attribs.containsKey("TorrentWaveRadius"))
-				abil.setRadius(abil.getRadius() + abil.getRadius() * attribs.get("TorrentWaveRadius") / 100.0);
+			//if (attribs.containsKey("TorrentWaveRadius"))
+			//	abil.setRadius(abil.getRadius() + abil.getRadius() * attribs.get("TorrentWaveRadius") / 100.0);
 			
-			if (attribs.containsKey("TorrentWaveTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("TorrentWaveTime") / 100.0));
+			//if (attribs.containsKey("TorrentWaveTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("TorrentWaveTime") / 100.0));
 			
 			return true;
 		}
@@ -308,16 +308,16 @@ public class WaterUpdater {
 			if (attribs.containsKey("WaterManipulationSpeed"))
 				abil.setSpeed(abil.getSpeed() + abil.getSpeed() * attribs.get("WaterManipulationSpeed") / 100.0);
 			
-			if (attribs.containsKey("WaterManipulationTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("WaterManipulationTime") / 100.0));
+			//if (attribs.containsKey("WaterManipulationTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("WaterManipulationTime") / 100.0));
 			
 			return true;
 		}
 		else if (ability instanceof WaterSpout) {
 			WaterSpout abil = (WaterSpout) ability;
 			
-			if (attribs.containsKey("WaterSpoutAngle"))
-				abil.setAngle((int) (abil.getAngle() + abil.getAngle() * attribs.get("WaterSpoutAngle") / 100.0));
+			//if (attribs.containsKey("WaterSpoutAngle"))
+			//	abil.setAngle((int) (abil.getAngle() + abil.getAngle() * attribs.get("WaterSpoutAngle") / 100.0));
 			
 			if (attribs.containsKey("WaterSpoutHeight"))
 				abil.setHeight((int) (abil.getHeight() + abil.getHeight() * attribs.get("WaterSpoutHeight") / 100.0));
@@ -325,11 +325,11 @@ public class WaterUpdater {
 			if (attribs.containsKey("WaterSpoutInterval"))
 				abil.setInterval((long) (abil.getInterval() + abil.getInterval() * attribs.get("WaterSpoutInterval") / 100.0));
 			
-			if (attribs.containsKey("WaterSpoutRotation"))
-				abil.setRotation(abil.getRotation() + abil.getRotation() * attribs.get("WaterSpoutRotation") / 100.0);
+			//if (attribs.containsKey("WaterSpoutRotation"))
+			//	abil.setRotation(abil.getRotation() + abil.getRotation() * attribs.get("WaterSpoutRotation") / 100.0);
 			
-			if (attribs.containsKey("WaterSpoutTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("WaterSpoutTime") / 100.0));
+			//if (attribs.containsKey("WaterSpoutTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("WaterSpoutTime") / 100.0));
 			
 			return true;
 		}
@@ -348,8 +348,8 @@ public class WaterUpdater {
 			if (attribs.containsKey("WaterSpoutWaveFlightTime"))
 				abil.setFlightTime(abil.getFlightTime() + abil.getFlightTime() * attribs.get("WaterSpoutWaveFlightTime") / 100.0);
 			
-			if (attribs.containsKey("WaterSpoutWaveProgressCounter"))
-				abil.setProgressCounter((int) (abil.getProgressCounter() + abil.getProgressCounter() * attribs.get("WaterSpoutWaveProgressCounter") / 100.0));
+			//if (attribs.containsKey("WaterSpoutWaveProgressCounter"))
+			//	abil.setProgressCounter((int) (abil.getProgressCounter() + abil.getProgressCounter() * attribs.get("WaterSpoutWaveProgressCounter") / 100.0));
 			
 			if (attribs.containsKey("WaterSpoutWaveRadius"))
 				abil.setRadius(abil.getRadius() + abil.getRadius() * attribs.get("WaterSpoutWaveRadius") / 100.0);
@@ -360,206 +360,11 @@ public class WaterUpdater {
 			if (attribs.containsKey("WaterSpoutWaveSpeed"))
 				abil.setSpeed(abil.getSpeed() + abil.getSpeed() * attribs.get("WaterSpoutWaveSpeed") / 100.0);
 			
-			if (attribs.containsKey("WaterSpoutWaveTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("WaterSpoutWaveTime") / 100.0));
+			//if (attribs.containsKey("WaterSpoutWaveTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("WaterSpoutWaveTime") / 100.0));
 			
 			if (attribs.containsKey("WaterSpoutWaveWaveRadius"))
 				abil.setWaveRadius(abil.getWaveRadius() + abil.getWaveRadius() * attribs.get("WaterSpoutWaveWaveRadius") / 100.0);
-			
-			return true;
-		}
-		else if (ability instanceof Bloodbending) {
-			Bloodbending abil = (Bloodbending) ability;
-			
-			if (attribs.containsKey("BloodbendingCooldown"))
-				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("BloodbendingCooldown") / 100.0));
-			
-			if (attribs.containsKey("BloodbendingHoldTime"))
-				abil.setHoldTime((long) (abil.getHoldTime() + abil.getHoldTime() * attribs.get("BloodbendingHoldTime") / 100.0));
-			
-			if (attribs.containsKey("BloodbendingRange"))
-				abil.setRange((int) (abil.getRange() + abil.getRange() * attribs.get("BloodbendingRange") / 100.0));
-			
-			if (attribs.containsKey("BloodbendingThrowFactor"))
-				abil.setThrowFactor(abil.getThrowFactor() + abil.getThrowFactor() * attribs.get("BloodbendingThrowFactor") / 100.0);
-			
-			if (attribs.containsKey("BloodbendingTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("BloodbendingTime") / 100.0));
-			
-			return true;
-		}
-		else if (ability instanceof IceBullet) {
-			IceBullet abil = (IceBullet) ability;
-			
-			if (attribs.containsKey("IceBulletAnimationSpeed"))
-				abil.setAnimationSpeed(abil.getAnimationSpeed() + abil.getAnimationSpeed() * attribs.get("IceBulletAnimationSpeed") / 100.0);
-			
-			if (attribs.containsKey("IceBulletCooldown"))
-				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("IceBulletCooldown") / 100.0));
-			
-			if (attribs.containsKey("IceBulletLeftClicks"))
-				abil.setLeftClicks((int) (abil.getLeftClicks() + abil.getLeftClicks() * attribs.get("IceBulletLeftClicks") / 100.0));
-			
-			if (attribs.containsKey("IceBulletMaxShots"))
-				abil.setMaxShots(abil.getMaxShots() + abil.getMaxShots() * attribs.get("IceBulletMaxShots") / 100.0);
-			
-			if (attribs.containsKey("IceBulletRadius"))
-				abil.setRadius(abil.getRadius() + abil.getRadius() * attribs.get("IceBulletRadius") / 100.0);
-			
-			if (attribs.containsKey("IceBulletRange"))
-				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("IceBulletRange") / 100.0);
-			
-			if (attribs.containsKey("IceBulletRightClicks"))
-				abil.setRightClicks((int) (abil.getRightClicks() + abil.getRightClicks() * attribs.get("IceBulletRightClicks") / 100.0));
-			
-			if (attribs.containsKey("IceBulletShootTime"))
-				abil.setShootTime(abil.getShootTime() + abil.getShootTime() * attribs.get("IceBulletShootTime") / 100.0);
-			
-			if (attribs.containsKey("IceBulletShots"))
-				abil.setShots(abil.getShots() + abil.getShots() * attribs.get("IceBulletShots") / 100.0);
-			
-			if (attribs.containsKey("IceBulletSpeed"))
-				abil.setSpeed(abil.getSpeed() + abil.getSpeed() * attribs.get("IceBulletSpeed") / 100.0);
-			
-			if (attribs.containsKey("IceBulletTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("IceBulletTime") / 100.0));
-			
-			return true;
-		}
-		else if (ability instanceof IceWave) {
-			IceWave abil = (IceWave) ability;
-			
-			if (attribs.containsKey("IceWaveCooldown"))
-				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("IceWaveCooldown") / 100.0));
-			
-			return true;
-		}
-		else if (ability instanceof HealingWaters) {
-			//HealingWaters abil = (HealingWaters) ability;
-			
-			return true;
-		}
-		else if (ability instanceof IceBlast) {
-			IceBlast abil = (IceBlast) ability;
-			
-			if (attribs.containsKey("IceBlastCollisionRadius"))
-				abil.setCollisionRadius(abil.getCollisionRadius() + abil.getCollisionRadius() * attribs.get("IceBlastCollisionRadius") / 100.0);
-			
-			if (attribs.containsKey("IceBlastCooldown"))
-				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("IceBlastCooldown") / 100.0));
-			
-			if (attribs.containsKey("IceBlastDeflectRange"))
-				abil.setDeflectRange(abil.getDeflectRange() + abil.getDeflectRange() * attribs.get("IceBlastDeflectRange") / 100.0);
-			
-			if (attribs.containsKey("IceBlastInterval"))
-				abil.setInterval((long) (abil.getInterval() + abil.getInterval() * attribs.get("IceBlastInterval") / 100.0));
-
-			if (attribs.containsKey("IceBlastRange"))
-				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("IceBlastRange") / 100.0);
-			
-			if (attribs.containsKey("IceBlastTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("IceBlastTime") / 100.0));
-			
-			return true;
-		}
-		else if (ability instanceof IceSpikeBlast) {
-			IceSpikeBlast abil = (IceSpikeBlast) ability;
-			
-			if (attribs.containsKey("IceSpikeCollisionRadius"))
-				abil.setCollisionRadius(abil.getCollisionRadius() + abil.getCollisionRadius() * attribs.get("IceSpikeCollisionRadius") / 100.0);
-			
-			if (attribs.containsKey("IceSpikeCooldown"))
-				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("IceSpikeCooldown") / 100.0));
-			
-			if (attribs.containsKey("IceSpikeDeflectRange"))
-				abil.setDeflectRange(abil.getDeflectRange() + abil.getDeflectRange() * attribs.get("IceSpikeDeflectRange") / 100.0);
-			
-			if (attribs.containsKey("IceSpikeInterval"))
-				abil.setInterval((long) (abil.getInterval() + abil.getInterval() * attribs.get("IceSpikeInterval") / 100.0));
-			
-			if (attribs.containsKey("IceSpikeRange"))
-				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("IceSpikeRange") / 100.0);
-			
-			if (attribs.containsKey("IceSpikeSlowCooldown"))
-				abil.setSlowCooldown((long) (abil.getSlowCooldown() + abil.getSlowCooldown() * attribs.get("IceSpikeSlowCooldown") / 100.0));
-			
-			if (attribs.containsKey("IceSpikeSlowDuration"))
-				abil.setSlowDuration((int) (abil.getSlowDuration() + abil.getSlowDuration() * attribs.get("IceSpikeSlowDuration") / 100.0));
-			
-			if (attribs.containsKey("IceSpikeSlowPower"))
-				abil.setSlowPower((int) (abil.getSlowPower() + abil.getSlowPower() * attribs.get("IceSpikeSlowPower") / 100.0));
-			
-			if (attribs.containsKey("IceSpikeTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("IceSpikeTime") / 100.0));
-			
-			return true;
-		}
-		else if (ability instanceof IceSpikePillar) {
-			IceSpikePillar abil = (IceSpikePillar) ability;
-			
-			if (attribs.containsKey("IceSpikePillarCooldown"))
-				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("IceSpikePillarCooldown") / 100.0));
-			
-			if (attribs.containsKey("IceSpikePillarHeight"))
-				abil.setHeight((int) (abil.getHeight() + abil.getHeight() * attribs.get("IceSpikePillarHeight") / 100.0));
-			
-			if (attribs.containsKey("IceSpikePillarInterval"))
-				abil.setInterval((long) (abil.getInterval() + abil.getInterval() * attribs.get("IceSpikePillarInterval") / 100.0));
-			
-			if (attribs.containsKey("IceSpikePillarProgress"))
-				abil.setProgress((int) (abil.getProgress() + abil.getProgress() * attribs.get("IceSpikePillarProgress") / 100.0));
-			
-			if (attribs.containsKey("IceSpikePillarRange"))
-				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("IceSpikePillarRange") / 100.0);
-			
-			if (attribs.containsKey("IceSpikePillarRemoveTimer"))
-				abil.setRemoveTimer((long) (abil.getRemoveTimer() + abil.getRemoveTimer() * attribs.get("IceSpikePillarRemoveTimer") / 100.0));
-			
-			//if (attribs.containsKey("IceSpikePillarRemoveTimestamp"))
-			//	abil.setRemoveTimestamp((long) (abil.getRemoveTimestamp() + abil.getRemoveTimestamp() * attribs.get("IceSpikePillarRemoveTimestamp") / 100.0));
-			
-			if (attribs.containsKey("IceSpikePillarSlowCooldown"))
-				abil.setSlowCooldown((long) (abil.getSlowCooldown() + abil.getSlowCooldown() * attribs.get("IceSpikePillarSlowCooldown") / 100.0));
-			
-			if (attribs.containsKey("IceSpikePillarSlowDuration"))
-				abil.setSlowDuration((int) (abil.getSlowDuration() + abil.getSlowDuration() * attribs.get("IceSpikePillarSlowDuration") / 100.0));
-			
-			if (attribs.containsKey("IceSpikePillarSlowPower"))
-				abil.setSlowPower((int) (abil.getSlowPower() + abil.getSlowPower() * attribs.get("IceSpikePillarSlowPower") / 100.0));
-			
-			if (attribs.containsKey("IceSpikePillarSpeed"))
-				abil.setSpeed(abil.getSpeed() + abil.getSpeed() * attribs.get("IceSpikePillarSpeed") / 100.0);
-			
-			if (attribs.containsKey("IceSpikePillarTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("IceSpikePillarTime") / 100.0));
-			
-			return true;
-		}
-		else if (ability instanceof IceSpikePillarField) {
-			IceSpikePillarField abil = (IceSpikePillarField) ability;
-			
-			if (attribs.containsKey("IceSpikePillarFieldCooldown"))
-				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("IceSpikePillarFieldCooldown") / 100.0));
-			
-			if (attribs.containsKey("IceSpikePillarFieldNumberOfSpikes"))
-				abil.setNumberOfSpikes((int) (abil.getNumberOfSpikes() + abil.getNumberOfSpikes() * attribs.get("IceSpikePillarFieldNumberOfSpikes") / 100.0));
-			
-			if (attribs.containsKey("IceSpikePillarFieldRadius"))
-				abil.setRadius(abil.getRadius() + abil.getRadius() * attribs.get("IceSpikePillarFieldRadius") / 100.0);
-			
-			return true;
-		}
-		else if (ability instanceof PhaseChange) {
-			PhaseChange abil = (PhaseChange) ability;
-			
-			if (attribs.containsKey("PhaseChangeDepth"))
-				abil.setDepth((int) (abil.getDepth() + abil.getDepth() * attribs.get("PhaseChangeDepth") / 100.0));
-			
-			if (attribs.containsKey("PhaseChangeFreezeControlRadius"))
-				abil.setFreezeControlRadius((int) (abil.getFreezeControlRadius() + abil.getFreezeControlRadius() * attribs.get("PhaseChangeFreezeControlRadius") / 100.0));
-			
-			if (attribs.containsKey("PhaseChangeSourceRange"))
-				abil.setSourceRange((int) (abil.getSourceRange() + abil.getSourceRange() * attribs.get("PhaseChangeSourceRange") / 100.0));
 			
 			return true;
 		}
@@ -572,8 +377,8 @@ public class WaterUpdater {
 			//if (attribs.containsKey("WaterArmsFreezeSlot"))
 			//	abil.setFreezeSlot((int) (abil.getFreezeSlot() + abil.getFreezeSlot() * attribs.get("WaterArmsFreezeSlot") / 100.0));
 			
-			if (attribs.containsKey("WaterArmsInitLength"))
-				abil.setInitLength((int) (abil.getInitLength() + abil.getInitLength() * attribs.get("WaterArmsInitLength") / 100.0));
+			//if (attribs.containsKey("WaterArmsInitLength"))
+			//	abil.setInitLength((int) (abil.getInitLength() + abil.getInitLength() * attribs.get("WaterArmsInitLength") / 100.0));
 			
 			//if (attribs.containsKey("WaterArmsLastClickTime"))
 			//	abil.setLastClickTime((long) (abil.getLastClickTime() + abil.getLastClickTime() * attribs.get("WaterArmsLastClickTime") / 100.0));
@@ -665,17 +470,17 @@ public class WaterUpdater {
 		else if (ability instanceof WaterArmsWhip) {
 			WaterArmsWhip abil = (WaterArmsWhip) ability;
 			
-			if (attribs.containsKey("WaterArmsWhipActiveLength"))
-				abil.setActiveLength((int) (abil.getActiveLength() + abil.getActiveLength() * attribs.get("WaterArmsWhipActiveLength") / 100.0));
+			//if (attribs.containsKey("WaterArmsWhipActiveLength"))
+			//	abil.setActiveLength((int) (abil.getActiveLength() + abil.getActiveLength() * attribs.get("WaterArmsWhipActiveLength") / 100.0));
 			
 			if (attribs.containsKey("WaterArmsWhipHoldTime"))
 				abil.setHoldTime((long) (abil.getHoldTime() + abil.getHoldTime() * attribs.get("WaterArmsWhipHoldTime") / 100.0));
 			
-			if (attribs.containsKey("WaterArmsWhipInitLength"))
+			// if (attribs.containsKey("WaterArmsWhipInitLength"))
 				abil.setInitLength((int) (abil.getInitLength() + abil.getInitLength() * attribs.get("WaterArmsWhipInitLength") / 100.0));
 			
-			if (attribs.containsKey("WaterArmsWhipPlayerHealth"))
-				abil.setPlayerHealth(abil.getPlayerHealth() + abil.getPlayerHealth() * attribs.get("WaterArmsWhipPlayerHealth") / 100.0);
+			//if (attribs.containsKey("WaterArmsWhipPlayerHealth"))
+			//	abil.setPlayerHealth(abil.getPlayerHealth() + abil.getPlayerHealth() * attribs.get("WaterArmsWhipPlayerHealth") / 100.0);
 			
 			if (attribs.containsKey("WaterArmsWhipPullMultiplier"))
 				abil.setPullMultiplier(abil.getPullMultiplier() + abil.getPullMultiplier() * attribs.get("WaterArmsWhipPullMultiplier") / 100.0);
@@ -692,8 +497,8 @@ public class WaterUpdater {
 			if (attribs.containsKey("WaterArmsWhipPunchLengthNight"))
 				abil.setPunchLengthNight((int) (abil.getPunchLengthNight() + abil.getPunchLengthNight() * attribs.get("WaterArmsWhipPunchLengthNight") / 100.0));
 			
-			if (attribs.containsKey("WaterArmsWhipTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("WaterArmsWhipTime") / 100.0));
+			//if (attribs.containsKey("WaterArmsWhipTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("WaterArmsWhipTime") / 100.0));
 			
 			if (attribs.containsKey("WaterArmsWhipUsageCooldown"))
 				abil.setUsageCooldown((long) (abil.getUsageCooldown() + abil.getUsageCooldown() * attribs.get("WaterArmsWhipUsageCooldown") / 100.0));
@@ -715,14 +520,209 @@ public class WaterUpdater {
 			
 			return true;
 		}
+		else if (ability instanceof Bloodbending) {
+			Bloodbending abil = (Bloodbending) ability;
+			
+			if (attribs.containsKey("BloodbendingCooldown"))
+				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("BloodbendingCooldown") / 100.0));
+			
+			if (attribs.containsKey("BloodbendingHoldTime"))
+				abil.setHoldTime((long) (abil.getHoldTime() + abil.getHoldTime() * attribs.get("BloodbendingHoldTime") / 100.0));
+			
+			if (attribs.containsKey("BloodbendingRange"))
+				abil.setRange((int) (abil.getRange() + abil.getRange() * attribs.get("BloodbendingRange") / 100.0));
+			
+			if (attribs.containsKey("BloodbendingThrowFactor"))
+				abil.setThrowFactor(abil.getThrowFactor() + abil.getThrowFactor() * attribs.get("BloodbendingThrowFactor") / 100.0);
+			
+			//if (attribs.containsKey("BloodbendingTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("BloodbendingTime") / 100.0));
+			
+			return true;
+		}
+		else if (ability instanceof HealingWaters) {
+			//HealingWaters abil = (HealingWaters) ability;
+			
+			return true;
+		}
+		else if (ability instanceof IceBlast) {
+			IceBlast abil = (IceBlast) ability;
+			
+			if (attribs.containsKey("IceBlastCollisionRadius"))
+				abil.setCollisionRadius(abil.getCollisionRadius() + abil.getCollisionRadius() * attribs.get("IceBlastCollisionRadius") / 100.0);
+			
+			if (attribs.containsKey("IceBlastCooldown"))
+				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("IceBlastCooldown") / 100.0));
+			
+			if (attribs.containsKey("IceBlastDeflectRange"))
+				abil.setDeflectRange(abil.getDeflectRange() + abil.getDeflectRange() * attribs.get("IceBlastDeflectRange") / 100.0);
+			
+			if (attribs.containsKey("IceBlastInterval"))
+				abil.setInterval((long) (abil.getInterval() + abil.getInterval() * attribs.get("IceBlastInterval") / 100.0));
+
+			if (attribs.containsKey("IceBlastRange"))
+				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("IceBlastRange") / 100.0);
+			
+			//if (attribs.containsKey("IceBlastTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("IceBlastTime") / 100.0));
+			
+			return true;
+		}
+		else if (ability instanceof IceSpikeBlast) {
+			IceSpikeBlast abil = (IceSpikeBlast) ability;
+			
+			if (attribs.containsKey("IceSpikeCollisionRadius"))
+				abil.setCollisionRadius(abil.getCollisionRadius() + abil.getCollisionRadius() * attribs.get("IceSpikeCollisionRadius") / 100.0);
+			
+			if (attribs.containsKey("IceSpikeCooldown"))
+				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("IceSpikeCooldown") / 100.0));
+			
+			if (attribs.containsKey("IceSpikeDeflectRange"))
+				abil.setDeflectRange(abil.getDeflectRange() + abil.getDeflectRange() * attribs.get("IceSpikeDeflectRange") / 100.0);
+			
+			if (attribs.containsKey("IceSpikeInterval"))
+				abil.setInterval((long) (abil.getInterval() + abil.getInterval() * attribs.get("IceSpikeInterval") / 100.0));
+			
+			if (attribs.containsKey("IceSpikeRange"))
+				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("IceSpikeRange") / 100.0);
+			
+			if (attribs.containsKey("IceSpikeSlowCooldown"))
+				abil.setSlowCooldown((long) (abil.getSlowCooldown() + abil.getSlowCooldown() * attribs.get("IceSpikeSlowCooldown") / 100.0));
+			
+			if (attribs.containsKey("IceSpikeSlowDuration"))
+				abil.setSlowDuration((int) (abil.getSlowDuration() + abil.getSlowDuration() * attribs.get("IceSpikeSlowDuration") / 100.0));
+			
+			if (attribs.containsKey("IceSpikeSlowPower"))
+				abil.setSlowPower((int) (abil.getSlowPower() + abil.getSlowPower() * attribs.get("IceSpikeSlowPower") / 100.0));
+			
+			//if (attribs.containsKey("IceSpikeTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("IceSpikeTime") / 100.0));
+			
+			return true;
+		}
+		else if (ability instanceof IceSpikePillar) {
+			IceSpikePillar abil = (IceSpikePillar) ability;
+			
+			if (attribs.containsKey("IceSpikePillarCooldown"))
+				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("IceSpikePillarCooldown") / 100.0));
+			
+			if (attribs.containsKey("IceSpikePillarHeight"))
+				abil.setHeight((int) (abil.getHeight() + abil.getHeight() * attribs.get("IceSpikePillarHeight") / 100.0));
+			
+			if (attribs.containsKey("IceSpikePillarInterval"))
+				abil.setInterval((long) (abil.getInterval() + abil.getInterval() * attribs.get("IceSpikePillarInterval") / 100.0));
+			
+			//if (attribs.containsKey("IceSpikePillarProgress"))
+			//	abil.setProgress((int) (abil.getProgress() + abil.getProgress() * attribs.get("IceSpikePillarProgress") / 100.0));
+			
+			if (attribs.containsKey("IceSpikePillarRange"))
+				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("IceSpikePillarRange") / 100.0);
+			
+			//if (attribs.containsKey("IceSpikePillarRemoveTimer"))
+			//	abil.setRemoveTimer((long) (abil.getRemoveTimer() + abil.getRemoveTimer() * attribs.get("IceSpikePillarRemoveTimer") / 100.0));
+			
+			//if (attribs.containsKey("IceSpikePillarRemoveTimestamp"))
+			//	abil.setRemoveTimestamp((long) (abil.getRemoveTimestamp() + abil.getRemoveTimestamp() * attribs.get("IceSpikePillarRemoveTimestamp") / 100.0));
+			
+			if (attribs.containsKey("IceSpikePillarSlowCooldown"))
+				abil.setSlowCooldown((long) (abil.getSlowCooldown() + abil.getSlowCooldown() * attribs.get("IceSpikePillarSlowCooldown") / 100.0));
+			
+			if (attribs.containsKey("IceSpikePillarSlowDuration"))
+				abil.setSlowDuration((int) (abil.getSlowDuration() + abil.getSlowDuration() * attribs.get("IceSpikePillarSlowDuration") / 100.0));
+			
+			if (attribs.containsKey("IceSpikePillarSlowPower"))
+				abil.setSlowPower((int) (abil.getSlowPower() + abil.getSlowPower() * attribs.get("IceSpikePillarSlowPower") / 100.0));
+			
+			if (attribs.containsKey("IceSpikePillarSpeed"))
+				abil.setSpeed(abil.getSpeed() + abil.getSpeed() * attribs.get("IceSpikePillarSpeed") / 100.0);
+			
+			//if (attribs.containsKey("IceSpikePillarTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("IceSpikePillarTime") / 100.0));
+			
+			return true;
+		}
+		else if (ability instanceof IceSpikePillarField) {
+			IceSpikePillarField abil = (IceSpikePillarField) ability;
+			
+			if (attribs.containsKey("IceSpikePillarFieldCooldown"))
+				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("IceSpikePillarFieldCooldown") / 100.0));
+			
+			if (attribs.containsKey("IceSpikePillarFieldNumberOfSpikes"))
+				abil.setNumberOfSpikes((int) (abil.getNumberOfSpikes() + abil.getNumberOfSpikes() * attribs.get("IceSpikePillarFieldNumberOfSpikes") / 100.0));
+			
+			if (attribs.containsKey("IceSpikePillarFieldRadius"))
+				abil.setRadius(abil.getRadius() + abil.getRadius() * attribs.get("IceSpikePillarFieldRadius") / 100.0);
+			
+			return true;
+		}
+		else if (ability instanceof PhaseChange) {
+			PhaseChange abil = (PhaseChange) ability;
+			
+			if (attribs.containsKey("PhaseChangeDepth"))
+				abil.setDepth((int) (abil.getDepth() + abil.getDepth() * attribs.get("PhaseChangeDepth") / 100.0));
+			
+			if (attribs.containsKey("PhaseChangeFreezeControlRadius"))
+				abil.setFreezeControlRadius((int) (abil.getFreezeControlRadius() + abil.getFreezeControlRadius() * attribs.get("PhaseChangeFreezeControlRadius") / 100.0));
+			
+			if (attribs.containsKey("PhaseChangeSourceRange"))
+				abil.setSourceRange((int) (abil.getSourceRange() + abil.getSourceRange() * attribs.get("PhaseChangeSourceRange") / 100.0));
+			
+			return true;
+		}
 		else if (ability instanceof PlantRegrowth) {
 			PlantRegrowth abil = (PlantRegrowth) ability;
 			
 			if (attribs.containsKey("PlantRegrowthRegrowTime"))
 				abil.setRegrowTime((long) (abil.getRegrowTime() + abil.getRegrowTime() * attribs.get("PlantRegrowthRegrowTime") / 100.0));
 			
-			if (attribs.containsKey("PlantRegrowthTime"))
-				abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("PlantRegrowthTime") / 100.0));
+			//if (attribs.containsKey("PlantRegrowthTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("PlantRegrowthTime") / 100.0));
+			
+			return true;
+		}
+		else if (ability instanceof IceBullet) {
+			IceBullet abil = (IceBullet) ability;
+			
+			if (attribs.containsKey("IceBulletAnimationSpeed"))
+				abil.setAnimationSpeed(abil.getAnimationSpeed() + abil.getAnimationSpeed() * attribs.get("IceBulletAnimationSpeed") / 100.0);
+			
+			if (attribs.containsKey("IceBulletCooldown"))
+				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("IceBulletCooldown") / 100.0));
+			
+			//if (attribs.containsKey("IceBulletLeftClicks"))
+			//	abil.setLeftClicks((int) (abil.getLeftClicks() + abil.getLeftClicks() * attribs.get("IceBulletLeftClicks") / 100.0));
+			
+			if (attribs.containsKey("IceBulletMaxShots"))
+				abil.setMaxShots(abil.getMaxShots() + abil.getMaxShots() * attribs.get("IceBulletMaxShots") / 100.0);
+			
+			if (attribs.containsKey("IceBulletRadius"))
+				abil.setRadius(abil.getRadius() + abil.getRadius() * attribs.get("IceBulletRadius") / 100.0);
+			
+			if (attribs.containsKey("IceBulletRange"))
+				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("IceBulletRange") / 100.0);
+			
+			//if (attribs.containsKey("IceBulletRightClicks"))
+			//	abil.setRightClicks((int) (abil.getRightClicks() + abil.getRightClicks() * attribs.get("IceBulletRightClicks") / 100.0));
+			
+			if (attribs.containsKey("IceBulletShootTime"))
+				abil.setShootTime(abil.getShootTime() + abil.getShootTime() * attribs.get("IceBulletShootTime") / 100.0);
+			
+			//if (attribs.containsKey("IceBulletShots"))
+			//	abil.setShots(abil.getShots() + abil.getShots() * attribs.get("IceBulletShots") / 100.0);
+			
+			if (attribs.containsKey("IceBulletSpeed"))
+				abil.setSpeed(abil.getSpeed() + abil.getSpeed() * attribs.get("IceBulletSpeed") / 100.0);
+			
+			//if (attribs.containsKey("IceBulletTime"))
+			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("IceBulletTime") / 100.0));
+			
+			return true;
+		}
+		else if (ability instanceof IceWave) {
+			IceWave abil = (IceWave) ability;
+			
+			if (attribs.containsKey("IceWaveCooldown"))
+				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("IceWaveCooldown") / 100.0));
 			
 			return true;
 		}
