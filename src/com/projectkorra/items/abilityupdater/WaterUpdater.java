@@ -186,8 +186,8 @@ public class WaterUpdater {
 			if (attribs.containsKey("SurgeWaveMaxRadius"))
 				abil.setMaxRadius(abil.getMaxRadius() + abil.getMaxRadius() * attribs.get("SurgeWaveMaxRadius") / 100.0);
 			
-			if (attribs.containsKey("SurgeWavePushFactor"))
-				abil.setPushFactor(abil.getPushFactor() + abil.getPushFactor() * attribs.get("SurgeWavePushFactor") / 100.0);
+			if (attribs.containsKey("SurgeWaveKnockback"))
+				abil.setKnockback(abil.getKnockback() + abil.getKnockback() * attribs.get("SurgeWaveKnockback") / 100.0);
 			
 			if (attribs.containsKey("SurgeWaveRange"))
 				abil.setRange(abil.getRange() + abil.getRange() * attribs.get("SurgeWaveRange") / 100.0);
@@ -195,8 +195,8 @@ public class WaterUpdater {
 			//if (attribs.containsKey("SurgeWaveTime"))
 			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("SurgeWaveTime") / 100.0));
 			
-			if (attribs.containsKey("SurgeWaveVerticalFactor"))
-				abil.setVerticalFactor(abil.getVerticalFactor() + abil.getVerticalFactor() * attribs.get("SurgeWaveVerticalFactor") / 100.0);
+			if (attribs.containsKey("SurgeWaveKnockup"))
+				abil.setKnockup(abil.getKnockup() + abil.getKnockup() * attribs.get("SurgeWaveKnockup") / 100.0);
 			
 			return true;
 		}
@@ -345,8 +345,8 @@ public class WaterUpdater {
 			if (attribs.containsKey("WaterSpoutWaveCooldown"))
 				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("WaterSpoutWaveCooldown") / 100.0));
 			
-			if (attribs.containsKey("WaterSpoutWaveFlightTime"))
-				abil.setFlightTime(abil.getFlightTime() + abil.getFlightTime() * attribs.get("WaterSpoutWaveFlightTime") / 100.0);
+			if (attribs.containsKey("WaterSpoutWaveFlightDuration"))
+				abil.setFlightDuration(abil.getFlightDuration() + abil.getFlightDuration() * attribs.get("WaterSpoutWaveFlightDuration") / 100.0);
 			
 			//if (attribs.containsKey("WaterSpoutWaveProgressCounter"))
 			//	abil.setProgressCounter((int) (abil.getProgressCounter() + abil.getProgressCounter() * attribs.get("WaterSpoutWaveProgressCounter") / 100.0));
@@ -473,8 +473,8 @@ public class WaterUpdater {
 			//if (attribs.containsKey("WaterArmsWhipActiveLength"))
 			//	abil.setActiveLength((int) (abil.getActiveLength() + abil.getActiveLength() * attribs.get("WaterArmsWhipActiveLength") / 100.0));
 			
-			if (attribs.containsKey("WaterArmsWhipHoldTime"))
-				abil.setHoldTime((long) (abil.getHoldTime() + abil.getHoldTime() * attribs.get("WaterArmsWhipHoldTime") / 100.0));
+			if (attribs.containsKey("WaterArmsWhipGrabDuration"))
+				abil.setGrabDuration((long) (abil.getGrabDuration() + abil.getGrabDuration() * attribs.get("WaterArmsWhipGrabDuration") / 100.0));
 			
 			// if (attribs.containsKey("WaterArmsWhipInitLength"))
 				abil.setInitLength((int) (abil.getInitLength() + abil.getInitLength() * attribs.get("WaterArmsWhipInitLength") / 100.0));
@@ -526,14 +526,14 @@ public class WaterUpdater {
 			if (attribs.containsKey("BloodbendingCooldown"))
 				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("BloodbendingCooldown") / 100.0));
 			
-			if (attribs.containsKey("BloodbendingHoldTime"))
-				abil.setHoldTime((long) (abil.getHoldTime() + abil.getHoldTime() * attribs.get("BloodbendingHoldTime") / 100.0));
+			if (attribs.containsKey("BloodbendingDuration"))
+				abil.setDuration((long) (abil.getDuration() + abil.getDuration() * attribs.get("BloodbendingDuration") / 100.0));
+			
+			if (attribs.containsKey("BloodbendingKnockback"))
+				abil.setKnockback(abil.getKnockback() + abil.getKnockback() * attribs.get("BloodbendingKnockback") / 100.0);
 			
 			if (attribs.containsKey("BloodbendingRange"))
 				abil.setRange((int) (abil.getRange() + abil.getRange() * attribs.get("BloodbendingRange") / 100.0));
-			
-			if (attribs.containsKey("BloodbendingThrowFactor"))
-				abil.setThrowFactor(abil.getThrowFactor() + abil.getThrowFactor() * attribs.get("BloodbendingThrowFactor") / 100.0);
 			
 			//if (attribs.containsKey("BloodbendingTime"))
 			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("BloodbendingTime") / 100.0));
@@ -592,8 +592,8 @@ public class WaterUpdater {
 			if (attribs.containsKey("IceSpikeSlowDuration"))
 				abil.setSlowDuration((int) (abil.getSlowDuration() + abil.getSlowDuration() * attribs.get("IceSpikeSlowDuration") / 100.0));
 			
-			if (attribs.containsKey("IceSpikeSlowPower"))
-				abil.setSlowPower((int) (abil.getSlowPower() + abil.getSlowPower() * attribs.get("IceSpikeSlowPower") / 100.0));
+			if (attribs.containsKey("IceSpikeSlowPotency"))
+				abil.setSlowPotency((int) (abil.getSlowPotency() + abil.getSlowPotency() * attribs.get("IceSpikeSlowPotency") / 100.0));
 			
 			//if (attribs.containsKey("IceSpikeTime"))
 			//	abil.setTime((long) (abil.getTime() + abil.getTime() * attribs.get("IceSpikeTime") / 100.0));

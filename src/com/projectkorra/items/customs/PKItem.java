@@ -143,14 +143,15 @@ public class PKItem {
 				String[] colons = comma.split(":");
 				Material mat = Material.getMaterial(colons[0]);
 
-				// Try to get the Material by id
+				// Try to get the Material by id, not anymore
+				/*
 				if (mat == null) {
 					try {
 						mat = Material.getMaterial(Integer.parseInt(colons[0]));
 					}
 					catch (NumberFormatException e) {
 					}
-				}
+				} */
 
 				int quantity = 1;
 				short damage = 0;

@@ -9,20 +9,19 @@ Item:
 Item:
     Name: example2
     DisplayName: <&4>Fire Wool
-    Material: WOOL
+    Material: RED_WOOL
     Amount: 3
-    Durability: 14
     Lore: <&c>This wool belongs to the Fire Nation<n><&c>Use with care!
     Glow: true
-    UnshapedRecipe: WOOL, WOOL:3:14, WOOL, example1:3
+    UnshapedRecipe: WHITE_WOOL, RED_WOOL:3, WHITE_WOOL, example1:3
 Item:
     Name: example3
     DisplayName: <&2>Earth <&a>Walkers
-    Material: GOLD_BOOTS
+    Material: GOLDEN_BOOTS
     ShapedRecipe: GOLD_INGOT, AIR, GOLD_INGOT, GOLD_INGOT, DIRT:16, GOLD_INGOT  
     Stats:
-        EarthSmashFlySpeed: 25
-        EarthSmashFlyDuration: 25
+        EarthSmashFlightSpeed: 25
+        EarthSmashFlightDuration: 25
         EarthSmashDamage: -15
         WearOnly: true
 Item:
@@ -74,22 +73,23 @@ Item:
     DisplayName: <&f>Airbender Staff
     Lore: <&8>A versatile wooden staff used by <&f><&l>Air Nomads<n><&7>Press sneak while falling to glide<n><&7>Improves the knockback of<n><&f>  AirBlast<n><&f>  AirSwipe<n><&f>  AirSuction
     Material: STICK
-    ShapedRecipe: WOOL:8, WOOL:8, WOOL:8, AIR, STICK:8, WOOL:8, FEATHER:8, AIR, WOOL:8
+    ShapedRecipe: WHITE_WOOL:8, WHITE_WOOL:8, WHITE_WOOL:8, AIR, STICK:8, WHITE_WOOL:8, FEATHER:8, AIR, WHITE_WOOL:8
     Glow: true
     Stats:
         Charges: 50
         DestroyAfterCharges: true
         IgnoreDestroyMessage: false
         AirGlide: true
-        AirBlastForce: 20
-        AirSwipeForce: 100
-        AirSuctionForce: 20
+        AirBlastPushFactor: 20
+        AirBlastPushFactorForOthers: 20
+        AirSuctionPushFactor: 20
+        AirSwipePushFactor: 100
 Item: 
     Name: badgermoletunic
     DisplayName: <&3>Badgermole Tunic
     Lore: <&8>The spirit of the badgermole lives on<n><&7>Focus your <&3>EarthTunnel <&7>into a smaller portion<n><&7>of earth, increasing the speed.
     Material: IRON_CHESTPLATE
-    UnshapedRecipe: COAL_BLOCK:3, IRON_ORE:3, GOLD_ORE:3, STONE:3, STAINED_CLAY:3:5, STAINED_CLAY:3:13
+    UnshapedRecipe: COAL_BLOCK:3, IRON_ORE:3, GOLD_ORE:3, STONE:3, LIME_TERRACOTTA:3, GREEN_TERRACOTTA:3
     Stats:
         WearOnly: true
         SneakCharges: 25
@@ -107,9 +107,11 @@ Item:
         IceSpikeRange: 20
         IceBlastRange: 20
         IceBlastDamage: 20
+        IceSpikeDamage: 20
         IceSpikePillarRange: 20
-        IceWaveDamage: 20
-        SurgeWaveFreezeSize: 20
+        IceSpikePillarDamage: 20
+        IceSpikePillarFieldDamage: 20
+        SurgeWaveMaxFreezeRadius: 20
         WaterSpoutHeight: -20
         WaterSpoutWaveFlightTime: -20
         WaterSpoutWaveSpeed: -20
@@ -119,13 +121,12 @@ Item:
     DisplayName: <&c>Flameo Chef Hat
     Lore: <&8>Buy <&4>'Flameo Instant Noodles!'<n><&8>The Noodliest Noodles in the United Republic!<n><&7>Greatly increases <&c>HeatControl<&7> cooking speed.
     Material: LEATHER_HELMET
-    ShapedRecipe: WOOL:1:14, WOOL:1:14, WOOL:1:14, WOOL:1:14, COAL_BLOCK:3, WOOL:1:14
+    ShapedRecipe: RED_WOOL:1, RED_WOOL:1, RED_WOOL:1, RED_WOOL:1, COAL_BLOCK:3, RED_WOOL:1
     Glow: true
     Stats:
         LeatherColor: 255, 0, 0
         SneakCharges: 15
         DestroyAfterCharges: true
-        HeatControlCookTime: -100
 Item:
     Name: waterchestplate
     DisplayName: <&9>Brutal Water Chestplate
@@ -143,13 +144,9 @@ Item:
         OctopusFormRadius: 15
         OctopusFormInterval: 30
         TorrentDamage: 15
-        TorrentStreamingDamage: 15
         TorrentRange: -25
 Item:
     Name: antilag
     DisplayName: <&c>Anti-Lag Machine
     Lore: <&8>Everyone loves you for using this item<n><&7>Decreases the radius of AirBubble<n><&7>and WaterBubble substantially!
     Material: DAYLIGHT_DETECTOR
-    Stats:
-        AirBubbleRadius: -60
-        WaterBubbleRadius: -60

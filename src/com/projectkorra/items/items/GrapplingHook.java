@@ -6,7 +6,9 @@ import com.projectkorra.items.utils.ElementUtils;
 import com.projectkorra.projectkorra.GeneralMethods;
 import com.projectkorra.projectkorra.util.ParticleEffect;
 
+import org.bukkit.Color;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -44,7 +46,7 @@ public class GrapplingHook {
 	private Vector direction;
 	private double speed;
 	private double range;
-	private double red, green, blue;
+	private int red, green, blue;
 
 	/**
 	 * Attempt to create a new Grappling Hook, fling a currently existing
@@ -112,7 +114,7 @@ public class GrapplingHook {
 				 * normally cause blocks to be skipped if we just jumped
 				 * directly.
 				 */
-				playAnimation(player.getEyeLocation().add(0, -0.5, 0), currentLoc, 1, (float) 0.1, (float) red, (float) green, (float) blue);
+				playAnimation(player.getEyeLocation().add(0, -0.5, 0), currentLoc, 1, (float) 0.1, red, green, blue);
 				BlockIterator iter = new BlockIterator(currentLoc.getWorld(), currentLoc.toVector(), direction, 0, (int) speed + 1);
 				currentLoc = currentLoc.add(direction.clone().multiply(speed));
 				while (iter.hasNext()) {
@@ -124,7 +126,7 @@ public class GrapplingHook {
 					}
 				}
 			} else if (state == State.HOOKED) {
-				playAnimation(player.getEyeLocation().add(0, -0.5, 0), currentLoc, 1, (float) 0.1, (float) red, (float) green, (float) blue);
+				playAnimation(player.getEyeLocation().add(0, -0.5, 0), currentLoc, 1, (float) 0.1, red, green, blue);
 			}
 
 		}
@@ -156,11 +158,11 @@ public class GrapplingHook {
 	 * @param g amount of green in the particle (0 - 255)
 	 * @param b amount of blue in the particle (0 - 255)
 	 */
-	public static void playAnimation(Location loc1, Location loc2, double incr, float density, float r, float g, float b) {
+	public static void playAnimation(Location loc1, Location loc2, double incr, float density, int r, int g, int b) {
 		Location iter = loc1.clone();
 		Vector dir = GeneralMethods.getDirection(loc1, loc2).normalize();
 		while (iter.distanceSquared(loc1) <= iter.distanceSquared(loc2)) {
-			ParticleEffect.RED_DUST.display(r, g, b, density, 0, iter, 256);
+			ParticleEffect.REDSTONE.display(iter, 1, 0, 0, 0, new Particle.DustOptions(Color.fromRGB(r, g, b), density));
 			iter = iter.add(dir.clone().multiply(incr));
 		}
 	}
@@ -174,7 +176,7 @@ public class GrapplingHook {
 	 * @param density the density of each particle
 	 */
 	public static void playAnimation(Location loc1, Location loc2, double incr, float density) {
-		playAnimation(loc1, loc2, incr, density, 0F, 0F, 0F);
+		playAnimation(loc1, loc2, incr, density, 0, 0, 0);
 	}
 
 	public State getState() {

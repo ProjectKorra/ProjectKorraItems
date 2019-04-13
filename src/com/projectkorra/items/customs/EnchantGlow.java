@@ -10,8 +10,8 @@ import java.lang.reflect.Field;
 public class EnchantGlow extends EnchantmentWrapper {
 	private static Enchantment glow;
 
-	public EnchantGlow(int id) {
-		super(id);
+	public EnchantGlow(String name) {
+		super(name);
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class EnchantGlow extends EnchantmentWrapper {
 			e.printStackTrace();
 		}
 
-		glow = new EnchantGlow(255);
+		glow = new EnchantGlow("Banana");
 		try {
 			Enchantment.registerEnchantment(glow);
 		}

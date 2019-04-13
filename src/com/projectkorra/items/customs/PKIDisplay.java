@@ -21,8 +21,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class PKIDisplay {
 	public static ConcurrentHashMap<Player, PKIDisplay> displays;
-	public static final ItemStack PREV_BUTTON = new ItemStack(Material.WOOL, 1, (short) 14);
-	public static final ItemStack NEXT_BUTTON = new ItemStack(Material.WOOL, 1, (short) 5);
+	public static final ItemStack PREV_BUTTON = new ItemStack(Material.RED_WOOL, 1);
+	public static final ItemStack NEXT_BUTTON = new ItemStack(Material.LIME_WOOL, 1);
 	public static final int INV_SIZE = 27;
 	public static final int INV_ITEM_QTY = INV_SIZE - 9;
 	private Player player;

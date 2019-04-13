@@ -119,7 +119,7 @@ public class AbilityUpdater implements Listener {
 					continue;
 
 				String particleName = colonSplit[0];
-				ParticleEffect effect = ParticleEffect.fromName(particleName.trim());
+				ParticleEffect effect = ParticleEffect.valueOf(particleName.trim());
 				if (effect == null) {
 					Messages.logTimedMessage(Messages.BAD_PARTICLE_EFFECT + ": " + particleName);
 					continue;
@@ -152,7 +152,7 @@ public class AbilityUpdater implements Listener {
 				for (int i = 0; i < duration; i++) {
 					new BukkitRunnable() {
 						public void run() {
-							feffect.display(fplayer.getEyeLocation(), (float) fradius, (float) fradius, (float) fradius, (float) fspeed, (int) famount);
+							feffect.display(fplayer.getEyeLocation(), (int) famount, (float) fradius, (float) fradius, (float) fradius, (float) fspeed);
 						}
 					}.runTaskLater(ProjectKorraItems.plugin, i);
 				}

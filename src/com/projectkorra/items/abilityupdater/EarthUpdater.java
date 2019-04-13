@@ -226,6 +226,9 @@ public class EarthUpdater {
 			if (attribs.containsKey("EarthSmashFlightDetectionRadius"))
 				abil.setFlightDetectionRadius(abil.getFlightDetectionRadius() + abil.getFlightDetectionRadius() * attribs.get("EarthSmashFlightDetectionRadius") / 100.0);
 			
+			if (attribs.containsKey("EarthSmashFlightDuration"))
+				abil.setFlightDuration((long) (abil.getFlightDuration() + abil.getFlightDuration() * attribs.get("EarthSmashFlightDuration") / 100.0));
+			
 			//if (attribs.containsKey("EarthSmashFlightRemoveTimer"))
 			//	abil.setFlightRemoveTimer((long) (abil.getFlightRemoveTimer() + abil.getFlightRemoveTimer() * attribs.get("EarthSmashFlightRemoveTimer") / 100.0));
 			

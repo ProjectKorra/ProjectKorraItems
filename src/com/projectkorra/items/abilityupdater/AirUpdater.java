@@ -243,8 +243,8 @@ public class AirUpdater {
 			if (attribs.containsKey("AirSwipeSpeed"))
 				abil.setSpeed(abil.getSpeed() + abil.getSpeed() * attribs.get("AirSwipeSpeed") / 100.0);
 			
-			if (attribs.containsKey("AirSwipeStepSize"))
-				abil.setStepSize((int) (abil.getStepSize() + abil.getStepSize() * attribs.get("AirSwipeStepSize") / 100.0));
+			//if (attribs.containsKey("AirSwipeStepSize"))
+			//	abil.setStepSize((int) (abil.getStepSize() + abil.getStepSize() * attribs.get("AirSwipeStepSize") / 100.0));
 			
 			return true;
 		}

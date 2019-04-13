@@ -238,11 +238,11 @@ public class FireUpdater {
 			if (attribs.containsKey("FireShieldDiscRadius"))
 				abil.setDiscRadius(abil.getDiscRadius() + abil.getDiscRadius() * attribs.get("FireShieldDiscRadius") / 100.0); // Shift
 			
-			if (attribs.containsKey("FireShieldInterval"))
-				abil.setInterval((long) (abil.getInterval() + abil.getInterval() * attribs.get("FireShieldInterval") / 100.0));
+			//if (attribs.containsKey("FireShieldInterval"))
+			//	abil.setInterval((long) (abil.getInterval() + abil.getInterval() * attribs.get("FireShieldInterval") / 100.0));
 			
-			if (attribs.containsKey("FireShieldRadius"))
-				abil.setRadius(abil.getRadius() + abil.getRadius() * attribs.get("FireShieldRadius") / 100.0);
+			//if (attribs.containsKey("FireShieldRadius"))
+			//	abil.setRadius(abil.getRadius() + abil.getRadius() * attribs.get("FireShieldRadius") / 100.0);
 			
 			if (attribs.containsKey("FireShieldShieldCooldown"))
 				abil.setShieldCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("FireShieldShieldCooldown") / 100.0)); // Click
@@ -316,8 +316,8 @@ public class FireUpdater {
 			if (attribs.containsKey("CombustionCooldown"))
 				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("CombustionCooldown") / 100.0));
 			
-			if (attribs.containsKey("CombustionPower"))
-				abil.setPower((float) (abil.getPower() + abil.getPower() * attribs.get("CombustionPower") / 100.0));
+			if (attribs.containsKey("CombustionExplosivePower"))
+				abil.setExplosivePower((float) (abil.getExplosivePower() + abil.getExplosivePower() * attribs.get("CombustionExplosivePower") / 100.0));
 			
 			if (attribs.containsKey("CombustionRadius"))
 				abil.setRadius(abil.getRadius() + abil.getRadius() * attribs.get("CombustionRadius") / 100.0);

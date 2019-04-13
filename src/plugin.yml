@@ -1,8 +1,9 @@
 name: ProjectKorraItems
 author: ProjectKorraItems
-version: 1.4.0
+version: 1.4.1
 main: com.projectkorra.items.ProjectKorraItems
 softdepend: [ProjectKorra]
+api-version: 1.13
 
 permissions:
   bendingitems.admin:
