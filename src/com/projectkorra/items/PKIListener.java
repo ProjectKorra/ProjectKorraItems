@@ -411,7 +411,7 @@ public class PKIListener implements Listener {
 		// Handles the Charges, and ShiftCharges attribute
 		if (!player.isSneaking()) {
 			ItemUtils.updateOnActionEffects(player, Action.SHIFT);
-			ItemUtils.handleItemSource(player, "WaterSource", new ItemStack(Material.POTION));
+			ItemUtils.handleItemSource(player, "WaterSource", ItemUtils.getWaterBottles(1));
 		}
 	}
 
@@ -430,7 +430,7 @@ public class PKIListener implements Listener {
 		
 		if (a == org.bukkit.event.block.Action.LEFT_CLICK_AIR || a == org.bukkit.event.block.Action.LEFT_CLICK_BLOCK) {
 			ItemUtils.updateOnActionEffects(player, Action.LEFT_CLICK);
-			ItemUtils.handleItemSource(player, "WaterSource", new ItemStack(Material.POTION));
+			ItemUtils.handleItemSource(player, "WaterSource", ItemUtils.getWaterBottles(1));
 		} else if (a == org.bukkit.event.block.Action.RIGHT_CLICK_AIR || a == org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK) {
 			
 		}

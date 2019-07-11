@@ -58,7 +58,7 @@ public class EnchantGlow extends EnchantmentWrapper {
 			e.printStackTrace();
 		}
 
-		glow = new EnchantGlow("Banana");
+		glow = new EnchantGlow("banana");
 		try {
 			Enchantment.registerEnchantment(glow);
 		}

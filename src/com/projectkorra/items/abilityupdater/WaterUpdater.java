@@ -477,7 +477,7 @@ public class WaterUpdater {
 				abil.setGrabDuration((long) (abil.getGrabDuration() + abil.getGrabDuration() * attribs.get("WaterArmsWhipGrabDuration") / 100.0));
 			
 			// if (attribs.containsKey("WaterArmsWhipInitLength"))
-				abil.setInitLength((int) (abil.getInitLength() + abil.getInitLength() * attribs.get("WaterArmsWhipInitLength") / 100.0));
+			//	abil.setInitLength((int) (abil.getInitLength() + abil.getInitLength() * attribs.get("WaterArmsWhipInitLength") / 100.0));
 			
 			//if (attribs.containsKey("WaterArmsWhipPlayerHealth"))
 			//	abil.setPlayerHealth(abil.getPlayerHealth() + abil.getPlayerHealth() * attribs.get("WaterArmsWhipPlayerHealth") / 100.0);
