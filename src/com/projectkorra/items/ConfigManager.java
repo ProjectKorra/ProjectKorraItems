@@ -122,8 +122,8 @@ public class ConfigManager {
 								newItem.setUnshapedRecipe(true);
 							} else if (prefix.equalsIgnoreCase(MATERIAL_PREF))
 								newItem.updateMaterial(tmp);
-							else if (prefix.equalsIgnoreCase(DURA_PREF))
-								newItem.updateDamage(tmp);
+							//else if (prefix.equalsIgnoreCase(DURA_PREF))
+							//	newItem.updateDamage(tmp);
 							else if (prefix.equalsIgnoreCase(AMT_PREF))
 								newItem.updateQuantity(tmp);
 							else if (prefix.equalsIgnoreCase(GLOW_PREF))

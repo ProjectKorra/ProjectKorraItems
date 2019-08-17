@@ -115,7 +115,7 @@ public class AttributeList {
 			add(new Attribute("AirSwipeRadius", "radius, Warning! hitting too many monsters at a time with airswipe can overload your server", Element.AIR));
 			add(new Attribute("AirSwipeRange", "range", Element.AIR));
 			add(new Attribute("AirSwipeSpeed", "travel speed", Element.AIR));
-			add(new Attribute("AirSwipeStepSize", "step size", Element.AIR));
+			//add(new Attribute("AirSwipeStepSize", "step size", Element.AIR));
 
 			// Suffocate
 			add(new Attribute("SuffocateAnimationSpeed", "animation speed", Element.AIR));
@@ -179,9 +179,9 @@ public class AttributeList {
 			add(new Attribute("SurgeWaveInterval", "interval", Element.WATER));
 			add(new Attribute("SurgeWaveMaxFreezeRadius", "the size of the iceberg that covers the enemy", Element.WATER));
 			add(new Attribute("SurgeWaveMaxRadius", "size of the wave", Element.WATER));
-			add(new Attribute("SurgeWavePushFactor", "knockback force", Element.WATER));
+			add(new Attribute("SurgeWaveKnockback", "knockback force", Element.WATER));
 			add(new Attribute("SurgeWaveRange", "range", Element.WATER));
-			add(new Attribute("SurgeWaveVerticalFactor", "knockup force", Element.WATER));
+			add(new Attribute("SurgeWaveKnockup", "knockup force", Element.WATER));
 
 			// Torrent
 			add(new Attribute("TorrentCooldown", "Torrent cooldown", Element.WATER, -1));
@@ -216,6 +216,7 @@ public class AttributeList {
 			add(new Attribute("WaterManipulationPushFactor", "knockback force", Element.WATER));
 			add(new Attribute("WaterManipulationRange", "range, you must click while the ability is in motion to extend the range", Element.WATER));
 			add(new Attribute("WaterManipulationSelectRange", "select range", Element.WATER));
+			add(new Attribute("WaterManipulationSpeed", "speed", Element.WATER));
 
 			// WaterSpout
 			add(new Attribute("WaterSpoutHeight", "height", Element.WATER));
@@ -225,7 +226,7 @@ public class AttributeList {
 			add(new Attribute("WaterSpoutWaveChargeTime", "initial chargetime", Element.WATER, -1));
 			add(new Attribute("WaterSpoutWaveCooldown", "cooldown", Element.WATER, -1));
 			add(new Attribute("WaterSpoutWaveDamage", "damage", Element.WATER));
-			add(new Attribute("WaterSpoutWaveFlightTime", "total flight time", Element.WATER));
+			add(new Attribute("WaterSpoutWaveFlightDuration", "total flight duration", Element.WATER));
 			add(new Attribute("WaterSpoutWaveRadius", "radius", Element.WATER));
 			add(new Attribute("WaterSpoutWaveSelectRange", "range", Element.WATER));
 			add(new Attribute("WaterSpoutWaveSpeed", "travel speed", Element.WATER));
@@ -258,7 +259,7 @@ public class AttributeList {
 			add(new Attribute("WaterArmsSpearSphereNight", "spear sphere at night", Element.WATER));
 			add(new Attribute("WaterArmsSpearUsageCooldown", "spear cooldown", Element.WATER));
 
-			add(new Attribute("WaterArmsWhipHoldTime", "whip hold time", Element.WATER));
+			add(new Attribute("WaterArmsWhipGrabDuration", "whip hold time", Element.WATER));
 			add(new Attribute("WaterArmsWhipPullMultiplier", "whip pull multiplier", Element.WATER));
 			add(new Attribute("WaterArmsWhipPunchDamage", "whip punch damage", Element.WATER));
 			add(new Attribute("WaterArmsWhipPunchLength", "whip punch length", Element.WATER));
@@ -274,9 +275,9 @@ public class AttributeList {
 			// WATER - BLOODBENDING
 			// Bloodbending
 			add(new Attribute("BloodbendingCooldown", "cooldown, only works if a base cooldown is enabled in config", Element.WATER, -1));
-			add(new Attribute("BloodbendingHoldTime", "maximum hold time, only works if a base hold time is enabled in config", Element.WATER));
+			add(new Attribute("BloodbendingDuration", "maximum hold time, only works if a base hold time is enabled in config", Element.WATER));
+			add(new Attribute("BloodbendingKnockback", "throwing force", Element.WATER));
 			add(new Attribute("BloodbendingRange", "grabbing range", Element.WATER));
-			add(new Attribute("BloodbendingThrowFactor", "throwing force", Element.WATER));
 
 			// WATER - HEALING
 			// Not yet amigo
@@ -299,7 +300,7 @@ public class AttributeList {
 			add(new Attribute("IceSpikeRange", "projectile range", Element.WATER));
 			add(new Attribute("IceSpikeSlowCooldown", "slow cooldown", Element.WATER));
 			add(new Attribute("IceSpikeSlowDuration", "slow duration", Element.WATER));
-			add(new Attribute("IceSpikeSlowPower", "slow power", Element.WATER));
+			add(new Attribute("IceSpikeSlowPotency", "slow power", Element.WATER));
 
 			add(new Attribute("IceSpikePillarCooldown", "pillar cooldown", Element.WATER, -1));
 			add(new Attribute("IceSpikePillarDamage", "pillar damage", Element.WATER));
@@ -349,8 +350,8 @@ public class AttributeList {
 			add(new Attribute("CollapseCooldown", "cooldown", Element.EARTH, -1));
 			add(new Attribute("CollapseDistance", "distance", Element.EARTH));
 			add(new Attribute("CollapseHeight", "height", Element.EARTH));
-			add(new Attribute("CollapseSpeed", "speed", Element.EARTH));
 			add(new Attribute("CollapseSelectRange", "select range", Element.EARTH));
+			add(new Attribute("CollapseSpeed", "speed", Element.EARTH));
 			
 			add(new Attribute("CollapseWallCooldown", "wall cooldown", Element.EARTH, -1));
 			add(new Attribute("CollapseWallHeight", "wall height", Element.EARTH));
@@ -382,8 +383,8 @@ public class AttributeList {
 			add(new Attribute("EarthSmashDelay", "delay", Element.EARTH));
 			add(new Attribute("EarthSmashFlightAnimationInterval", "flight animation interval", Element.EARTH));
 			add(new Attribute("EarthSmashFlightDetectionRadius", "flight detection radius", Element.EARTH));
+			add(new Attribute("EarthSmashFlightDuration", "flying duration", Element.EARTH));
 			add(new Attribute("EarthSmashFlightSpeed", "flying speed, if this is too high the ability will get buggy", Element.EARTH));
-			//add(new Attribute("EarthSmashFlyDuration", "flying duration", Element.EARTH));
 			add(new Attribute("EarthSmashGrabDetectionRadius", "grab detection radius", Element.EARTH));
 			add(new Attribute("EarthSmashGrabRange", "initial spawning distance", Element.EARTH));
 			add(new Attribute("EarthSmashKnockback", "knockback force", Element.EARTH));
@@ -487,10 +488,10 @@ public class AttributeList {
 			add(new Attribute("FireShieldDiscCooldown", "cooldown of click shield", Element.FIRE, -1));
 			add(new Attribute("FireShieldDiscDuration", "duration of a click shield", Element.FIRE));
 			add(new Attribute("FireShieldDiscRadius", "radius of click shield", Element.FIRE));
-			add(new Attribute("FireShieldInterval", "interval", Element.FIRE));
-			add(new Attribute("FireShieldRadius", "radius of shift shield", Element.FIRE));
-			add(new Attribute("FireShieldShieldCooldown", "cooldown of shift shield", Element.FIRE, -1));
-			add(new Attribute("FireShieldShieldDuration", "duration of a shift shield", Element.FIRE));
+			//add(new Attribute("FireShieldInterval", "interval", Element.FIRE));
+			add(new Attribute("FireShieldShieldRadius", "radius of shift shield", Element.FIRE));
+			//add(new Attribute("FireShieldShieldCooldown", "cooldown of shift shield", Element.FIRE, -1));
+			//add(new Attribute("FireShieldShieldDuration", "duration of a shift shield", Element.FIRE));
 
 			// HeatControl
 			//add(new Attribute("HeatControlCookTime", "the time it takes to cook an item, negative is better"));
@@ -517,7 +518,7 @@ public class AttributeList {
 			// Combustion
 			add(new Attribute("CombustionCooldown", "cooldown", Element.FIRE, -1));
 			add(new Attribute("CombustionDamage", "damage", Element.FIRE));
-			add(new Attribute("CombustionPower", "power", Element.FIRE));
+			add(new Attribute("CombustionExplosivePower", "explosive power", Element.FIRE));
 			add(new Attribute("CombustionRadius", "radius", Element.FIRE));
 			add(new Attribute("CombustionRange", "range", Element.FIRE));
 			add(new Attribute("CombustionSpeed", "speed", Element.FIRE));

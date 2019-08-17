@@ -5,32 +5,35 @@ import com.projectkorra.items.ProjectKorraItems;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionType;
 
 public class RecipeIngredient {
 	private String customItemName;
 	private Material material;
 	private int quantity;
-	private short damage;
+	private PotionType potionType;
 	private boolean isCustomItem;
 
-	private RecipeIngredient(String customItemName, Material material, int quantity, short damage, boolean isCustomItem) {
+	private RecipeIngredient(String customItemName, Material material, int quantity, PotionType potionType, boolean isCustomItem) {
 		this.customItemName = customItemName;
 		this.material = material;
 		this.quantity = quantity;
-		this.damage = damage;
+		this.potionType = potionType;
 		this.isCustomItem = isCustomItem;
 	}
 
-	public RecipeIngredient(Material material, int quantity, short damage) {
-		this(null, material, quantity, damage, false);
+	public RecipeIngredient(Material material, int quantity, PotionType potionType) {
+		this(null, material, quantity, potionType, false);
 	}
 
-	public RecipeIngredient(String customItemName, int quantity, short damage) {
-		this(customItemName, null, quantity, damage, true);
+	public RecipeIngredient(String customItemName, int quantity, PotionType potionType) {
+		this(customItemName, null, quantity, potionType, true);
 	}
 
 	public RecipeIngredient(Material material, int quantity) {
-		this(material, quantity, (short) 0);
+		this(material, quantity, null);
 	}
 
 	public RecipeIngredient(Material mat) {
@@ -61,12 +64,12 @@ public class RecipeIngredient {
 		this.quantity = quantity;
 	}
 
-	public short getDamage() {
-		return damage;
+	public PotionType getPotionType() {
+		return potionType;
 	}
 
-	public void setDamage(short damage) {
-		this.damage = damage;
+	public void setDamage(PotionType potionType) {
+		this.potionType = potionType;
 	}
 
 	public boolean isCustomItem() {
@@ -89,13 +92,19 @@ public class RecipeIngredient {
 				return new ItemStack(Material.AIR);
 			}
 		} else {
-			return new ItemStack(material, quantity, damage);
+			ItemStack istack = new ItemStack(material, quantity);
+			if (material == Material.POTION && potionType != null) {
+				PotionMeta pmeta = (PotionMeta) istack.getItemMeta();
+				pmeta.setBasePotionData(new PotionData(potionType));
+				istack.setItemMeta(pmeta);
+			}
+			return istack;
 		}
 	}
 
 	@Override
 	public String toString() {
-		return "RecipeIngredient [customItemName=" + customItemName + ", material=" + material + ", quantity=" + quantity + ", damage=" + damage + ", isCustomItem=" + isCustomItem + "]";
+		return "RecipeIngredient [customItemName=" + customItemName + ", material=" + material + ", quantity=" + quantity + ", potionType=" + potionType + ", isCustomItem=" + isCustomItem + "]";
 	}
 
 }

@@ -21,6 +21,7 @@ import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.projectkorra.items.attribute.Action;
@@ -102,7 +103,8 @@ public class PKIListener implements Listener {
 								// We don't actually care to check the damage value if the
 								// ingredient is a custom item
 								if (!ing.isCustomItem() && ing.getMaterial() == item.getType()
-										&& item.getDurability() == ing.getDamage()
+										&& ing.getMaterial() == Material.POTION
+										&& ing.getPotionType() == ((PotionMeta) item.getItemMeta()).getBasePotionData().getType()
 										|| (citemInSlot != null && citemInSlot.getName().equals(ing.getCustomItemName()))) {
 
 									// Calculate the least possible maximum quantity that can result
@@ -193,7 +195,8 @@ public class PKIListener implements Listener {
 					ItemStack istack = invItems.get(i);
 					PKItem istackCustomItem = PKItem.getCustomItem(istack);
 
-					if (!ing.isCustomItem() && istack.getDurability() != ing.getDamage()) {
+					if (!ing.isCustomItem() && ing.getMaterial() == Material.POTION
+							&& ing.getPotionType() != ((PotionMeta) istack.getItemMeta()).getBasePotionData().getType()) {
 						continue;
 					} else if (!ing.isCustomItem() && istack.getType() != ing.getMaterial()) {
 						continue;
@@ -399,6 +402,7 @@ public class PKIListener implements Listener {
 	 * 
 	 * @param event a sneak event
 	 */
+	/* DUPLICATED IN AttributeListener
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerSneak(PlayerToggleSneakEvent event) {
 		if (event.isCancelled())
@@ -414,6 +418,7 @@ public class PKIListener implements Listener {
 			ItemUtils.handleItemSource(player, "WaterSource", ItemUtils.getWaterBottles(1));
 		}
 	}
+	*/
 
 	/**
 	 * Confirm if an ability was executed via clicking. Also handle specific stats that related to

@@ -50,6 +50,9 @@ public class WaterUpdater {
 			Torrent abil = (Torrent) ability;
 			if (attribs.containsKey("TorrentDamage"))
 				abil.setDamage((int) (abil.getDamage() + abil.getDamage() * attribs.get("TorrentDamage") / 100.0));
+			
+			if (attribs.containsKey("TorrentDeflectDamage"))
+				abil.setDeflectDamage(abil.getDeflectDamage() + abil.getDeflectDamage() * attribs.get("TorrentDeflectDamage") / 100.0);
 			return true;
 		}
 		else if (ability instanceof WaterManipulation) {
@@ -63,6 +66,17 @@ public class WaterUpdater {
 			if (attribs.containsKey("WaterSpoutWaveDamage"))
 				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("WaterSpoutWaveDamage") / 100.0);
 			return true;
+		}
+		else if (ability instanceof WaterArmsSpear) {
+			WaterArmsSpear abil = (WaterArmsSpear) ability;
+			if (attribs.containsKey("WaterArmsSpearSpearDamage"))
+				abil.setSpearDamage(abil.getSpearDamage() + abil.getSpearDamage() * attribs.get("WaterArmsSpearSpearDamage") / 100.0);
+			return true;
+		}
+		else if (ability instanceof WaterArmsWhip) {
+			WaterArmsWhip abil = (WaterArmsWhip) ability;
+			if (attribs.containsKey("WaterArmsWhipPunchDamage"))
+				abil.setPunchDamage(abil.getPunchDamage() + abil.getPunchDamage() * attribs.get("WaterArmsWhipPunchDamage") / 100.0);
 		}
 		else if (ability instanceof IceBlast) {
 			IceBlast abil = (IceBlast) ability;
@@ -208,9 +222,6 @@ public class WaterUpdater {
 			
 			if (attribs.containsKey("TorrentCooldown"))
 				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("TorrentCooldown") / 100.0));
-			
-			if (attribs.containsKey("TorrentDeflectDamage"))
-				abil.setDeflectDamage(abil.getDeflectDamage() + abil.getDeflectDamage() * attribs.get("TorrentDeflectDamage") / 100.0);
 			
 			if (attribs.containsKey("TorrentInterval"))
 				abil.setInterval((long) (abil.getInterval() + abil.getInterval() * attribs.get("TorrentInterval") / 100.0));
@@ -429,9 +440,6 @@ public class WaterUpdater {
 			//if (attribs.containsKey("WaterArmsSpearDistanceTravelled"))
 			//	abil.setDistanceTravelled((int) (abil.getDistanceTravelled() + abil.getDistanceTravelled() * attribs.get("WaterArmsSpearDistanceTravelled") / 100.0));
 			
-			if (attribs.containsKey("WaterArmsSpearSpearDamage"))
-				abil.setSpearDamage(abil.getSpearDamage() + abil.getSpearDamage() * attribs.get("WaterArmsSpearSpearDamage") / 100.0);
-			
 			if (attribs.containsKey("WaterArmsSpearDuration"))
 				abil.setSpearDuration((long) (abil.getSpearDuration() + abil.getSpearDuration() * attribs.get("WaterArmsSpearDuration") / 100.0));
 			
@@ -463,7 +471,7 @@ public class WaterUpdater {
 				abil.setSpearSphereNight((int) (abil.getSpearSphereNight() + abil.getSpearSphereNight() * attribs.get("WaterArmsSpearSphereNight") / 100.0));
 			
 			if (attribs.containsKey("WaterArmsSpearUsageCooldown"))
-				abil.setUsageCooldown((long) (abil.getUsageCooldown() + abil.getUsageCooldown() * attribs.get("WaterArmsUsageCooldown") / 100.0));
+				abil.setUsageCooldown((long) (abil.getUsageCooldown() + abil.getUsageCooldown() * attribs.get("WaterArmsSpearUsageCooldown") / 100.0));
 			
 			return true;
 		}
@@ -484,9 +492,6 @@ public class WaterUpdater {
 			
 			if (attribs.containsKey("WaterArmsWhipPullMultiplier"))
 				abil.setPullMultiplier(abil.getPullMultiplier() + abil.getPullMultiplier() * attribs.get("WaterArmsWhipPullMultiplier") / 100.0);
-			
-			if (attribs.containsKey("WaterArmsWhipPunchDamage"))
-				abil.setPunchDamage(abil.getPunchDamage() + abil.getPunchDamage() * attribs.get("WaterArmsWhipPunchDamage") / 100.0);
 			
 			if (attribs.containsKey("WaterArmsWhipPunchLength"))
 				abil.setPunchLength((int) (abil.getPunchLength() + abil.getPunchLength() * attribs.get("WaterArmsWhipPunchLength") / 100.0));
