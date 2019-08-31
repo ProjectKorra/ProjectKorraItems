@@ -136,7 +136,6 @@ public class PKItem {
 	 * @param s
 	 * @param customItemNames
 	 */
-	@SuppressWarnings("deprecation")
 	public void updateRecipe(String s, Set<String> customItemNames) {
 		try {
 			s = s.replaceAll(" ", "");

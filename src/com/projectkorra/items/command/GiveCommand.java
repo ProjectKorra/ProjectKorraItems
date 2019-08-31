@@ -17,6 +17,7 @@ public class GiveCommand extends PKICommand {
 		super("give", "/bending items give <Item> [Amount] [Player]", "This command gives you or another player a bending item.", Messages.GIVE_ALIAS);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void execute(CommandSender sender, List<String> args) {
 		if (correctLength(sender, args.size(), 0, 3)) {

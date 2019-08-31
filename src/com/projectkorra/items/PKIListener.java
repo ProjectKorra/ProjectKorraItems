@@ -18,7 +18,6 @@ import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
-import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -56,7 +55,7 @@ public class PKIListener implements Listener {
 		new BukkitRunnable() {
 			@SuppressWarnings("unchecked")
 			public void run() {
-				Player player = (Player) humEnt;
+				// Player player = (Player) humEnt;
 				ItemStack[] tempInvItems = fevent.getInventory().getContents();
 				ArrayList<ItemStack> originalInvItems = new ArrayList<ItemStack>();
 
@@ -134,7 +133,7 @@ public class PKIListener implements Listener {
 							ItemStack newItem = citem.generateItem();
 							newItem.setAmount(maxQuantity * newItem.getAmount());
 							fevent.getInventory().setItem(0, newItem);
-							player.updateInventory();
+							// player.updateInventory();
 							return;
 						}
 					}
@@ -226,7 +225,7 @@ public class PKIListener implements Listener {
 		player.setItemOnCursor(curItem);
 		final ItemStack[] finalItems = invItems.toArray(new ItemStack[invItems.size()]);
 		final InventoryClickEvent fevent = event;
-		final Player fplayer = player;
+		//final Player fplayer = player;
 
 		/*
 		 * Update the players inventory on a short delay so that they see the newly calculated
@@ -235,7 +234,7 @@ public class PKIListener implements Listener {
 		new BukkitRunnable() {
 			public void run() {
 				fevent.getInventory().setContents(finalItems);
-				fplayer.updateInventory();
+				// fplayer.updateInventory(); // Not needed anymore
 			}
 		}.runTaskLater(ProjectKorraItems.plugin, 1);
 	}

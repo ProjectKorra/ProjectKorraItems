@@ -5,6 +5,7 @@ import com.projectkorra.items.attribute.Action;
 import com.projectkorra.items.attribute.Attribute;
 import com.projectkorra.items.attribute.AttributeList;
 import com.projectkorra.items.customs.PKItem;
+import com.projectkorra.projectkorra.waterbending.util.WaterReturn;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -214,27 +215,30 @@ public class ItemUtils {
 		ConcurrentHashMap<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
 		if (attribs.containsKey(attrib) && attribs.get(attrib) == 1) {
 			final PlayerInventory inv = player.getInventory();
-			int slot = -1;
-			for (int i = 9; i < inv.getSize(); i++) {
-				if (inv.getItem(i) == null || inv.getItem(i).getType() == Material.AIR) {
-					slot = i;
-					break;
+			
+			if (!attrib.equals("WaterSource") || !WaterReturn.hasWaterBottle(player)) {
+				int slot = -1;
+				for (int i = 9; i < inv.getSize(); i++) {
+					if (inv.getItem(i) == null || inv.getItem(i).getType() == Material.AIR) {
+						slot = i;
+						break;
+					}
 				}
-			}
-			if (slot < 0)
-				slot = inv.first(Material.AIR);
-			if (slot >= 0) {
-				inv.setItem(slot, istack);
-				player.updateInventory();
-			} else
-				return;
+				if (slot < 0)
+					slot = inv.firstEmpty();
+				if (slot >= 0) {
+					inv.setItem(slot, istack);
+					// player.updateInventory();
+				} else
+					return;
 
-			final int fslot = slot;
-			new BukkitRunnable() {
-				public void run() {
-					inv.setItem(fslot, new ItemStack(Material.AIR));
-				}
-			}.runTaskLater(ProjectKorraItems.plugin, 10);
+				final int fslot = slot;
+				new BukkitRunnable() {
+					public void run() {
+						inv.setItem(fslot, new ItemStack(Material.AIR));
+					}
+				}.runTaskLater(ProjectKorraItems.plugin, 10);
+			}
 		}
 	}
 	
