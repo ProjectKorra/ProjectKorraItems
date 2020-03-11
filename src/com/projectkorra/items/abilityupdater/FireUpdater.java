@@ -244,11 +244,11 @@ public class FireUpdater {
 			if (attribs.containsKey("FireShieldShieldRadius"))
 				abil.setShieldRadius(abil.getShieldRadius() + abil.getShieldRadius() * attribs.get("FireShieldShieldRadius") / 100.0);
 			
-			//if (attribs.containsKey("FireShieldShieldCooldown"))
-			//	abil.setShieldCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("FireShieldShieldCooldown") / 100.0)); // Click
+			if (attribs.containsKey("FireShieldShieldCooldown"))
+				abil.setShieldCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("FireShieldShieldCooldown") / 100.0)); // Click
 			
-			//if (attribs.containsKey("FireShieldShieldDuration"))
-			//	abil.setShieldDuration((long) (abil.getDuration() + abil.getDuration() * attribs.get("FireShieldShieldDuration") / 100.0)); // Click
+			if (attribs.containsKey("FireShieldShieldDuration"))
+				abil.setShieldDuration((long) (abil.getDuration() + abil.getDuration() * attribs.get("FireShieldShieldDuration") / 100.0)); // Click
 			
 			return true;
 		}

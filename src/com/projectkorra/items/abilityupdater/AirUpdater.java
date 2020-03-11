@@ -220,7 +220,7 @@ public class AirUpdater {
 				abil.setArc((int) (abil.getArc() + abil.getArc() * attribs.get("AirSwipeArc") / 100.0));
 			
 			if (attribs.containsKey("AirSwipeCooldown"))
-				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("AirSwipeMaxCharge") / 100.0));
+				abil.setCooldown((long) (abil.getCooldown() + abil.getCooldown() * attribs.get("AirSwipeCooldown") / 100.0));
 			
 			if (attribs.containsKey("AirSwipeMaxChargeFactor"))
 				abil.setMaxChargeFactor(abil.getMaxChargeFactor() + abil.getMaxChargeFactor() * attribs.get("AirSwipeMaxChargeFactor") / 100.0);

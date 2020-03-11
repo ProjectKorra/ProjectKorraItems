@@ -204,6 +204,27 @@ public class ItemUtils {
 	}
 	
 	/**
+	 * Returns the first slot index in a PlayerInventory, trying to avoid hotbar slots
+	 * 
+	 * @param Inventory the inventory to check
+	 * @return The slot found, -1 if inventory full
+	 */
+	public static int firstAvoidHotbar(final PlayerInventory inventory) {
+		int slot = -1;
+		for (int i = 9; i < inventory.getSize(); i++) {
+			if (inventory.getItem(i) == null || inventory.getItem(i).getType() == Material.AIR) {
+				slot = i;
+				break;
+			}
+		}
+		
+		if (slot < 0)
+			slot = inventory.firstEmpty();
+		
+		return slot;
+	}
+	
+	/**
 	 * Handles the specific stat "WaterSource" and in the future "MetalSource". These stats cause
 	 * specific temporary items to spawn inside of the players inventory.
 	 * 
@@ -215,24 +236,11 @@ public class ItemUtils {
 		ConcurrentHashMap<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
 		if (attribs.containsKey(attrib) && attribs.get(attrib) == 1) {
 			final PlayerInventory inv = player.getInventory();
+			final int fslot = firstAvoidHotbar(inv);
 			
-			if (!attrib.equals("WaterSource") || !WaterReturn.hasWaterBottle(player)) {
-				int slot = -1;
-				for (int i = 9; i < inv.getSize(); i++) {
-					if (inv.getItem(i) == null || inv.getItem(i).getType() == Material.AIR) {
-						slot = i;
-						break;
-					}
-				}
-				if (slot < 0)
-					slot = inv.firstEmpty();
-				if (slot >= 0) {
-					inv.setItem(slot, istack);
-					// player.updateInventory();
-				} else
-					return;
+			if (fslot >= 0 && (!attrib.equalsIgnoreCase("WaterSource") || !WaterReturn.hasWaterBottle(player))) {
+				inv.setItem(fslot, istack);
 
-				final int fslot = slot;
 				new BukkitRunnable() {
 					public void run() {
 						inv.setItem(fslot, new ItemStack(Material.AIR));

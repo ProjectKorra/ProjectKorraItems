@@ -490,8 +490,8 @@ public class AttributeList {
 			add(new Attribute("FireShieldDiscRadius", "radius of click shield", Element.FIRE));
 			//add(new Attribute("FireShieldInterval", "interval", Element.FIRE));
 			add(new Attribute("FireShieldShieldRadius", "radius of shift shield", Element.FIRE));
-			//add(new Attribute("FireShieldShieldCooldown", "cooldown of shift shield", Element.FIRE, -1));
-			//add(new Attribute("FireShieldShieldDuration", "duration of a shift shield", Element.FIRE));
+			add(new Attribute("FireShieldShieldCooldown", "cooldown of shift shield", Element.FIRE, -1));
+			add(new Attribute("FireShieldShieldDuration", "duration of a shift shield", Element.FIRE));
 
 			// HeatControl
 			//add(new Attribute("HeatControlCookTime", "the time it takes to cook an item, negative is better"));

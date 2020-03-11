@@ -75,7 +75,7 @@ public class WaterUpdater {
 		}
 		else if (ability instanceof WaterArmsWhip) {
 			WaterArmsWhip abil = (WaterArmsWhip) ability;
-			if (attribs.containsKey("WaterArmsWhipPunchDamage"))
+			if (!abil.isHasDamaged() && attribs.containsKey("WaterArmsWhipPunchDamage"))
 				abil.setPunchDamage(abil.getPunchDamage() + abil.getPunchDamage() * attribs.get("WaterArmsWhipPunchDamage") / 100.0);
 		}
 		else if (ability instanceof IceBlast) {
