@@ -49,7 +49,7 @@ public class WaterUpdater {
 		else if (ability instanceof Torrent) {
 			Torrent abil = (Torrent) ability;
 			if (attribs.containsKey("TorrentDamage"))
-				abil.setDamage((int) (abil.getDamage() + abil.getDamage() * attribs.get("TorrentDamage") / 100.0));
+				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("TorrentDamage") / 100.0);
 			
 			if (attribs.containsKey("TorrentDeflectDamage"))
 				abil.setDeflectDamage(abil.getDeflectDamage() + abil.getDeflectDamage() * attribs.get("TorrentDeflectDamage") / 100.0);
@@ -110,6 +110,7 @@ public class WaterUpdater {
 				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("IceBulletDamage") / 100.0);
 			return true;
 		}
+		WaterArmsFreeze f;
 		
 		return false;
 	}

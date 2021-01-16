@@ -65,7 +65,7 @@ public class FireUpdater {
 			Combustion abil = (Combustion) ability;
 			
 			if (attribs.containsKey("CombustionDamage"))
-				abil.setDamage((int) (abil.getDamage() + abil.getDamage() * attribs.get("CombustionDamage") / 100.0));
+				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("CombustionDamage") / 100.0);
 			
 			return true;
 		}

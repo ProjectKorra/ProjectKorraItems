@@ -1,11 +1,27 @@
 package com.projectkorra.items.abilityupdater;
 
-import java.util.ArrayList;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
 
+import com.projectkorra.projectkorra.ability.Ability;
+import com.projectkorra.projectkorra.firebending.FireBurst;
+import com.projectkorra.projectkorra.firebending.WallOfFire;
+import com.projectkorra.projectkorra.waterbending.OctopusForm;
+import com.projectkorra.projectkorra.waterbending.Torrent;
+import com.projectkorra.projectkorra.waterbending.multiabilities.WaterArmsFreeze;
+import com.projectkorra.projectkorra.waterbending.multiabilities.WaterArmsSpear;
+import com.projectkorra.projectkorra.waterbending.multiabilities.WaterArmsWhip;
+import org.bukkit.attribute.AttributeInstance;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -20,16 +36,170 @@ import com.projectkorra.projectkorra.event.AbilityStartEvent;
 import com.projectkorra.projectkorra.util.ParticleEffect;
 
 public class AbilityUpdater implements Listener {
-	
-	@EventHandler
-	public void onDamage(AbilityDamageEntityEvent event) {
-		updateAbilityDamage(event.getAbility().getPlayer(), event.getAbility());
+	// private final Map<String, Map<UUID, Map<UUID, Long>>> entitiesDamagedByAbility = new ConcurrentHashMap<>();
+	// private final Map<UUID, Long> lastLeftClicks = new ConcurrentHashMap<>();
+	private final Map<String, Boolean> abilityWithStart = new ConcurrentHashMap<>();
+
+
+	private boolean isSetDoubleType(Ability ability) {
+		boolean result = true;
+
+		if (ability instanceof FireBurst)
+			result = false;
+		else if (ability instanceof WallOfFire)
+			result = false;
+		else if (ability instanceof OctopusForm)
+			result = false;
+
+		return result;
 	}
-	
-	@EventHandler
-	public void onStart(AbilityStartEvent event) {
-		updateAbility(event.getAbility().getPlayer(), event.getAbility());
+
+	private boolean isGetDoubleType(Ability ability) {
+		boolean result = true;
+
+		if (ability instanceof FireBurst)
+			result = false;
+		else if (ability instanceof OctopusForm)
+			result = false;
+
+		return result;
 	}
+
+	private String getDamageMod(Ability ability) {
+		String methodMod = "";
+
+		if (ability instanceof WaterArmsWhip)
+			methodMod = "Punch";
+		else if (ability instanceof WaterArmsSpear)
+			methodMod = "Spear";
+		else if (ability instanceof Torrent)
+			methodMod = "Deflect";
+		else if (ability instanceof WaterArmsFreeze)
+			methodMod = "Ice";
+
+		return methodMod;
+	}
+
+	private Double getDamage(Ability ability, String methodMod) {
+		Double damage = null;
+
+		if (!ability.isHarmlessAbility()) {
+			try {
+				Method getDamageMethod = ability.getClass().getMethod("get" + methodMod + "Damage");
+				Object rawDamage = getDamageMethod.invoke(ability);
+				if (isGetDoubleType(ability))
+					damage = (double) rawDamage;
+				else
+					damage = (double) ((int) rawDamage);
+			} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+				// e.printStackTrace();
+			}
+		}
+
+		return damage;
+	}
+
+	private void setDamage(Ability ability, String methodMod, Double damage) {
+		try {
+			Class setMethodType = double.class;
+			boolean isDouble = isSetDoubleType(ability);
+			if (!isDouble)
+				setMethodType = int.class;
+			Method setDamageMethod = ability.getClass().getMethod("set" + methodMod + "Damage", setMethodType);
+			if (isDouble)
+				setDamageMethod.invoke(ability, damage);
+			else
+				setDamageMethod.invoke(ability, damage.intValue());
+		} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+			// e.printStackTrace();
+		}
+	}
+
+
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = false)
+	public void onAbilityStart(AbilityStartEvent ev) {
+		updateDamageAttributes(ev.getAbility());
+	}
+
+
+	private void updateDamageAttributes(Ability ability) {
+		Player player = ability.getPlayer();
+		String damageMod = getDamageMod(ability);
+		Double damage = getDamage(ability, damageMod);
+		// ProjectKorraItems.plugin.getLogger().log(Level.INFO, "Start Event");
+
+		if (damage != null) {
+			// ProjectKorraItems.plugin.getLogger().log(Level.INFO, "Damage before: " + damage);
+			updateAbilityDamage(player, ability);
+			damage = getDamage(ability, damageMod);
+			AttributeInstance damageInstance = player.getAttribute(org.bukkit.attribute.Attribute.GENERIC_ATTACK_DAMAGE);
+			if (damageInstance != null) {
+				double playerBaseDamage = damageInstance.getBaseValue();
+				// ProjectKorraItems.plugin.getLogger().log(Level.INFO, "Damage: " + damage + " + " + playerBaseDamage);
+				setDamage(ability, damageMod, Math.max(0, damage + playerBaseDamage));
+			}
+			// else {
+			// ProjectKorraItems.plugin.getLogger().log(Level.INFO, "Damage: " + damage + " + 1");
+			// }
+			/*
+			Map<UUID, Map<UUID, Long>> entitiesDamagedByPlayer = entitiesDamagedByAbility.getOrDefault(ability.getName(), new ConcurrentHashMap<>());
+			entitiesDamagedByPlayer.put(player.getUniqueId(), new ConcurrentHashMap<>());
+			entitiesDamagedByAbility.put(ability.getName(), entitiesDamagedByPlayer);
+			 */
+			abilityWithStart.put(ability.getName(), true);
+			// lastLeftClicks.put(player.getUniqueId(), System.currentTimeMillis());
+		}
+		updateAbility(player, ability);
+	}
+
+	/*
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = false)
+	public void onArmSwing(PlayerInteractEvent ev) {
+		if(ev.getAction() == Action.LEFT_CLICK_BLOCK || ev.getAction() == Action.LEFT_CLICK_AIR) {
+			long now = System.currentTimeMillis();
+			lastLeftClicks.put(ev.getPlayer().getUniqueId(), now);
+			// ProjectKorraItems.plugin.getLogger().log(Level.INFO, "Punch: " + now);
+		}
+	}
+	 */
+
+
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = false)
+	public void onDamage(AbilityDamageEntityEvent ev) {
+		Ability ability = ev.getAbility();
+		if (!abilityWithStart.containsKey(ability.getName())) {
+			updateDamageAttributes(ability);
+		}
+		/*
+		else {
+			Player player = ability.getPlayer();
+			Entity damagee = ev.getEntity();
+			Map<UUID, Map<UUID, Long>> entitiesDamagedByPlayer = entitiesDamagedByAbility.get(ability.getName());
+			Map<UUID, Long> damagedEntities = entitiesDamagedByPlayer.get(player.getUniqueId());
+			long lastLeftClick = lastLeftClicks.get(player.getUniqueId());
+			boolean damaged = true;
+
+			if (damagedEntities.containsKey(damagee.getUniqueId())) {
+				long previousHit = damagedEntities.getOrDefault(damagee.getUniqueId(), 0L);
+				// ProjectKorraItems.plugin.getLogger().log(Level.INFO, "Attempt: " + previousHit);
+				// ProjectKorraItems.plugin.getLogger().log(Level.INFO, "Last punch: " + lastLeftClick);
+				if (previousHit >= lastLeftClick) {
+					damaged = false;
+				}
+			}
+
+			if (!damaged) {
+				ev.setDamage(0);
+				ev.setCancelled(true);
+				// ProjectKorraItems.plugin.getLogger().log(Level.INFO, "CANCELLED!");
+			}
+			// else {
+			// ProjectKorraItems.plugin.getLogger().log(Level.INFO, "Ev. Damage: " + ev.getDamage());
+			// }
+		}
+		 */
+	}
+
 
 	/**
 	 * Attempts to update an ability based on the attribute effects of a
