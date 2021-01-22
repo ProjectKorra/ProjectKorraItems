@@ -5,6 +5,9 @@ import com.projectkorra.items.ProjectKorraItems;
 import com.projectkorra.items.attribute.Attribute;
 import com.projectkorra.items.attribute.AttributeList;
 
+import de.tr7zw.nbtapi.NBTCompound;
+import de.tr7zw.nbtapi.NBTItem;
+import io.th0rgal.oraxen.items.OraxenItems;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -25,6 +28,8 @@ public class PKItem {
 	private String name;
 	private String displayName;
 	private ArrayList<String> lore;
+	private boolean isOraxen;
+	private String oraxenId;
 	private Material material;
 	private int quantity;
 	// private short damage;
@@ -39,6 +44,8 @@ public class PKItem {
 		name = "";
 		displayName = "";
 		lore = new ArrayList<String>();
+		isOraxen = false;
+		oraxenId = null;
 		material = null;
 		quantity = 1;
 		// damage = (short) 0;
@@ -85,12 +92,25 @@ public class PKItem {
 	public void updateMaterial(String s) {
 		if (s == null || s.length() == 0) {
 			valid = false;
-			ProjectKorraItems.log.info(Messages.BAD_MATERIAL + ": " + toString());
+			ProjectKorraItems.log.info(Messages.BAD_MATERIAL + "(95): " + toString());
 		} else {
-			material = Material.getMaterial(s);
-			if (material == null) {
-				valid = false;
-				ProjectKorraItems.log.info(Messages.BAD_MATERIAL + ": " + s);
+			if (s.toLowerCase().startsWith("oraxen:")) {
+				s = s.split(":")[1];
+				if (OraxenItems.exists(s)) {
+					oraxenId = s;
+					isOraxen = true;
+				}
+				else {
+					valid = false;
+					ProjectKorraItems.log.info(Messages.BAD_MATERIAL + "(105): oraxen:" + s);
+				}
+			}
+			else {
+				material = Material.getMaterial(s);
+				if (material == null) {
+					valid = false;
+					ProjectKorraItems.log.info(Messages.BAD_MATERIAL + "(112): " + s);
+				}
 			}
 		}
 	}
@@ -195,8 +215,8 @@ public class PKItem {
 			ProjectKorraItems.log.info(Messages.BAD_NAME + ": " + toString());
 		else if (displayName.length() == 0)
 			ProjectKorraItems.log.info(Messages.BAD_DNAME + ": " + toString());
-		else if (material == null)
-			ProjectKorraItems.log.info(Messages.BAD_MATERIAL + ": " + toString());
+		else if ((!isOraxen && material == null) || (isOraxen && oraxenId == null))
+			ProjectKorraItems.log.info(Messages.BAD_MATERIAL + "(219): " + toString());
 		else {
 			items.put(name.toLowerCase(), this);
 			itemList.add(this);
@@ -204,40 +224,49 @@ public class PKItem {
 	}
 
 	public ItemStack generateItem() {
-		ItemStack istack = new ItemStack(material, quantity);
-		ItemMeta meta = istack.getItemMeta();
-		List<String> tempLore = new ArrayList<String>(lore);
-		meta.setDisplayName(displayName);
-
-		for (Attribute attr : attributes) {
-			try {
-				if (attr.getName().equalsIgnoreCase("Charges"))
-					tempLore.add(AttributeList.CHARGES_STR + Integer.parseInt(attr.getValues().get(0)));
-				else if (attr.getName().equalsIgnoreCase("ClickCharges"))
-					tempLore.add(AttributeList.CLICK_CHARGES_STR + Integer.parseInt(attr.getValues().get(0)));
-				else if (attr.getName().equalsIgnoreCase("SneakCharges"))
-					tempLore.add(AttributeList.SNEAK_CHARGES_STR + Integer.parseInt(attr.getValues().get(0)));
-			}
-			catch (Exception e) {
-			}
-
-			try {
-				if (attr.getName().equalsIgnoreCase("LeatherColor")) {
-					LeatherArmorMeta lmeta = (LeatherArmorMeta) meta;
-					lmeta.setColor(Color.fromRGB(Integer.parseInt(attr.getValues().get(0).trim()), Integer.parseInt(attr.getValues().get(1).trim()), Integer.parseInt(attr.getValues().get(2).trim())));
-					meta = lmeta;
-				}
-			}
-			catch (Exception e) {
-			}
+		ItemStack istack = null;
+		if (!isOraxen) {
+			istack = new ItemStack(material, quantity);
 		}
+		else {
+			istack = OraxenItems.getItemById(oraxenId).setAmount(1).build();
+			istack.setAmount(1);
+		}
+		ItemMeta meta = istack.getItemMeta();
+		if (meta != null) {
+			meta.setDisplayName(displayName);
+			List<String> tempLore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
+			tempLore.addAll(lore);
 
-		meta.setLore(tempLore);
-		istack.setItemMeta(meta);
+			for (Attribute attr : attributes) {
+				try {
+					if (attr.getName().equalsIgnoreCase("Charges"))
+						tempLore.add(AttributeList.CHARGES_STR + Integer.parseInt(attr.getValues().get(0)));
+					else if (attr.getName().equalsIgnoreCase("ClickCharges"))
+						tempLore.add(AttributeList.CLICK_CHARGES_STR + Integer.parseInt(attr.getValues().get(0)));
+					else if (attr.getName().equalsIgnoreCase("SneakCharges"))
+						tempLore.add(AttributeList.SNEAK_CHARGES_STR + Integer.parseInt(attr.getValues().get(0)));
+				} catch (Exception ignored) { }
+
+				try {
+					if (attr.getName().equalsIgnoreCase("LeatherColor")) {
+						LeatherArmorMeta lmeta = (LeatherArmorMeta) meta;
+						lmeta.setColor(Color.fromRGB(Integer.parseInt(attr.getValues().get(0).trim()), Integer.parseInt(attr.getValues().get(1).trim()), Integer.parseInt(attr.getValues().get(2).trim())));
+						meta = lmeta;
+					}
+				} catch (Exception ignored) { }
+			}
+
+			meta.setLore(tempLore);
+			istack.setItemMeta(meta);
+		}
 		if (glow)
 			EnchantGlow.addGlow(istack);
 
-		return istack;
+		NBTItem nbtItem = new NBTItem(istack);
+		nbtItem.addCompound("ProjectKorra").addCompound("Item").setString("name", name);
+
+		return nbtItem.getItem();
 	}
 
 	/**
@@ -384,20 +413,19 @@ public class PKItem {
 	}
 
 	public static PKItem getCustomItem(ItemStack istack) {
-		
-		if (istack == null)
+		if (istack == null || istack.getType() == Material.AIR)
 			return null;
-		
-		ItemMeta meta = istack.getItemMeta();
-		
-		if (meta == null || meta.getDisplayName() == null)
+		NBTItem nbtItem = new NBTItem(istack);
+		if (!nbtItem.hasKey("ProjectKorra"))
 			return null;
-		
-		for (PKItem citem : items.values()) {
-			if (meta.getDisplayName().equals(citem.getDisplayName()))
-				return citem;
-		}
-		return null;
+		NBTCompound pkCompound = nbtItem.getCompound("ProjectKorra");
+		if (!pkCompound.hasKey("Item"))
+			return null;
+		NBTCompound pkiCompound = pkCompound.getCompound("Item");
+		if (!pkiCompound.hasKey("name"))
+			return null;
+		String name = pkiCompound.getString("name");
+		return getCustomItem(name);
 	}
 
 	public static PKItem getCustomItem(String itemName) {
