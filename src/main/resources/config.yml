@@ -1,20 +1,17 @@
-Item:
-    Name: example1
+example1:
     DisplayName: This is an Example Item
     Material: STICK
     Amount: 1
     Lore: This is some lore!!!!
     Glow: true
-Item:
-    Name: example2
+example2:
     DisplayName: <&4>Fire Wool
     Material: RED_WOOL
     Amount: 3
     Lore: <&c>This wool belongs to the Fire Nation<n><&c>Use with care!
     Glow: true
     UnshapedRecipe: WHITE_WOOL, RED_WOOL:3, WHITE_WOOL, example1:3
-Item:
-    Name: example3
+example3:
     DisplayName: <&2>Earth <&a>Walkers
     Material: GOLDEN_BOOTS
     ShapedRecipe: GOLD_INGOT, AIR, GOLD_INGOT, GOLD_INGOT, DIRT:16, GOLD_INGOT  
@@ -23,8 +20,7 @@ Item:
         EarthSmashFlightDuration: 25
         EarthSmashDamage: -15
         WearOnly: true
-Item:
-    Name: example4
+example4:
     DisplayName: <&4><&l>BLAZE ROD!
     Material: BLAZE_ROD
     UnshapedRecipe: BLAZE_ROD:3, BLAZE_POWDER:3
@@ -36,8 +32,7 @@ Item:
         RequireElement: fire
         RequireWorld: world
         ParticleEffects: flame:5:100:10:100
-Item:
-    Name: example5
+example5:
     DisplayName: <&9>Azula Stone
     Material: REDSTONE
     Lore: <&c>Instantly charges Lightning
@@ -48,8 +43,7 @@ Item:
         AllowFromInventory: true
         LightningChargeTime: -300
         ParticleEffects: magiccrit:15:50:10:0
-Item:
-    Name: example6
+example6:
     DisplayName: <&2>Cactus Juice
     Material: POTION
     Lore: <&8>Makes you dizzy but increases <n><&8>your resistance to damage.<n><&8>Octopusform charges faster<n><&8>Airbenders can glide without a glider
@@ -57,8 +51,7 @@ Item:
         DestroyAfterCharges: true
         IgnoreDestroyMessage: true
         ConsumeEffects: CONFUSION:3:15, DAMAGE_RESISTANCE:2:5, AirGlide:true:15, AirGlideSpeed:50:15, OctopusFormInterval:-100:15
-Item:
-    Name: example7
+example7:
     DisplayName: <&b>Water Leggings with Water Pouch
     Material: LEATHER_LEGGINGS
     Lore: <&8>Basic Leggings that come equipped with a Water Pouch.<n><&7>You must double tap your abilities to execute them.
@@ -68,8 +61,7 @@ Item:
         Charges: 50
         DestroyAfterCharges: false
         WaterSource: true
-Item: 
-    Name: glider
+glider:
     DisplayName: <&f>Airbender Staff
     Lore: <&8>A versatile wooden staff used by <&f><&l>Air Nomads<n><&7>Press sneak while falling to glide<n><&7>Improves the knockback of<n><&f>  AirBlast<n><&f>  AirSwipe<n><&f>  AirSuction
     Material: STICK
@@ -84,8 +76,7 @@ Item:
         AirBlastPushFactorForOthers: 20
         AirSuctionPushFactor: 20
         AirSwipePushFactor: 100
-Item: 
-    Name: badgermoletunic
+badgermoletunic:
     DisplayName: <&3>Badgermole Tunic
     Lore: <&8>The spirit of the badgermole lives on<n><&7>Focus your <&3>EarthTunnel <&7>into a smaller portion<n><&7>of earth, increasing the speed.
     Material: IRON_CHESTPLATE
@@ -94,8 +85,7 @@ Item:
         WearOnly: true
         SneakCharges: 25
         EarthTunnelMaxRadius: -60
-Item: 
-    Name: northpolehelmet
+northpolehelmet:
     DisplayName: <&b>Arctic Helmet of the North
     Lore: <&8>crafted in the northern water tribe<n><&7>Increases <&b>ice<&7> based abilities by <&e>20%<n><&7>Decreases <&9>water<&7> mobility abilities by <&e>20%.
     Material: LEATHER_HELMET
@@ -116,8 +106,7 @@ Item:
         WaterSpoutWaveFlightDuration: -20
         WaterSpoutWaveSpeed: -20
         WaterSpoutWaveRadius: -20
-Item:
-    Name: flameo
+flameo:
     DisplayName: <&c>Flameo Chef Hat
     Lore: <&8>Buy <&4>'Flameo Instant Noodles!'<n><&8>The Noodliest Noodles in the United Republic!<n><&7>Greatly increases <&c>HeatControl<&7> cooking speed.
     Material: LEATHER_HELMET
@@ -127,8 +116,7 @@ Item:
         LeatherColor: 255, 0, 0
         SneakCharges: 15
         DestroyAfterCharges: true
-Item:
-    Name: waterchestplate
+waterchestplate:
     DisplayName: <&9>Brutal Water Chestplate
     Lore: <&8>The toughest <&b>water<&8> benders <n><&8>specialize in close combat<n><&7>Increases <&9>OctopusForm<&7> by <&e>30%<n><&7>Increases <&9>Torrent<&7> damage by <&e>15%<n><&7>Decreases <&9>Torrent<&7> range by <&e>25%
     Material: LEATHER_CHESTPLATE
@@ -145,8 +133,7 @@ Item:
         OctopusFormInterval: 30
         TorrentDamage: 15
         TorrentRange: -25
-Item:
-    Name: antilag
+antilag:
     DisplayName: <&c>Anti-Lag Machine
     Lore: <&8>Everyone loves you for using this item<n><&7>Decreases the radius of AirBubble<n><&7>and WaterBubble substantially!
     Material: DAYLIGHT_DETECTOR

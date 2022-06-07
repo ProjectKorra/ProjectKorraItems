@@ -36,6 +36,7 @@ public class Messages {
 	public static final String DUPLICATE_ITEM = "an item with this name already exists";
 	public static final String BAD_RECIPE_MAT = "invalid recipe material";
 	public static final String BAD_RECIPE = "an error occured while parsing the recipe";
+	public static final String DUPLICATED_RECIPE = "duplicated recipe section";
 	public static final String BAD_DAMAGE = "invalid durability value";
 	public static final String BAD_QUANTITY = "invalid amount value";
 	public static final String BAD_LORE = "invalid lore";
@@ -43,6 +44,7 @@ public class Messages {
 	public static final String BAD_DNAME = "invalid display name";
 	public static final String BAD_MATERIAL = "invalid material";
 	public static final String BAD_NAME = "invalid name";
+	public static final String BAD_ATTRIBUTE = "invalid attribute";
 	public static final String BAD_CHARGES = "invalid charges value";
 	public static final String BAD_VALUE = "an issue occured with this value";
 	public static final String BAD_PARTICLE_EFFECT = "this particle effect could not be found";

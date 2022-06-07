@@ -115,14 +115,8 @@ public class PKItem {
 		}
 	}
 
-	public void updateQuantity(String s) {
-		try {
-			quantity = Integer.parseInt(s);
-		}
-		catch (Exception e) {
-			valid = false;
-			ProjectKorraItems.log.info(Messages.BAD_QUANTITY + ": " + toString());
-		}
+	public void updateQuantity(int qty) {
+		quantity = qty;
 	}
 
 	/*
@@ -137,14 +131,8 @@ public class PKItem {
 	}
 	*/
 
-	public void updateGlow(String s) {
-		try {
-			glow = Boolean.parseBoolean(s);
-		}
-		catch (Exception e) {
-			valid = false;
-			ProjectKorraItems.log.info(Messages.BAD_GLOW + ": " + toString());
-		}
+	public void updateGlow(boolean glow) {
+		this.glow = glow;
 	}
 
 	/**
@@ -215,8 +203,9 @@ public class PKItem {
 			ProjectKorraItems.log.info(Messages.BAD_NAME + ": " + toString());
 		else if (displayName.length() == 0)
 			ProjectKorraItems.log.info(Messages.BAD_DNAME + ": " + toString());
-		else if ((!isOraxen && material == null) || (isOraxen && oraxenId == null))
+		else if ((!isOraxen && material == null) || (isOraxen && oraxenId == null)) {
 			ProjectKorraItems.log.info(Messages.BAD_MATERIAL + "(219): " + toString());
+		}
 		else {
 			items.put(name.toLowerCase(), this);
 			itemList.add(this);
@@ -402,7 +391,7 @@ public class PKItem {
 	@Override
 	public String toString() {
 		// return "CustomItem [name=" + name + ", displayName=" + displayName + ", lore=" + lore + ", material=" + material + ", quantity=" + quantity + ", damage=" + damage;
-		return "CustomItem [name=" + name + ", displayName=" + displayName + ", lore=" + lore + ", material=" + material + ", quantity=" + quantity;
+		return "CustomItem [name=" + name + ", displayName=" + displayName + ", lore=" + lore + ", material=" + material + ", isOraxen=" + isOraxen + ", oraxenId=" + oraxenId + ", quantity=" + quantity + "]";
 	}
 
 	public static String colorizeString(String s) {

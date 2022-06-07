@@ -2,8 +2,7 @@ name: ${project.name}
 author: ProjectKorraItems
 version: ${project.version}
 main: ${project.groupId}.${project.artifactId}.ProjectKorraItems
-depend: [ProjectKorra]
-softdepend: [Oraxen]
+depend: [ProjectKorra, Oraxen]
 api-version: 1.13
 
 permissions:
