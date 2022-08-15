@@ -19,7 +19,7 @@ public class AttributeListener implements Listener {
 	/**
 	 * A map of player names that holds their current bending potion effects.
 	 **/
-	public static final ConcurrentHashMap<String, ConcurrentHashMap<String, Attribute>> currentBendingEffects = new ConcurrentHashMap<String, ConcurrentHashMap<String, Attribute>>();
+	public static final ConcurrentHashMap<String, ConcurrentHashMap<String, Attribute>> currentBendingEffects = new ConcurrentHashMap<>();
 
 	/**
 	 * When the player sneaks we should attempt to let them Glide. The Glider
@@ -40,7 +40,7 @@ public class AttributeListener implements Listener {
 		// Handles the Charges, and ShiftCharges attribute
 		if (!player.isSneaking()) {
 			ItemUtils.updateOnActionEffects(player, Action.SHIFT);
-			ItemUtils.handleItemSource(player, "WaterSource", ItemUtils.getWaterBottles(1));
+			// ItemUtils.handleItemSource(player, "WaterSource", ItemUtils.getWaterBottles(1));
 		}
 	}
 
@@ -56,7 +56,7 @@ public class AttributeListener implements Listener {
 			return;
 		Player player = event.getPlayer();
 		ItemUtils.updateOnActionEffects(player, Action.LEFT_CLICK);
-		ItemUtils.handleItemSource(player, "WaterSource", ItemUtils.getWaterBottles(1));
+		// ItemUtils.handleItemSource(player, "WaterSource", ItemUtils.getWaterBottles(1));
 
 		// new GrapplingHook(player, Action.LEFTCLICK);
 	}

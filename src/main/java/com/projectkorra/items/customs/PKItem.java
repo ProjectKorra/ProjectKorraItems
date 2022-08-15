@@ -5,15 +5,16 @@ import com.projectkorra.items.ProjectKorraItems;
 import com.projectkorra.items.attribute.Attribute;
 import com.projectkorra.items.attribute.AttributeList;
 
-import de.tr7zw.nbtapi.NBTCompound;
-import de.tr7zw.nbtapi.NBTItem;
 import io.th0rgal.oraxen.items.OraxenItems;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionType;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PKItem {
 	public static ConcurrentHashMap<String, PKItem> items = new ConcurrentHashMap<String, PKItem>();
 	public static ArrayList<PKItem> itemList = new ArrayList<PKItem>();
+	public static NamespacedKey PKI_KEY = new NamespacedKey(ProjectKorraItems.plugin, "name");
 
 	private String name;
 	private String displayName;
@@ -247,15 +249,16 @@ public class PKItem {
 			}
 
 			meta.setLore(tempLore);
+
+			PersistentDataContainer itemDC = meta.getPersistentDataContainer();
+			itemDC.set(PKI_KEY, PersistentDataType.STRING, name);
+
 			istack.setItemMeta(meta);
 		}
 		if (glow)
 			EnchantGlow.addGlow(istack);
 
-		NBTItem nbtItem = new NBTItem(istack);
-		nbtItem.addCompound("ProjectKorra").addCompound("Item").setString("name", name);
-
-		return nbtItem.getItem();
+		return istack;
 	}
 
 	/**
@@ -402,18 +405,15 @@ public class PKItem {
 	}
 
 	public static PKItem getCustomItem(ItemStack istack) {
-		if (istack == null || istack.getType() == Material.AIR)
+		if (istack == null || istack.getItemMeta() == null)
 			return null;
-		NBTItem nbtItem = new NBTItem(istack);
-		if (!nbtItem.hasKey("ProjectKorra"))
+
+		PersistentDataContainer itemDC = istack.getItemMeta().getPersistentDataContainer();
+		String name = itemDC.get(PKI_KEY, PersistentDataType.STRING);
+
+		if (name == null)
 			return null;
-		NBTCompound pkCompound = nbtItem.getCompound("ProjectKorra");
-		if (!pkCompound.hasKey("Item"))
-			return null;
-		NBTCompound pkiCompound = pkCompound.getCompound("Item");
-		if (!pkiCompound.hasKey("name"))
-			return null;
-		String name = pkiCompound.getString("name");
+
 		return getCustomItem(name);
 	}
 

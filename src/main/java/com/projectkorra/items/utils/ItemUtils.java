@@ -223,49 +223,4 @@ public class ItemUtils {
 		
 		return slot;
 	}
-	
-	/**
-	 * Handles the specific stat "WaterSource" and in the future "MetalSource". These stats cause
-	 * specific temporary items to spawn inside of the players inventory.
-	 * 
-	 * @param player the player with the WaterSource stat
-	 * @param attrib the name of the stat "WaterSource" or "MetalSource"
-	 * @param istack the ItemStack that will temporarily spawn
-	 */
-	public static void handleItemSource(Player player, String attrib, ItemStack istack) {
-		ConcurrentHashMap<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
-		if (attribs.containsKey(attrib) && attribs.get(attrib) == 1) {
-			final PlayerInventory inv = player.getInventory();
-			final int fslot = firstAvoidHotbar(inv);
-			
-			if (fslot >= 0 && (!attrib.equalsIgnoreCase("WaterSource") || !WaterReturn.hasWaterBottle(player))) {
-				inv.setItem(fslot, istack);
-
-				new BukkitRunnable() {
-					public void run() {
-						inv.setItem(fslot, new ItemStack(Material.AIR));
-					}
-				}.runTaskLater(ProjectKorraItems.plugin, 10);
-			}
-		}
-	}
-	
-	/**
-	 * Returns an ItemStack with the specified number of bottles of water
-	 * 
-	 * @param qty The quantity of water bottles in the ItemStack
-	 */
-	public static ItemStack getWaterBottles(int qty) {
-		ItemStack bottles = null;
-		
-		if (qty > 0 && qty <= 64) {
-			bottles = new ItemStack(Material.POTION, qty);
-			PotionMeta meta = (PotionMeta) bottles.getItemMeta();
-			PotionData data = new PotionData(PotionType.WATER);
-			meta.setBasePotionData(data);
-			bottles.setItemMeta(meta);
-		}
-		
-		return bottles;
-	}
 }

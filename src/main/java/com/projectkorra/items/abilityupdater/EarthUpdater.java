@@ -51,8 +51,10 @@ public class EarthUpdater {
 		else if (ability instanceof EarthSmash) {
 			EarthSmash abil = (EarthSmash) ability;
 			
-			if (attribs.containsKey("EarthSmashDamage"))
-				abil.setDamage(abil.getDamage() + abil.getDamage() * attribs.get("EarthSmashDamage") / 100.0);
+			if (attribs.containsKey("EarthSmashDamage")) {
+				abil.setMinDamage(abil.getMinDamage() + abil.getMinDamage() * attribs.get("EarthSmashDamage") / 100.0);
+				abil.setMaxDamage(abil.getMaxDamage() + abil.getMaxDamage() * attribs.get("EarthSmashDamage") / 100.0);
+			}
 			
 			return true;
 		}
