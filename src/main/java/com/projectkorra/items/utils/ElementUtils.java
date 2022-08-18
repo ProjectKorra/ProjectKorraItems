@@ -41,12 +41,7 @@ public class ElementUtils {
 	 * @param mat the material to check
 	 * @return true if it is transparent
 	 */
-	@SuppressWarnings("deprecation")
 	public static boolean isTransparent(Material mat) {
-		for (Material m : ElementalAbility.getTransparentMaterialSet()) {
-			if (mat.getId() == m.getId())
-				return true;
-		}
-		return false;
+		return ElementalAbility.getTransparentMaterialSet().contains(mat);
 	}
 }

@@ -28,18 +28,17 @@ public class ListCommand extends PKICommand {
 			Player player = (Player) sender;
 			
 			boolean show = false;
-			
-			if (args.size() >= 0) {
-				if (args.size() == 1) {
-					for (String s : Messages.STATS_ALIAS) {
-						if (args.get(0) == s) {
-							show = true;
-						}
+
+			if (args.size() == 1) {
+				for (String s : Messages.STATS_ALIAS) {
+					if (args.get(0).equals(s)) {
+						show = true;
+						break;
 					}
 				}
-				PKIDisplay d = new PKIDisplay(player, show);
-				d.createInventory();
 			}
+			PKIDisplay d = new PKIDisplay(player, show);
+			d.createInventory();
 		}
 	}
 }

@@ -1,10 +1,7 @@
 package com.projectkorra.items;
 
-import java.util.ArrayList;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.*;
 
-import com.jeff_media.armorequipevent.ArmorEquipEvent;
-import com.projectkorra.projectkorra.BendingPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -55,30 +52,27 @@ public class PKIListener implements Listener {
 			return;
 
 		new BukkitRunnable() {
-			@SuppressWarnings("unchecked")
 			public void run() {
 				// Player player = (Player) humEnt;
 				ItemStack[] tempInvItems = fevent.getInventory().getContents();
-				ArrayList<ItemStack> originalInvItems = new ArrayList<ItemStack>();
 
-				for (ItemStack istack : tempInvItems)
-					originalInvItems.add(istack);
-
+				List<ItemStack> originalInvItems = new ArrayList<>(Arrays.asList(tempInvItems));
 				/*
 				 * Remove the resultant slot because we don't wish to consider it for the purpose of
 				 * calculating the recipe.
 				 */
 				originalInvItems.remove(0);
-				ArrayList<ItemStack> invItemsClone = (ArrayList<ItemStack>) originalInvItems.clone();
+
+				List<ItemStack> invItemsClone = new ArrayList<>();
 
 				for (PKItem citem : PKItem.items.values()) {
 					if (citem.getRecipe().size() == 0)
 						continue;
 
-					ArrayList<RecipeIngredient> recipeClone = (ArrayList<RecipeIngredient>) citem.getRecipe().clone();
+					List<RecipeIngredient> recipeClone = new ArrayList<>(citem.getRecipe());
 					boolean validShape = true;
 					int maxQuantity = Integer.MAX_VALUE;
-					invItemsClone = (ArrayList<ItemStack>) originalInvItems.clone();
+					invItemsClone = new ArrayList<>(originalInvItems);
 
 					for (int i = 0; i < recipeClone.size(); i++) {
 						RecipeIngredient ing = recipeClone.get(i);
@@ -98,13 +92,13 @@ public class PKIListener implements Listener {
 								recipeClone.remove(i);
 								invItemsClone.remove(j);
 								i--;
-								j--;
 								break;
 							} else if (item.getAmount() >= ing.getQuantity()) {
 								// We don't actually care to check the damage value if the
 								// ingredient is a custom item
 								if (!ing.isCustomItem() && ing.getMaterial() == item.getType()
 										&& ing.getMaterial() == Material.POTION
+										&& item.getItemMeta() != null && item.getItemMeta() instanceof PotionMeta
 										&& ing.getPotionType() == ((PotionMeta) item.getItemMeta()).getBasePotionData().getType()
 										|| (citemInSlot != null && citemInSlot.getName().equals(ing.getCustomItemName()))) {
 
@@ -118,7 +112,6 @@ public class PKIListener implements Listener {
 									recipeClone.remove(i);
 									invItemsClone.remove(j);
 									i--;
-									j--;
 									break;
 								}
 							}
@@ -152,7 +145,6 @@ public class PKIListener implements Listener {
 	 * 
 	 * @param event the click event
 	 */
-	@SuppressWarnings("unchecked")
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onGrabResultItem(InventoryClickEvent event) {
 		if (event.isCancelled() || event.getSlotType() != SlotType.RESULT || event.getSlot() != 0
@@ -179,11 +171,9 @@ public class PKIListener implements Listener {
 		 * will remain in the crafting bench.
 		 */
 		ItemStack[] tempInvItems = event.getInventory().getContents();
-		ArrayList<RecipeIngredient> recipeClone = (ArrayList<RecipeIngredient>) citem.getRecipe().clone();
-		ArrayList<ItemStack> invItems = new ArrayList<ItemStack>();
+		List<RecipeIngredient> recipeClone = new ArrayList<>(citem.getRecipe());
 
-		for (ItemStack istack : tempInvItems)
-			invItems.add(istack);
+		List<ItemStack> invItems = new ArrayList<>(Arrays.asList(tempInvItems));
 
 		invItems.set(0, new ItemStack(Material.AIR));
 
@@ -197,6 +187,7 @@ public class PKIListener implements Listener {
 					PKItem istackCustomItem = PKItem.getCustomItem(istack);
 
 					if (!ing.isCustomItem() && ing.getMaterial() == Material.POTION
+							&& istack.getItemMeta() != null
 							&& ing.getPotionType() != ((PotionMeta) istack.getItemMeta()).getBasePotionData().getType()) {
 						continue;
 					} else if (!ing.isCustomItem() && istack.getType() != ing.getMaterial()) {
@@ -214,7 +205,7 @@ public class PKIListener implements Listener {
 					} else if (ingQuantity == itemQuantity) {
 						invItems.set(i, new ItemStack(Material.AIR));
 						break;
-					} else if (ingQuantity < itemQuantity) {
+					} else {
 						istack.setAmount(itemQuantity - ingQuantity);
 						break;
 					}
@@ -225,7 +216,7 @@ public class PKIListener implements Listener {
 
 		event.getInventory().clear();
 		player.setItemOnCursor(curItem);
-		final ItemStack[] finalItems = invItems.toArray(new ItemStack[invItems.size()]);
+		final ItemStack[] finalItems = invItems.toArray(new ItemStack[0]);
 		final InventoryClickEvent fevent = event;
 		//final Player fplayer = player;
 
@@ -378,9 +369,7 @@ public class PKIListener implements Listener {
 			return;
 
 		PKItem citem = PKItem.getCustomItem(cursorItem);
-		if (citem == null)
-			return;
-		else {
+		if (citem != null) {
 			event.setCancelled(true);
 			player.sendMessage(Messages.NO_ANVIL);
 		}
@@ -444,44 +433,6 @@ public class PKIListener implements Listener {
 		// new GrapplingHook(player, Action.LEFT_CLICK);
 	}
 
-	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = false)
-	public void onArmorEquipEvent(ArmorEquipEvent event) {
-		BendingPlayer bendingPlayer = BendingPlayer.getBendingPlayer(event.getPlayer());
-		ItemStack newStack = event.getNewArmorPiece();
-		PKItem newPKItem = PKItem.getCustomItem(newStack);
-		// If the new item has WaterSource we set water pouch and exit
-		if (newPKItem != null) {
-			for (Attribute attr : newPKItem.getAttributes()) {
-				if (attr.getName().equals("WaterSource")) {
-					bendingPlayer.setWaterPouch(true);
-					return;
-				}
-			}
-		}
-
-		// If prior to changing armor we didn't have water pouch, we don't need to do anything
-		if (!bendingPlayer.hasWaterPouch()) {
-			return;
-		}
-
-		// If we had water pouch, we need to check if it was due to the removed armor piece
-		ItemStack oldStack = event.getOldArmorPiece();
-		PKItem oldPKItem = PKItem.getCustomItem(oldStack);
-		boolean hadWaterSource = false;
-		if (oldPKItem != null) {
-			for (Attribute attr : oldPKItem.getAttributes()) {
-				if (attr.getName().equals("WaterSource")) {
-					hadWaterSource = true;
-					break;
-				}
-			}
-		}
-		// If the armor had it, we set water pouch to false
-		if (hadWaterSource) {
-			bendingPlayer.setWaterPouch(false);
-		}
-	}
-
 	/**
 	 * Make a call to allow all consume based affects for the custom item that the player ate.
 	 * 
@@ -506,7 +457,7 @@ public class PKIListener implements Listener {
 			return;
 
 		Player player = event.getPlayer();
-		ConcurrentHashMap<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
+		Map<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
 		boolean auto = Attribute.getBooleanValue("AirGlideAutomatic", attribs);
 		if (auto)
 			new Glider(player, true);

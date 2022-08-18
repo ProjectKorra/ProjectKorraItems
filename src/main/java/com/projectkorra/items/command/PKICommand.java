@@ -1,6 +1,7 @@
 package com.projectkorra.items.command;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -10,7 +11,7 @@ import com.projectkorra.projectkorra.command.PKCommand;
 import com.projectkorra.projectkorra.command.SubCommand;
 
 public abstract class PKICommand implements SubCommand {
-	public static HashMap<String, PKICommand> instances = new HashMap<>();
+	public static Map<String, PKICommand> instances = new HashMap<>();
 
 	private String name;
 	private String properUse;
@@ -58,11 +59,7 @@ public abstract class PKICommand implements SubCommand {
 	 * @return True if they have permission, false otherwise
 	 */
 	protected boolean hasPermission(CommandSender sender) {
-		if (sender.hasPermission("bendingitems.command." + name)) {
-			return true;
-		} else {
-			return false;
-		}
+		return sender.hasPermission("bendingitems.command." + name);
 	}
 
 	/**
@@ -75,11 +72,7 @@ public abstract class PKICommand implements SubCommand {
 	 * @return True if they have permission, false otherwise
 	 */
 	protected boolean hasPermission(CommandSender sender, String extra) {
-		if (sender.hasPermission("bendingitems.command." + name + "." + extra)) {
-			return true;
-		} else {
-			return false;
-		}
+		return sender.hasPermission("bendingitems.command." + name + "." + extra);
 	}
 
 	/**

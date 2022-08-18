@@ -1,6 +1,6 @@
 package com.projectkorra.items.abilityupdater;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
 import org.bukkit.entity.Player;
 
@@ -39,7 +39,7 @@ public class WaterUpdater {
 	 * @return if the ability was updated correctly
 	 */
 	
-	public static boolean updateAbilityDamage(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
+	public static boolean updateAbilityDamage(Player player, Object ability, Map<String, Double> attribs) {
 		if (ability instanceof OctopusForm) {
 			OctopusForm abil = (OctopusForm) ability;
 			if (attribs.containsKey("OctopusFormDamage"))
@@ -115,7 +115,7 @@ public class WaterUpdater {
 		return false;
 	}
 	
-	public static boolean updateAbility(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
+	public static boolean updateAbility(Player player, Object ability, Map<String, Double> attribs) {
 		if (ability instanceof OctopusForm) {
 			OctopusForm abil = (OctopusForm) ability;
 			

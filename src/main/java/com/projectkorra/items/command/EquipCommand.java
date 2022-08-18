@@ -16,21 +16,18 @@ public class EquipCommand extends PKICommand {
 
 	@Override
 	public void execute(CommandSender sender, List<String> args) {
-		if (correctLength(sender, args.size(), 0, 0))
-		if (args.size() == 0) {
-			if (!hasPermission(sender)) {
-				sender.sendMessage(Messages.NO_PERM);
-				return;
-			} else if (!isPlayer(sender)) {
-				sender.sendMessage(Messages.PLAYER_ONLY);
-				return;
-			}
-
-			Player player = (Player)sender;
-			new PKIEquip(player);
+		if (!correctLength(sender, args.size(), 0, 0)) {
 			return;
 		}
-		
-	}
+		if (!hasPermission(sender)) {
+			sender.sendMessage(Messages.NO_PERM);
+			return;
+		} else if (!isPlayer(sender)) {
+			sender.sendMessage(Messages.PLAYER_ONLY);
+			return;
+		}
 
+		Player player = (Player)sender;
+		new PKIEquip(player);
+	}
 }

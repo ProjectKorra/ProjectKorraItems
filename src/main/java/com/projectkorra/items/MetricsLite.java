@@ -47,6 +47,7 @@ import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.zip.GZIPOutputStream;
@@ -203,13 +204,7 @@ public class MetricsLite {
 				// Reload the metrics file
 				configuration.load(getConfigFile());
 			}
-			catch (IOException ex) {
-				if (debug) {
-					Bukkit.getLogger().log(Level.INFO, "[Metrics] " + ex.getMessage());
-				}
-				return true;
-			}
-			catch (InvalidConfigurationException ex) {
+			catch (IOException | InvalidConfigurationException ex) {
 				if (debug) {
 					Bukkit.getLogger().log(Level.INFO, "[Metrics] " + ex.getMessage());
 				}
@@ -400,7 +395,7 @@ public class MetricsLite {
 
 		try {
 			gzos = new GZIPOutputStream(baos);
-			gzos.write(input.getBytes("UTF-8"));
+			gzos.write(input.getBytes(StandardCharsets.UTF_8));
 		}
 		catch (IOException e) {
 			e.printStackTrace();
@@ -502,7 +497,7 @@ public class MetricsLite {
 				default:
 					if (chr < ' ') {
 						String t = "000" + Integer.toHexString(chr);
-						builder.append("\\u" + t.substring(t.length() - 4));
+						builder.append("\\u").append(t.substring(t.length() - 4));
 					} else {
 						builder.append(chr);
 					}
@@ -521,7 +516,7 @@ public class MetricsLite {
 	 * @return the encoded text, as UTF-8
 	 */
 	private static String urlEncode(final String text) throws UnsupportedEncodingException {
-		return URLEncoder.encode(text, "UTF-8");
+		return URLEncoder.encode(text, StandardCharsets.UTF_8);
 	}
 
 }

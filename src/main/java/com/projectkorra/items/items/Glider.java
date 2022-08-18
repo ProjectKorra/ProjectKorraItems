@@ -1,6 +1,6 @@
 package com.projectkorra.items.items;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,6 +15,7 @@ import com.projectkorra.items.attribute.AttributeList;
 import com.projectkorra.items.utils.AttributeUtils;
 import com.projectkorra.projectkorra.BendingPlayer;
 import com.projectkorra.projectkorra.Element;
+import org.jetbrains.annotations.NotNull;
 
 public class Glider {
 
@@ -25,10 +26,10 @@ public class Glider {
 	 * if the items that they are using have charges. Players must be Airbenders
 	 * to glide.
 	 * 
-	 * @param p the player that will glide
+	 * @param player the player that will glide
 	 */
-	public Glider(Player p) {
-		this(p, false);
+	public Glider(Player player) {
+		this(player, false);
 	}
 
 	/**
@@ -38,11 +39,10 @@ public class Glider {
 	 * if the items that they are using have charges. Players must be Airbenders
 	 * to glide.
 	 * 
-	 * @param p the player that will glide
+	 * @param player the player that will glide
 	 * @param auto if the gliding should start automatically without sneaking
 	 */
-	public Glider(Player p, final boolean auto) {
-		final Player player = p;
+	public Glider(Player player, final boolean auto) {
 		BendingPlayer bplayer = BendingPlayer.getBendingPlayer(player.getName());
 		if (player == null || bplayer == null)
 			return;
@@ -63,7 +63,7 @@ public class Glider {
 						return;
 					}
 
-					ConcurrentHashMap<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
+					Map<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
 					if ((!player.isSneaking() && !auto) || (player.isSneaking() && auto)) {
 						this.cancel();
 						return;

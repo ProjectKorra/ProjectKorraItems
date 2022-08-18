@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -20,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * stop being followed.
  */
 public class PKIEquip {
-	public static final ConcurrentHashMap<String, PKIEquip> INSTANCES = new ConcurrentHashMap<String, PKIEquip>();
+	public static final Map<String, PKIEquip> INSTANCES = new ConcurrentHashMap<>();
 
 	private PKItem customItem;
 	private ItemStack item;
@@ -32,7 +33,6 @@ public class PKIEquip {
 	 * 
 	 * @param player the player to add or remove an ItemEquip
 	 */
-	@SuppressWarnings("deprecation")
 	public PKIEquip(Player player) {
 		String name = player.getName();
 
@@ -43,7 +43,7 @@ public class PKIEquip {
 			return;
 		}
 
-		ItemStack inhand = player.getItemInHand();
+		ItemStack inhand = player.getInventory().getItemInMainHand();
 		PKItem citem = PKItem.getCustomItem(inhand);
 		if (citem == null) {
 			player.sendMessage(Messages.CANT_EQUIP);
@@ -100,7 +100,7 @@ public class PKIEquip {
 			inv.setItem(foundSlot, new ItemStack(Material.AIR));
 
 			return true;
-		} else if (prevSlotItem != null && prevSlotItem.hasItemMeta() && prevSlotItem.getItemMeta().hasDisplayName() && prevSlotItem.getItemMeta().getDisplayName().equals(itemEq.customItem.getDisplayName())) {
+		} else if (prevSlotItem != null && prevSlotItem.hasItemMeta() && prevSlotItem.getItemMeta() != null && prevSlotItem.getItemMeta().hasDisplayName() && prevSlotItem.getItemMeta().getDisplayName().equals(itemEq.customItem.getDisplayName())) {
 
 			final ItemStack prevItem = inv.getItem(prevSlot);
 			final PKIEquip fitemEq = itemEq;

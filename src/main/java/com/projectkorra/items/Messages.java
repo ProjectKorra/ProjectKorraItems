@@ -2,6 +2,7 @@ package com.projectkorra.items;
 
 import org.bukkit.ChatColor;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Messages {
@@ -9,7 +10,7 @@ public class Messages {
 	 * logDelay is used to store the times that a message was logged by
 	 * logTimedMessage.
 	 **/
-	public static ConcurrentHashMap<String, Long> logDelay = new ConcurrentHashMap<String, Long>();
+	public static Map<String, Long> logDelay = new ConcurrentHashMap<>();
 
 	/** The amount of stats that are displayed when calling /bi stats **/
 	public static final int LINES_PER_PAGE = 10;
@@ -90,7 +91,6 @@ public class Messages {
 	 * displayed again for a set amount of time.
 	 * 
 	 * @param msg the message to log
-	 * @param delay the delay between duplicating msg
 	 */
 	public static void logTimedMessage(String msg) {
 		logTimedMessage(msg, Messages.LOG_DELAY);

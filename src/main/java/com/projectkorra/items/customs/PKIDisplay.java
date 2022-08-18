@@ -12,7 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
 /**
  * ItemDisplays are used to display all of the previously created CustomItems
@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * CustomItems becomes too large then the display must use multiple pages.
  */
 public class PKIDisplay {
-	public static ConcurrentHashMap<Player, PKIDisplay> displays;
+	public static Map<Player, PKIDisplay> displays;
 	public static final ItemStack PREV_BUTTON = new ItemStack(Material.RED_WOOL, 1);
 	public static final ItemStack NEXT_BUTTON = new ItemStack(Material.LIME_WOOL, 1);
 	public static final int INV_SIZE = 27;
@@ -44,12 +44,16 @@ public class PKIDisplay {
 		this.showStats = showStats;
 		this.page = page;
 		ItemMeta meta1 = PREV_BUTTON.getItemMeta();
-		meta1.setDisplayName(ChatColor.RED + "Prev");
-		PREV_BUTTON.setItemMeta(meta1);
+		if (meta1 != null) {
+			meta1.setDisplayName(ChatColor.RED + "Prev");
+			PREV_BUTTON.setItemMeta(meta1);
+		}
 
 		ItemMeta meta2 = NEXT_BUTTON.getItemMeta();
-		meta2.setDisplayName(ChatColor.GREEN + "Next");
-		NEXT_BUTTON.setItemMeta(meta2);
+		if (meta2 != null) {
+			meta2.setDisplayName(ChatColor.GREEN + "Next");
+			NEXT_BUTTON.setItemMeta(meta2);
+		}
 		createInventory();
 	}
 
@@ -92,35 +96,37 @@ public class PKIDisplay {
 		}
 
 		Inventory inv = Bukkit.createInventory(null, INV_SIZE, "Bending Items");
-		ArrayList<ItemStack> cistacks = new ArrayList<ItemStack>();
+		List<ItemStack> cistacks = new ArrayList<>();
 		for (PKItem citem : PKItem.itemList) {
 			ItemStack istack = citem.generateItem();
 			ItemMeta meta = istack.getItemMeta();
-			if (showStats) {
-				ArrayList<String> lore = new ArrayList<String>();
-				for (Attribute att : citem.getAttributes()) {
-					if (att.getValues().toString().length() < 40)
-						lore.add(new String(att.getName() + ":" + att.getValues()));
-					else
-						lore.add(new String(att.getName()));
-				}
-				meta.setLore(lore);
-			} else {
-				List<String> lore = meta.getLore();
-				if (lore == null)
-					lore = new ArrayList<String>();
+			if (meta != null) {
+				if (showStats) {
+					List<String> lore = new ArrayList<>();
+					for (Attribute att : citem.getAttributes()) {
+						if (att.getValues().toString().length() < 40)
+							lore.add(att.getName() + ":" + att.getValues());
+						else
+							lore.add(att.getName());
+					}
+					meta.setLore(lore);
+				} else {
+					List<String> lore = meta.getLore();
+					if (lore == null)
+						lore = new ArrayList<>();
 
-				String s = "";
-				if (citem.getRecipe().size() == 0)
-					s = ChatColor.RED + "Uncraftable";
-				else if (citem.isUnshapedRecipe())
-					s = ChatColor.GREEN + "Craftable (unshaped)";
-				else
-					s = ChatColor.GREEN + "Craftable (shaped)";
-				lore.add(s);
-				meta.setLore(lore);
+					String s;
+					if (citem.getRecipe().size() == 0)
+						s = ChatColor.RED + "Uncraftable";
+					else if (citem.isUnshapedRecipe())
+						s = ChatColor.GREEN + "Craftable (unshaped)";
+					else
+						s = ChatColor.GREEN + "Craftable (shaped)";
+					lore.add(s);
+					meta.setLore(lore);
+				}
+				istack.setItemMeta(meta);
 			}
-			istack.setItemMeta(meta);
 			cistacks.add(istack);
 		}
 

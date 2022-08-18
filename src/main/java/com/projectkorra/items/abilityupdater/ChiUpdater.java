@@ -12,7 +12,7 @@ import com.projectkorra.projectkorra.chiblocking.combo.Immobilize;
 
 import org.bukkit.entity.Player;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
 public class ChiUpdater {
 
@@ -25,7 +25,7 @@ public class ChiUpdater {
 	 * @return if the ability was updated correctly
 	 */
 	
-	public static boolean updateAbilityDamage(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
+	public static boolean updateAbilityDamage(Player player, Object ability, Map<String, Double> attribs) {
 		if (ability instanceof QuickStrike) {
 			QuickStrike abil = (QuickStrike) ability;
 			
@@ -54,7 +54,7 @@ public class ChiUpdater {
 		return false;
 	}
 	
-	public static boolean updateAbility(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
+	public static boolean updateAbility(Player player, Object ability, Map<String, Double> attribs) {
 		if (ability instanceof AcrobatStance) {
 			AcrobatStance abil = (AcrobatStance) ability;
 			

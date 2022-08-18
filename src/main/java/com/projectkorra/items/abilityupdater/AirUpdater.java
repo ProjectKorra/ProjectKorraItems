@@ -16,7 +16,7 @@ import com.projectkorra.projectkorra.airbending.flight.FlightMultiAbility;
 
 import org.bukkit.entity.Player;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
 public class AirUpdater {
 
@@ -29,7 +29,7 @@ public class AirUpdater {
 	 * @return if the ability was updated correctly
 	 */
 	
-	public static boolean updateAbilityDamage(Player player, Object ability, ConcurrentHashMap<String, Double>attribs) {
+	public static boolean updateAbilityDamage(Player player, Object ability, Map<String, Double>attribs) {
 		if (ability instanceof AirBlast) { 
 			AirBlast abil = (AirBlast) ability;
 			
@@ -74,7 +74,7 @@ public class AirUpdater {
 		return false;
 	}
 	
-	public static boolean updateAbility(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
+	public static boolean updateAbility(Player player, Object ability, Map<String, Double> attribs) {
 		if (ability instanceof AirBlast) { 
 			AirBlast abil = (AirBlast) ability;
 			

@@ -1,25 +1,21 @@
 package com.projectkorra.items.utils;
 
-import com.projectkorra.items.ProjectKorraItems;
 import com.projectkorra.items.attribute.Action;
 import com.projectkorra.items.attribute.Attribute;
 import com.projectkorra.items.attribute.AttributeList;
 import com.projectkorra.items.customs.PKItem;
-import com.projectkorra.projectkorra.waterbending.util.WaterReturn;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionType;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ItemUtils {
@@ -27,7 +23,7 @@ public class ItemUtils {
 	/**
 	 * A map of player names that holds their current bending potion effects.
 	 **/
-	public static final ConcurrentHashMap<String, ConcurrentHashMap<String, Attribute>> currentBendingEffects = new ConcurrentHashMap<String, ConcurrentHashMap<String, Attribute>>();
+	public static final Map<String, Map<String, Attribute>> currentBendingEffects = new ConcurrentHashMap<>();
 
 
 	/**
@@ -36,10 +32,8 @@ public class ItemUtils {
 	 * @param player the player with the items
 	 * @return a list of items
 	 */
-	public static ArrayList<ItemStack> getPlayerEquipment(Player player) {
-		ArrayList<ItemStack> istacks = new ArrayList<ItemStack>();
-		for (ItemStack istack : player.getInventory().getArmorContents())
-			istacks.add(istack);
+	public static List<ItemStack> getPlayerEquipment(Player player) {
+		List<ItemStack> istacks = new ArrayList<>(Arrays.asList(player.getInventory().getArmorContents()));
 		istacks.add(player.getInventory().getItemInMainHand());
 		return istacks;
 	}
@@ -53,12 +47,12 @@ public class ItemUtils {
 	 * @param player the player that has equipment
 	 * @return a list of the equipment
 	 */
-	public static ArrayList<ItemStack> getPlayerValidEquipment(Player player) {
+	public static List<ItemStack> getPlayerValidEquipment(Player player) {
 		if (player == null) {
-			return new ArrayList<ItemStack>();
+			return new ArrayList<>();
 		}
 		
-		ArrayList<ItemStack> equipment = getPlayerEquipment(player);
+		List<ItemStack> equipment = getPlayerEquipment(player);
 
 		/*
 		 * Get any inventory items that contain the "AllowFromInventory" stat.
@@ -98,7 +92,6 @@ public class ItemUtils {
 			if (!keepItem) {
 				equipment.remove(i);
 				i--;
-				continue;
 			}
 		}
 		return equipment;
@@ -113,21 +106,20 @@ public class ItemUtils {
 	 */
 	public static boolean hasValidCharges(ItemStack item) {
 		boolean validCharges = true;
-		try {
-			for (String line : item.getItemMeta().getLore()) {
-				if (line.startsWith(AttributeList.CHARGES_STR) || line.startsWith(AttributeList.CLICK_CHARGES_STR) || line.startsWith(AttributeList.SNEAK_CHARGES_STR)) {
-					String tmpStr = line.substring(line.indexOf(": ") + 1, line.length()).trim();
-					int value = Integer.parseInt(tmpStr);
-					if (value <= 0)
-						validCharges = false;
-					else {
-						validCharges = true;
-						break;
-					}
+		if (item.getItemMeta() == null || item.getItemMeta().getLore() == null) {
+			return true;
+		}
+		for (String line : item.getItemMeta().getLore()) {
+			if (line.startsWith(AttributeList.CHARGES_STR) || line.startsWith(AttributeList.CLICK_CHARGES_STR) || line.startsWith(AttributeList.SNEAK_CHARGES_STR)) {
+				String tmpStr = line.substring(line.indexOf(": ") + 1, line.length()).trim();
+				int value = Integer.parseInt(tmpStr);
+				if (value <= 0)
+					validCharges = false;
+				else {
+					validCharges = true;
+					break;
 				}
 			}
-		}
-		catch (Exception e) {
 		}
 		return validCharges;
 	}
@@ -161,7 +153,7 @@ public class ItemUtils {
 		if (player == null)
 			return;
 
-		ArrayList<ItemStack> istacks = ItemUtils.getPlayerValidEquipment(player);
+		List<ItemStack> istacks = ItemUtils.getPlayerValidEquipment(player);
 		String[] validAttribs = null;
 		if (type == Action.LEFT_CLICK)
 			validAttribs = new String[] { "Effects", "ClickEffects" };
@@ -183,8 +175,8 @@ public class ItemUtils {
 			for (Attribute att : citem.getAttributes())
 				for (String allowedEff : validAttribs)
 					if (att.getName().equalsIgnoreCase(allowedEff)) {
-						ArrayList<PotionEffect> potEffects = AttributeUtils.parsePotionEffects(att);
-						ArrayList<Attribute> bendEffects = AttributeUtils.parseBendingEffects(att);
+						List<PotionEffect> potEffects = AttributeUtils.parsePotionEffects(att);
+						List<Attribute> bendEffects = AttributeUtils.parseBendingEffects(att);
 
 						for (PotionEffect pot : potEffects)
 							player.addPotionEffect(pot, true);
@@ -194,7 +186,7 @@ public class ItemUtils {
 							if (!currentBendingEffects.containsKey(player.getName()))
 								currentBendingEffects.put(player.getName(), new ConcurrentHashMap<String, Attribute>());
 							effect.setTime(System.currentTimeMillis());
-							ConcurrentHashMap<String, Attribute> playerEffList = currentBendingEffects.get(player.getName());
+							Map<String, Attribute> playerEffList = currentBendingEffects.get(player.getName());
 							playerEffList.put(effect.getName(), effect);
 						}
 					}
@@ -206,7 +198,7 @@ public class ItemUtils {
 	/**
 	 * Returns the first slot index in a PlayerInventory, trying to avoid hotbar slots
 	 * 
-	 * @param Inventory the inventory to check
+	 * @param inventory the inventory to check
 	 * @return The slot found, -1 if inventory full
 	 */
 	public static int firstAvoidHotbar(final PlayerInventory inventory) {

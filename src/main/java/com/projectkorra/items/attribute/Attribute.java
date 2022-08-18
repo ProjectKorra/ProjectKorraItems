@@ -3,12 +3,13 @@ package com.projectkorra.items.attribute;
 import com.projectkorra.projectkorra.Element;
 
 import java.util.ArrayList;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Attribute {
 	private String name;
 	private String desc;
-	private ArrayList<String> values;
+	private List<String> values;
 	private Element element;
 	private double duration, time;
 	private int benefit;
@@ -31,7 +32,7 @@ public class Attribute {
 		this.benefit = benefit;
 		this.duration = 0;
 		this.time = 0;
-		values = new ArrayList<String>();
+		values = new ArrayList<>();
 	}
 
 	/**
@@ -46,9 +47,7 @@ public class Attribute {
 		this.duration = other.duration;
 		this.element = other.element;
 		this.benefit = other.benefit;
-		this.values = new ArrayList<String>();
-		for (String str : other.values)
-			this.values.add(new String(str));
+		this.values = new ArrayList<>(other.values);
 	}
 
 	public Attribute(String name, String desc, Element element) {
@@ -115,7 +114,7 @@ public class Attribute {
 		this.desc = desc;
 	}
 
-	public ArrayList<String> getValues() {
+	public List<String> getValues() {
 		return values;
 	}
 
@@ -135,7 +134,7 @@ public class Attribute {
 		}
 	}
 
-	public void setValues(ArrayList<String> values) {
+	public void setValues(List<String> values) {
 		this.values = values;
 	}
 
@@ -145,7 +144,7 @@ public class Attribute {
 	 * @param val the value of the attribute
 	 */
 	public void setValues(double val) {
-		this.values = new ArrayList<String>();
+		this.values = new ArrayList<>();
 		values.add(val + "");
 	}
 
@@ -181,11 +180,9 @@ public class Attribute {
 		if (!this.name.equalsIgnoreCase(name))
 			return false;
 		try {
-			boolean val = Integer.parseInt(this.values.get(0)) != 0;
-			return val;
+			return Integer.parseInt(this.values.get(0)) != 0;
 		}
-		catch (Exception e) {
-		}
+		catch (NumberFormatException ignored) {}
 		return false;
 	}
 
@@ -197,14 +194,13 @@ public class Attribute {
 	 * @param map containing attribute names and values
 	 * @return true if name is in map and it's value isn't 0
 	 */
-	public static boolean getBooleanValue(String name, ConcurrentHashMap<String, Double> map) {
+	public static boolean getBooleanValue(String name, Map<String, Double> map) {
 		boolean val = map.containsKey(name);
 		if (val) {
 			try {
 				val = map.get(name).intValue() != 0;
 			}
-			catch (Exception e) {
-			}
+			catch (Exception ignored) {}
 		}
 		return val;
 	}

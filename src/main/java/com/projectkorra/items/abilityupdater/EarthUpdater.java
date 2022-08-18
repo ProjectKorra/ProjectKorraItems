@@ -1,6 +1,6 @@
 package com.projectkorra.items.abilityupdater;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
 import org.bukkit.entity.Player;
 
@@ -39,7 +39,7 @@ public class EarthUpdater {
 	 * @return if the ability was updated correctly
 	 */
 	
-	public static boolean updateAbilityDamage(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
+	public static boolean updateAbilityDamage(Player player, Object ability, Map<String, Double> attribs) {
 		if (ability instanceof EarthBlast) {
 			EarthBlast abil = (EarthBlast) ability;
 			
@@ -70,7 +70,7 @@ public class EarthUpdater {
 		return false;
 	}
 	
-	public static boolean updateAbility(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
+	public static boolean updateAbility(Player player, Object ability, Map<String, Double> attribs) {
 		if (ability instanceof Catapult) {
 			Catapult abil = (Catapult) ability;
 			

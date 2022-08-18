@@ -19,42 +19,43 @@ import org.bukkit.potion.PotionType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class PKItem {
-	public static ConcurrentHashMap<String, PKItem> items = new ConcurrentHashMap<String, PKItem>();
-	public static ArrayList<PKItem> itemList = new ArrayList<PKItem>();
+	public static Map<String, PKItem> items = new ConcurrentHashMap<>();
+	public static List<PKItem> itemList = new ArrayList<>();
 	public static NamespacedKey PKI_KEY = new NamespacedKey(ProjectKorraItems.plugin, "name");
 
 	private String name;
 	private String displayName;
-	private ArrayList<String> lore;
+	private List<String> lore;
 	private boolean isOraxen;
 	private String oraxenId;
 	private Material material;
 	private int quantity;
 	// private short damage;
-	private ArrayList<RecipeIngredient> recipe;
+	private List<RecipeIngredient> recipe;
 	private boolean unshapedRecipe;
 	private boolean valid;
 	private boolean alreadyFinal;
 	private boolean glow;
-	private ArrayList<Attribute> attributes;
+	private List<Attribute> attributes;
 
 	public PKItem() {
 		name = "";
 		displayName = "";
-		lore = new ArrayList<String>();
+		lore = new ArrayList<>();
 		isOraxen = false;
 		oraxenId = null;
 		material = null;
 		quantity = 1;
 		// damage = (short) 0;
-		recipe = new ArrayList<RecipeIngredient>();
+		recipe = new ArrayList<>();
 		valid = true;
 		unshapedRecipe = true;
-		attributes = new ArrayList<Attribute>();
+		attributes = new ArrayList<>();
 		glow = false;
 	}
 
@@ -180,7 +181,6 @@ public class PKItem {
 				} else {
 					ProjectKorraItems.log.info(Messages.BAD_RECIPE_MAT + ": " + colons[0]);
 					valid = false;
-					continue;
 				}
 			}
 			while (recipe.size() < 9) {
@@ -215,7 +215,7 @@ public class PKItem {
 	}
 
 	public ItemStack generateItem() {
-		ItemStack istack = null;
+		ItemStack istack;
 		if (!isOraxen) {
 			istack = new ItemStack(material, quantity);
 		}
@@ -227,6 +227,9 @@ public class PKItem {
 		if (meta != null) {
 			meta.setDisplayName(displayName);
 			List<String> tempLore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
+			if (tempLore == null) {
+				tempLore = new ArrayList<>();
+			}
 			tempLore.addAll(lore);
 
 			for (Attribute attr : attributes) {
@@ -279,11 +282,11 @@ public class PKItem {
 		return false;
 	}
 
-	public static ConcurrentHashMap<String, PKItem> getItems() {
+	public static Map<String, PKItem> getItems() {
 		return items;
 	}
 
-	public static void setItems(ConcurrentHashMap<String, PKItem> items) {
+	public static void setItems(Map<String, PKItem> items) {
 		PKItem.items = items;
 	}
 
@@ -303,11 +306,11 @@ public class PKItem {
 		this.displayName = displayName;
 	}
 
-	public ArrayList<String> getLore() {
+	public List<String> getLore() {
 		return lore;
 	}
 
-	public void setLore(ArrayList<String> lore) {
+	public void setLore(List<String> lore) {
 		this.lore = lore;
 	}
 
@@ -315,7 +318,7 @@ public class PKItem {
 		return material;
 	}
 
-	public ArrayList<Attribute> getAttributes() {
+	public List<Attribute> getAttributes() {
 		return attributes;
 	}
 
@@ -335,7 +338,7 @@ public class PKItem {
 		return null;
 	}
 
-	public void setAttributes(ArrayList<Attribute> attributes) {
+	public void setAttributes(List<Attribute> attributes) {
 		this.attributes = attributes;
 	}
 
@@ -367,11 +370,11 @@ public class PKItem {
 	}
 	*/
 
-	public ArrayList<RecipeIngredient> getRecipe() {
+	public List<RecipeIngredient> getRecipe() {
 		return recipe;
 	}
 
-	public void setRecipe(ArrayList<RecipeIngredient> recipe) {
+	public void setRecipe(List<RecipeIngredient> recipe) {
 		this.recipe = recipe;
 	}
 

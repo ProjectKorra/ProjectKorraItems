@@ -95,7 +95,7 @@ public class AbilityUpdater implements Listener {
 
 	private void setDamage(Ability ability, String methodMod, Double damage) {
 		try {
-			Class setMethodType = double.class;
+			Class<? extends Number> setMethodType = double.class;
 			boolean isDouble = isSetDoubleType(ability);
 			if (!isDouble)
 				setMethodType = int.class;
@@ -110,7 +110,7 @@ public class AbilityUpdater implements Listener {
 	}
 
 
-	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = false)
+	@EventHandler(priority = EventPriority.HIGH)
 	public void onAbilityStart(AbilityStartEvent ev) {
 		updateDamageAttributes(ev.getAbility());
 	}
@@ -137,7 +137,7 @@ public class AbilityUpdater implements Listener {
 	}
 
 
-	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = false)
+	@EventHandler(priority = EventPriority.HIGH)
 	public void onDamage(AbilityDamageEntityEvent ev) {
 		Ability ability = ev.getAbility();
 		if (!abilityWithStart.containsKey(ability.getName())) {
@@ -161,7 +161,7 @@ public class AbilityUpdater implements Listener {
 
 		boolean abilityAdded = true;
 		
-		ConcurrentHashMap<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
+		Map<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
 		
 		if (FireUpdater.updateAbility(player, ability, attribs)) {
 			AttributeUtils.decreaseCharges(player, null);
@@ -189,7 +189,7 @@ public class AbilityUpdater implements Listener {
 
 		boolean abilityAdded = true;
 		
-		ConcurrentHashMap<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
+		Map<String, Double> attribs = AttributeUtils.getSimplePlayerAttributeMap(player);
 		
 		if (FireUpdater.updateAbilityDamage(player, ability, attribs)) {
 			AttributeUtils.decreaseCharges(player, null);
@@ -214,10 +214,10 @@ public class AbilityUpdater implements Listener {
 	 * If the player has an item with the stat "ParticleEffects" then we will
 	 * parse the information and display a particle effect around the player.
 	 * 
-	 * @param player
+	 * @param player the player to update
 	 */
 	private static void updatePlayerParticles(Player player) {
-		ArrayList<ItemStack> equipment = ItemUtils.getPlayerValidEquipment(player);
+		List<ItemStack> equipment = ItemUtils.getPlayerValidEquipment(player);
 		for (ItemStack istack : equipment) {
 			PKItem citem = PKItem.getCustomItem(istack);
 			if (citem == null)
@@ -227,15 +227,17 @@ public class AbilityUpdater implements Listener {
 			if (attr == null)
 				continue;
 
-			ArrayList<String> values = attr.getValues();
+			List<String> values = attr.getValues();
 			for (String value : values) {
 				String[] colonSplit = value.split(":");
 				if (colonSplit.length == 0)
 					continue;
 
 				String particleName = colonSplit[0];
-				ParticleEffect effect = ParticleEffect.valueOf(particleName.trim());
-				if (effect == null) {
+				ParticleEffect effect;
+				try {
+					effect = ParticleEffect.valueOf(particleName.trim());
+				} catch (IllegalArgumentException ex) {
 					Messages.logTimedMessage(Messages.BAD_PARTICLE_EFFECT + ": " + particleName);
 					continue;
 				}

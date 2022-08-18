@@ -2,6 +2,7 @@ package com.projectkorra.items.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Material;
@@ -29,14 +30,14 @@ public class AttributeUtils {
 	 * @param player the player to create the effects of
 	 * @return a map containing attribute effects
 	 */
-	public static ConcurrentHashMap<String, Double> getSimplePlayerAttributeMap(Player player) {
-		ArrayList<ItemStack> equipment = ItemUtils.getPlayerValidEquipment(player);
-		ConcurrentHashMap<String, Double> attribMap = new ConcurrentHashMap<String, Double>();
-		ArrayList<Attribute> totalAttribs = new ArrayList<Attribute>();
+	public static Map<String, Double> getSimplePlayerAttributeMap(Player player) {
+		List<ItemStack> equipment = ItemUtils.getPlayerValidEquipment(player);
+		Map<String, Double> attribMap = new ConcurrentHashMap<>();
+		List<Attribute> totalAttribs = new ArrayList<>();
 
 		/* Handle any potion style bending effects that the player might have */
 		if (AttributeListener.currentBendingEffects.containsKey(player.getName())) {
-			ConcurrentHashMap<String, Attribute> effects = AttributeListener.currentBendingEffects.get(player.getName());
+			Map<String, Attribute> effects = AttributeListener.currentBendingEffects.get(player.getName());
 			for (Attribute effect : effects.values()) {
 				if (System.currentTimeMillis() - effect.getTime() < effect.getDuration()) {
 					totalAttribs.add(effect);
@@ -49,12 +50,11 @@ public class AttributeUtils {
 			PKItem citem = PKItem.getCustomItem(istack);
 			if (citem == null)
 				continue;
-			for (Attribute attr : citem.getAttributes())
-				totalAttribs.add(attr);
+			totalAttribs.addAll(citem.getAttributes());
 		}
 
 		/* Handles the "Air", "Water", "Earth", and "Fire" stats */
-		ArrayList<Attribute> fullElementAttribs = new ArrayList<Attribute>();
+		List<Attribute> fullElementAttribs = new ArrayList<>();
 		for (Attribute attr : totalAttribs) {
 			fullElementAttribs.addAll(getFullElementAttributes(attr));
 		}
@@ -80,21 +80,19 @@ public class AttributeUtils {
 	 * @param attr the attribute to split
 	 * @return a list of the new PotionEffects
 	 */
-	public static ArrayList<PotionEffect> parsePotionEffects(Attribute attr) {
-		ArrayList<PotionEffect> effects = new ArrayList<PotionEffect>();
+	public static List<PotionEffect> parsePotionEffects(Attribute attr) {
+		List<PotionEffect> effects = new ArrayList<>();
 		if (attr.getValues() == null)
 			return effects;
 
 		for (String val : attr.getValues()) {
 			String[] colSplit = val.split(":");
-			try {
-				PotionEffectType type = PotionEffectType.getByName(colSplit[0].trim());
+			PotionEffectType type = PotionEffectType.getByName(colSplit[0].trim());
+			if (type != null) {
 				int strength = Integer.parseInt(colSplit[1].trim());
 				double duration = Double.parseDouble(colSplit[2].trim());
 				PotionEffect pot = new PotionEffect(type, (int) (duration * 20), strength - 1);
 				effects.add(pot);
-			}
-			catch (Exception e) {
 			}
 		}
 		return effects;
@@ -109,8 +107,8 @@ public class AttributeUtils {
 	 * @param attr the attribute containing a list of bending effects as values
 	 * @return a list of new attributes representing the bending effects
 	 */
-	public static ArrayList<Attribute> parseBendingEffects(Attribute attr) {
-		ArrayList<Attribute> effects = new ArrayList<Attribute>();
+	public static List<Attribute> parseBendingEffects(Attribute attr) {
+		List<Attribute> effects = new ArrayList<>();
 		if (attr.getValues() == null)
 			return effects;
 
@@ -131,7 +129,7 @@ public class AttributeUtils {
 				final String modifier = colSplit[1].trim();
 				double duration = Double.parseDouble(colSplit[2].trim());
 				Attribute newAttr = new Attribute(Attribute.getAttribute(name));
-				ArrayList<String> vals = new ArrayList<String>();
+				List<String> vals = new ArrayList<>();
 				vals.add(modifier);
 				newAttr.setValues(vals);
 				newAttr.setDuration(duration * 1000);
@@ -156,34 +154,32 @@ public class AttributeUtils {
 		if (player == null)
 			return;
 
-		ArrayList<ItemStack> istacks = ItemUtils.getPlayerValidEquipment(player);
+		List<ItemStack> istacks = ItemUtils.getPlayerValidEquipment(player);
 		for (ItemStack istack : istacks) {
 			PKItem citem = PKItem.getCustomItem(istack);
 			if (citem == null)
 				continue;
 
 			ItemMeta meta = istack.getItemMeta();
+			if (meta == null)
+				continue;
 			List<String> lore = meta.getLore();
 			if (lore == null)
 				continue;
 
 			boolean displayDestroyMsg = false;
-			List<String> newLore = new ArrayList<String>();
+			List<String> newLore = new ArrayList<>();
 			for (String line : lore) {
 				String newLine = line;
-				try {
-					if (line.startsWith(AttributeList.CHARGES_STR) || (line.startsWith(AttributeList.CLICK_CHARGES_STR) && type == Action.LEFT_CLICK || type == Action.RIGHT_CLICK || type == null) || (line.startsWith(AttributeList.SNEAK_CHARGES_STR) && type == Action.SHIFT || type == null)) {
-						String start = line.substring(0, line.indexOf(": "));
-						String end = line.substring(line.indexOf(": ") + 1, line.length());
-						end = end.trim();
-						int val = Integer.parseInt(end) - 1;
-						if (val == 0)
-							displayDestroyMsg = true;
-						if (val >= 0)
-							newLine = start + ": " + val;
-					}
-				}
-				catch (Exception e) {
+				if (line.startsWith(AttributeList.CHARGES_STR) || (line.startsWith(AttributeList.CLICK_CHARGES_STR) && (type == Action.LEFT_CLICK || type == Action.RIGHT_CLICK || type == null)) || (line.startsWith(AttributeList.SNEAK_CHARGES_STR) && (type == Action.SHIFT || type == null))) {
+					String start = line.substring(0, line.indexOf(": "));
+					String end = line.substring(line.indexOf(": ") + 1);
+					end = end.trim();
+					int val = Integer.parseInt(end) - 1;
+					if (val == 0)
+						displayDestroyMsg = true;
+					if (val >= 0)
+						newLine = start + ": " + val;
 				}
 				newLore.add(newLine);
 			}
@@ -200,19 +196,15 @@ public class AttributeUtils {
 
 			boolean hasChargesLeft = true;
 			for (String line : newLore) {
-				try {
-					if (line.startsWith(AttributeList.CHARGES_STR) || line.startsWith(AttributeList.CLICK_CHARGES_STR) || line.startsWith(AttributeList.SNEAK_CHARGES_STR)) {
-						String tmpStr = line.substring(line.indexOf(": ") + 1, line.length()).trim();
-						int value = Integer.parseInt(tmpStr);
-						if (value <= 0)
-							hasChargesLeft = false;
-						else {
-							hasChargesLeft = true;
-							break;
-						}
+				if (line.startsWith(AttributeList.CHARGES_STR) || line.startsWith(AttributeList.CLICK_CHARGES_STR) || line.startsWith(AttributeList.SNEAK_CHARGES_STR)) {
+					String tmpStr = line.substring(line.indexOf(": ") + 1).trim();
+					int value = Integer.parseInt(tmpStr);
+					if (value <= 0)
+						hasChargesLeft = false;
+					else {
+						hasChargesLeft = true;
+						break;
 					}
-				}
-				catch (Exception e) {
 				}
 			}
 
@@ -229,7 +221,11 @@ public class AttributeUtils {
 					if (istack.getAmount() > 1) {
 						istack.setAmount(istack.getAmount() - 1);
 						ItemStack newStack = citem.generateItem();
-						ItemUtils.setLore(istack, newStack.getItemMeta().getLore());
+						List<String> aux = null;
+						if (newStack.getItemMeta() != null) {
+							aux = newStack.getItemMeta().getLore();
+						}
+						ItemUtils.setLore(istack, aux);
 					} else
 						player.getInventory().remove(istack);
 				} else {
@@ -239,7 +235,11 @@ public class AttributeUtils {
 							if (istack.getAmount() > 1) {
 								armor[i].setAmount(armor[i].getAmount() - 1);
 								ItemStack newStack = citem.generateItem();
-								ItemUtils.setLore(armor[i], newStack.getItemMeta().getLore());
+								List<String> aux = null;
+								if (newStack.getItemMeta() != null) {
+									aux = newStack.getItemMeta().getLore();
+								}
+								ItemUtils.setLore(armor[i], aux);
 							} else
 								armor[i] = new ItemStack(Material.AIR);
 							break;
@@ -260,7 +260,7 @@ public class AttributeUtils {
 	 * @param attr an attribute with an element as a name
 	 * @return a list of attributes for that element
 	 */
-	public static ArrayList<Attribute> getFullElementAttributes(Attribute attr) {
+	public static List<Attribute> getFullElementAttributes(Attribute attr) {
 		return getFullElementAttributes(attr.getName(), attr.getValueAsDouble());
 	}
 
@@ -273,8 +273,8 @@ public class AttributeUtils {
 	 * @param value the amount of benefit to give
 	 * @return a list of attributes for that element
 	 */
-	public static ArrayList<Attribute> getFullElementAttributes(String name, double value) {
-		ArrayList<Attribute> lst = new ArrayList<Attribute>();
+	public static List<Attribute> getFullElementAttributes(String name, double value) {
+		List<Attribute> lst = new ArrayList<>();
 		if (name == null) {
 			return lst;
 		}

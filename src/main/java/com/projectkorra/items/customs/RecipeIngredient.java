@@ -95,8 +95,10 @@ public class RecipeIngredient {
 			ItemStack istack = new ItemStack(material, quantity);
 			if (material == Material.POTION && potionType != null) {
 				PotionMeta pmeta = (PotionMeta) istack.getItemMeta();
-				pmeta.setBasePotionData(new PotionData(potionType));
-				istack.setItemMeta(pmeta);
+				if (pmeta != null) {
+					pmeta.setBasePotionData(new PotionData(potionType));
+					istack.setItemMeta(pmeta);
+				}
 			}
 			return istack;
 		}

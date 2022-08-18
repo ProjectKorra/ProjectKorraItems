@@ -1,7 +1,5 @@
 package com.projectkorra.items.abilityupdater;
 
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.bukkit.entity.Player;
 
 import com.projectkorra.projectkorra.firebending.Blaze;
@@ -25,6 +23,8 @@ import com.projectkorra.projectkorra.firebending.combo.JetBlaze;
 import com.projectkorra.projectkorra.firebending.combustion.Combustion;
 import com.projectkorra.projectkorra.firebending.lightning.Lightning;
 
+import java.util.Map;
+
 public class FireUpdater {
 
 	/**
@@ -36,7 +36,7 @@ public class FireUpdater {
 	 * @return if the ability was updated correctly
 	 */
 	
-	public static boolean updateAbilityDamage(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
+	public static boolean updateAbilityDamage(Player player, Object ability, Map<String, Double> attribs) {
 		if (ability instanceof FireBlast) {
 			FireBlast abil = (FireBlast) ability;
 			
@@ -83,7 +83,7 @@ public class FireUpdater {
 		return false;
 	}
 	
-	public static boolean updateAbility(Player player, Object ability, ConcurrentHashMap<String, Double> attribs) {
+	public static boolean updateAbility(Player player, Object ability, Map<String, Double> attribs) {
 		if (ability instanceof Blaze) {
 			// Blaze abil = (Blaze) ability;
 			
