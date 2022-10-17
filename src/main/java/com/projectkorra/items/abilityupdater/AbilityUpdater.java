@@ -1,19 +1,6 @@
 package com.projectkorra.items.abilityupdater;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-
 import com.projectkorra.projectkorra.ability.Ability;
-import com.projectkorra.projectkorra.firebending.FireBurst;
-import com.projectkorra.projectkorra.firebending.WallOfFire;
-import com.projectkorra.projectkorra.waterbending.OctopusForm;
-import com.projectkorra.projectkorra.waterbending.Torrent;
-import com.projectkorra.projectkorra.waterbending.multiabilities.WaterArmsFreeze;
-import com.projectkorra.projectkorra.waterbending.multiabilities.WaterArmsSpear;
-import com.projectkorra.projectkorra.waterbending.multiabilities.WaterArmsWhip;
-import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -31,27 +18,22 @@ import com.projectkorra.projectkorra.event.AbilityDamageEntityEvent;
 import com.projectkorra.projectkorra.event.AbilityStartEvent;
 import com.projectkorra.projectkorra.util.ParticleEffect;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 public class AbilityUpdater implements Listener {
-	private final Map<String, Boolean> abilityWithStart = new ConcurrentHashMap<>();
+	private final Set<String> abilityWithStart = new HashSet<>();
 
 
+	/*
 	private boolean isSetDoubleType(Ability ability) {
 		boolean result = true;
 
 		if (ability instanceof FireBurst)
 			result = false;
 		else if (ability instanceof WallOfFire)
-			result = false;
-		else if (ability instanceof OctopusForm)
-			result = false;
-
-		return result;
-	}
-
-	private boolean isGetDoubleType(Ability ability) {
-		boolean result = true;
-
-		if (ability instanceof FireBurst)
 			result = false;
 		else if (ability instanceof OctopusForm)
 			result = false;
@@ -80,11 +62,7 @@ public class AbilityUpdater implements Listener {
 		if (!ability.isHarmlessAbility()) {
 			try {
 				Method getDamageMethod = ability.getClass().getMethod("get" + methodMod + "Damage");
-				Object rawDamage = getDamageMethod.invoke(ability);
-				if (isGetDoubleType(ability))
-					damage = (double) rawDamage;
-				else
-					damage = (double) ((int) rawDamage);
+				damage = (double) getDamageMethod.invoke(ability);
 			} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
 				// e.printStackTrace();
 			}
@@ -108,30 +86,23 @@ public class AbilityUpdater implements Listener {
 			// e.printStackTrace();
 		}
 	}
+	 */
 
 
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onAbilityStart(AbilityStartEvent ev) {
+		abilityWithStart.add(ev.getAbility().getName());
 		updateDamageAttributes(ev.getAbility());
 	}
 
 
 	private void updateDamageAttributes(Ability ability) {
 		Player player = ability.getPlayer();
-		String damageMod = getDamageMod(ability);
-		Double damage = getDamage(ability, damageMod);
+		// String damageMod = getDamageMod(ability);
+		// Double damage = getDamage(ability, damageMod);
 
-		if (damage != null) {
+		if (!ability.isHarmlessAbility()) {
 			updateAbilityDamage(player, ability);
-			damage = getDamage(ability, damageMod);
-			if (player != null) {
-				AttributeInstance damageInstance = player.getAttribute(org.bukkit.attribute.Attribute.GENERIC_ATTACK_DAMAGE);
-				if (damageInstance != null) {
-					double playerBaseDamage = damageInstance.getBaseValue();
-					setDamage(ability, damageMod, Math.max(0, damage + playerBaseDamage));
-				}
-				abilityWithStart.put(ability.getName(), true);
-			}
 		}
 		updateAbility(player, ability);
 	}
@@ -140,7 +111,7 @@ public class AbilityUpdater implements Listener {
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onDamage(AbilityDamageEntityEvent ev) {
 		Ability ability = ev.getAbility();
-		if (!abilityWithStart.containsKey(ability.getName())) {
+		if (!abilityWithStart.contains(ability.getName())) {
 			updateDamageAttributes(ability);
 		}
 	}
@@ -182,7 +153,7 @@ public class AbilityUpdater implements Listener {
 		}
 	}
 	
-	public static void updateAbilityDamage(Player player, Object ability) {
+	public static void updateAbilityDamage(Player player, Ability ability) {
 		if (player == null) {
 			return;
 		}

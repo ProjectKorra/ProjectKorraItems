@@ -356,7 +356,7 @@ public class MetricsLite {
 		connection.setDoOutput(true);
 
 		if (debug) {
-			System.out.println("[Metrics] Prepared request for " + pluginName + " uncompressed=" + uncompressed.length + " compressed=" + compressed.length);
+			plugin.getLogger().info("[Metrics] Prepared request for " + pluginName + " uncompressed=" + uncompressed.length + " compressed=" + compressed.length);
 		}
 
 		// Write the data
