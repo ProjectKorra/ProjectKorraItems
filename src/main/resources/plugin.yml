@@ -1,0 +1,23 @@
+name: ${project.name}
+author: ProjectKorraItems
+version: ${project.version}
+main: ${project.groupId}.${project.artifactId}.ProjectKorraItems
+depend: [ProjectKorra, Oraxen]
+api-version: 1.13
+
+permissions:
+  bendingitems.admin:
+    default: op
+    description: Grants access to all commands.
+    children:
+      bendingitems.player: true
+      bendingitems.command.reload: true
+      bendingitems.command.give: true
+  bendingitems.player:
+    default: true
+    description: Grants access to most commands.
+    children:
+      bendingitems.command.list: true
+      bendingitems.command.stats: true
+      bendingitems.command.items: true
+      bendingitems.command.equip: true
