@@ -4,7 +4,7 @@
 
     <groupId>com.projectkorra</groupId>
     <artifactId>items</artifactId>
-    <version>1.6.2</version>
+    <version>1.6.3</version>
     <packaging>jar</packaging>
     <name>ProjectKorraItems</name>
 
