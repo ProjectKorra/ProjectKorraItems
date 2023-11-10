@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.jeff_media.armorequipevent.ArmorEquipEvent;
+import com.codingforcookies.armorequip.ArmorEquipEvent;
 import com.projectkorra.items.ProjectKorraItems;
 import com.projectkorra.items.customs.PKItem;
 import com.projectkorra.projectkorra.BendingPlayer;

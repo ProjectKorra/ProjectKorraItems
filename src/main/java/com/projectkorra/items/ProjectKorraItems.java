@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
-import com.jeff_media.armorequipevent.ArmorEquipEvent;
+import com.codingforcookies.armorequip.ArmorEquipEvent;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -49,7 +49,7 @@ public class ProjectKorraItems extends JavaPlugin {
 		pm.registerEvents(new AttributeListener(), this);
 		pm.registerEvents(new AbilityUpdater(), this);
 
-		ArmorEquipEvent.registerListener(this);
+		// ArmorEquipEvent.registerListener(this);
 		
 		//
 

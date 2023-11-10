@@ -4,7 +4,7 @@
 
     <groupId>com.projectkorra</groupId>
     <artifactId>items</artifactId>
-    <version>1.6.3</version>
+    <version>1.6.4</version>
     <packaging>jar</packaging>
     <name>ProjectKorraItems</name>
 
@@ -80,10 +80,6 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
-        <repository>
-            <id>jeff-media-public</id>
-            <url>https://hub.jeff-media.com/nexus/repository/jeff-media-public/</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -91,13 +87,13 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.19.4-R0.1-SNAPSHOT</version>
+            <version>1.20.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.19.4-R0.1-SNAPSHOT</version>
+            <version>1.20.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
             <classifier>javadoc</classifier>
         </dependency>
@@ -105,7 +101,7 @@
         <dependency>
             <groupId>com.projectkorra</groupId>
             <artifactId>projectkorra</artifactId>
-            <version>1.11.1</version>
+            <version>1.11.2</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -118,7 +114,7 @@
         <dependency>
             <groupId>com.github.oraxen</groupId>
             <artifactId>Oraxen</artifactId>
-            <version>master-SNAPSHOT</version>
+            <version>1.163.0</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -129,9 +125,9 @@
         </dependency>
         <!--ArmorEquipEvent-->
         <dependency>
-            <groupId>com.jeff_media</groupId>
+            <groupId>com.github.Arnuh</groupId>
             <artifactId>ArmorEquipEvent</artifactId>
-            <version>1.0.2-SNAPSHOT</version>
+            <version>1.7.6</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

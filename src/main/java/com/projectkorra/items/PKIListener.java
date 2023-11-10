@@ -356,6 +356,7 @@ public class PKIListener implements Listener {
 	 * 
 	 * @param event the click event
 	 */
+	/*
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onAnvilItemPlace(InventoryClickEvent event) {
 		if (event.isCancelled() || event.getInventory().getType() != InventoryType.ANVIL)
@@ -374,6 +375,7 @@ public class PKIListener implements Listener {
 			player.sendMessage(Messages.NO_ANVIL);
 		}
 	}
+	 */
 
 	/**
 	 * When a player changes their currently held item, we need to check if the item was being
