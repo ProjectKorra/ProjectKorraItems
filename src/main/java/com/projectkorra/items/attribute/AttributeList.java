@@ -13,7 +13,7 @@ public class AttributeList {
 	public static final String SNEAK_CHARGES_STR = ChatColor.GOLD + "SneakCharges: ";
 	public static final String CLICK_CHARGES_STR = ChatColor.GOLD + "ClickCharges: ";
 
-	public static final ArrayList<Attribute> ATTRIBUTES = new ArrayList<>() {
+	public static final ArrayList<Attribute> ATTRIBUTES = new ArrayList<Attribute>() {
 		private static final long serialVersionUID = 1L;
 		{
 			// MISC
