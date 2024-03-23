@@ -1,10 +1,10 @@
 package com.projectkorra.items;
 
+import annotations.projectkorra.NotNull;
 import com.projectkorra.items.attribute.Attribute;
 import com.projectkorra.items.customs.PKItem;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -98,7 +98,8 @@ public class ConfigManager {
 					updateAttributes(item, Objects.requireNonNull(itemConfig.getConfigurationSection(key)));
 					break;
 				case GLOW_PREF:
-					item.updateGlow(itemConfig.getBoolean(key));
+					ProjectKorraItems.log.info(Messages.BAD_ATTRIBUTE + " (" + GLOW_PREF + ")");
+					// item.updateGlow(itemConfig.getBoolean(key));
 					break;
 			}
 		}

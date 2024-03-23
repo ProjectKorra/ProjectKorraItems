@@ -15,7 +15,6 @@ import com.projectkorra.items.attribute.AttributeList;
 import com.projectkorra.items.utils.AttributeUtils;
 import com.projectkorra.projectkorra.BendingPlayer;
 import com.projectkorra.projectkorra.Element;
-import org.jetbrains.annotations.NotNull;
 
 public class Glider {
 

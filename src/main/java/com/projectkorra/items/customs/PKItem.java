@@ -40,7 +40,6 @@ public class PKItem {
 	private boolean unshapedRecipe;
 	private boolean valid;
 	private boolean alreadyFinal;
-	private boolean glow;
 	private List<Attribute> attributes;
 
 	public PKItem() {
@@ -56,7 +55,6 @@ public class PKItem {
 		valid = true;
 		unshapedRecipe = true;
 		attributes = new ArrayList<>();
-		glow = false;
 	}
 
 	public void updateName(String s) {
@@ -133,10 +131,6 @@ public class PKItem {
 		}
 	}
 	*/
-
-	public void updateGlow(boolean glow) {
-		this.glow = glow;
-	}
 
 	/**
 	 * Updates this CustomItem with a new Recipe. The recipe will consist of
@@ -258,8 +252,6 @@ public class PKItem {
 
 			istack.setItemMeta(meta);
 		}
-		if (glow)
-			EnchantGlow.addGlow(istack);
 
 		return istack;
 	}
